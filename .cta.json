@@ -1,0 +1,29 @@
+{
+  "projectName": "x90-labs-portfolio",
+  "mode": "file-router",
+  "typescript": true,
+  "packageManager": "pnpm",
+  "includeExamples": false,
+  "tailwind": true,
+  "addOnOptions": {
+    "prisma": {
+      "database": "postgres"
+    }
+  },
+  "envVarValues": {},
+  "git": true,
+  "routerOnly": false,
+  "version": 1,
+  "framework": "react",
+  "chosenAddOns": [
+    "nitro",
+    "prisma",
+    "compiler",
+    "form",
+    "shadcn",
+    "t3env",
+    "table",
+    "tanstack-query",
+    "better-auth"
+  ]
+}
