@@ -1,80 +1,246 @@
-import { Link } from '@tanstack/react-router'
-import BetterAuthHeader from '../integrations/better-auth/header-user.tsx'
-import ThemeToggle from './ThemeToggle'
+import { Link, useRouterState } from "@tanstack/react-router"
+import { useCallback, useEffect, useState } from "react"
+import { Github, Menu } from "lucide-react"
+import { Button } from "#/components/ui/button"
+import { XninetzyLogo } from "#/components/XninetzyLogo"
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "#/components/ui/sheet"
+import {
+  NavigationMenu,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+} from "#/components/ui/navigation-menu"
+import { ROUTES } from "#/lib/domain/routes"
+import { cn } from "#/lib/utils"
+
+const SECTION_LINKS: ReadonlyArray<{ section: string; label: string }> = [
+  { section: "services", label: "Services" },
+  { section: "how-we-build", label: "Process" },
+  { section: "contact", label: "Contact" },
+]
+
+const PAGE_LINKS: ReadonlyArray<{ to: string; label: string }> = [
+  { to: ROUTES.PROJECTS, label: "Projects" },
+  { to: ROUTES.RESEARCH, label: "Research" },
+]
+
+type NavItem =
+  | { kind: "section"; section: string; label: string }
+  | { kind: "page"; to: string; label: string }
+
+const NAV_LINKS: NavItem[] = [
+  ...PAGE_LINKS.map((link) => ({ kind: "page" as const, to: link.to, label: link.label })),
+  ...SECTION_LINKS.map((link) => ({
+    kind: "section" as const,
+    section: link.section,
+    label: link.label,
+  })),
+]
+
+function smoothScrollTo(targetId: string) {
+  const element = document.getElementById(targetId)
+  if (!element) return
+  const headerOffset = 72
+  const top = element.getBoundingClientRect().top + window.scrollY - headerOffset
+  window.scrollTo({ top, behavior: "smooth" })
+}
+
+function navigateToSection(
+  section: string,
+  isHome: boolean,
+  callback?: () => void,
+) {
+  if (isHome) {
+    smoothScrollTo(section)
+    callback?.()
+    return
+  }
+  callback?.()
+  window.location.href = `${ROUTES.HOME}#${section}`
+}
 
 export default function Header() {
+  const [scrolled, setScrolled] = useState(false)
+  const [open, setOpen] = useState(false)
+  const pathname = useRouterState({ select: (state) => state.location.pathname })
+  const isHome = pathname === ROUTES.HOME
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 12)
+    onScroll()
+    window.addEventListener("scroll", onScroll, { passive: true })
+    return () => window.removeEventListener("scroll", onScroll)
+  }, [])
+
+  useEffect(() => {
+    if (!isHome || typeof window === "undefined") return
+    const hash = window.location.hash.replace(/^#/, "")
+    if (!hash) return
+    const id = window.setTimeout(() => smoothScrollTo(hash), 60)
+    return () => window.clearTimeout(id)
+  }, [isHome, pathname])
+
+  const handleSectionClick = useCallback(
+    (section: string, close?: () => void) =>
+      (event: React.MouseEvent<HTMLAnchorElement>) => {
+        event.preventDefault()
+        navigateToSection(section, isHome, close)
+      },
+    [isHome],
+  )
+
   return (
-    <header className="sticky top-0 z-50 border-b border-[var(--line)] bg-[var(--header-bg)] px-4 backdrop-blur-lg">
-      <nav className="page-wrap flex flex-wrap items-center gap-x-3 gap-y-2 py-3 sm:py-4">
-        <h2 className="m-0 flex-shrink-0 text-base font-semibold tracking-tight">
+    <header
+      className={cn(
+        "sticky top-0 z-50 w-full transition-all duration-300",
+        scrolled
+          ? "border-b border-[var(--lab-line)] bg-[var(--lab-bg-soft)] backdrop-blur-xl shadow-[0_8px_32px_-12px_rgba(0,0,0,0.5)]"
+          : "border-b border-transparent bg-transparent",
+      )}
+    >
+      <div className="relative">
+        <div
+          aria-hidden
+          className={cn(
+            "pointer-events-none absolute inset-x-0 -bottom-px h-px transition-opacity duration-500",
+            scrolled ? "opacity-100" : "opacity-0",
+          )}
+          style={{
+            background:
+              "linear-gradient(90deg, transparent 0%, rgba(246,90,11,0.55) 50%, transparent 100%)",
+          }}
+        />
+
+        <div className="mx-auto flex h-16 w-full max-w-[1240px] items-center gap-3 px-4 sm:h-[68px]">
           <Link
-            to="/"
-            className="inline-flex items-center gap-2 rounded-full border border-[var(--chip-line)] bg-[var(--chip-bg)] px-3 py-1.5 text-sm text-[var(--sea-ink)] no-underline shadow-[0_8px_24px_rgba(30,90,72,0.08)] sm:px-4 sm:py-2"
+            to={ROUTES.HOME}
+            className="group flex items-center gap-2.5 no-underline"
+            aria-label="XNINETZY Labs home"
           >
-            <span className="h-2 w-2 rounded-full bg-[linear-gradient(90deg,#56c6be,#7ed3bf)]" />
-            TanStack Start
+            <XninetzyLogo size={36} variant="mark" className="relative" />
+            <span className="flex flex-col leading-none">
+              <span className="text-sm font-bold tracking-[0.18em] text-[var(--lab-ink)] sm:text-[15px]">
+                XNINETZY
+              </span>
+              <span className="mt-0.5 font-mono text-[9px] uppercase tracking-[0.32em] text-[var(--lab-orange)] sm:text-[10px]">
+                Labs
+              </span>
+            </span>
           </Link>
-        </h2>
 
-        <div className="ml-auto flex items-center gap-1.5 sm:ml-0 sm:gap-2">
-          <a
-            href="https://x.com/tan_stack"
-            target="_blank"
-            rel="noreferrer"
-            className="hidden rounded-xl p-2 text-[var(--sea-ink-soft)] transition hover:bg-[var(--link-bg-hover)] hover:text-[var(--sea-ink)] sm:block"
-          >
-            <span className="sr-only">Follow TanStack on X</span>
-            <svg viewBox="0 0 16 16" aria-hidden="true" width="24" height="24">
-              <path
-                fill="currentColor"
-                d="M12.6 1h2.2L10 6.48 15.64 15h-4.41L7.78 9.82 3.23 15H1l5.14-5.84L.72 1h4.52l3.12 4.73L12.6 1zm-.77 12.67h1.22L4.57 2.26H3.26l8.57 11.41z"
-              />
-            </svg>
-          </a>
-          <a
-            href="https://github.com/TanStack"
-            target="_blank"
-            rel="noreferrer"
-            className="hidden rounded-xl p-2 text-[var(--sea-ink-soft)] transition hover:bg-[var(--link-bg-hover)] hover:text-[var(--sea-ink)] sm:block"
-          >
-            <span className="sr-only">Go to TanStack GitHub</span>
-            <svg viewBox="0 0 16 16" aria-hidden="true" width="24" height="24">
-              <path
-                fill="currentColor"
-                d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"
-              />
-            </svg>
-          </a>
-          <BetterAuthHeader />
+          <span
+            aria-hidden
+            className="mx-2 hidden h-6 w-px bg-gradient-to-b from-transparent via-[var(--lab-line-strong)] to-transparent md:block"
+          />
 
-          <ThemeToggle />
+          <NavigationMenu className="ml-auto hidden md:flex">
+            <NavigationMenuList className="gap-1">
+              {NAV_LINKS.map((link) => (
+                <NavigationMenuItem key={link.label}>
+                  <NavigationMenuLink asChild>
+                    {link.kind === "section" ? (
+                      <a
+                        href={`${ROUTES.HOME}#${link.section}`}
+                        onClick={handleSectionClick(link.section)}
+                        className="group relative inline-flex h-9 items-center px-3 font-mono text-[12px] uppercase tracking-[0.14em] text-[var(--lab-ink-soft)] no-underline transition-colors hover:text-[var(--lab-orange)]"
+                      >
+                        {link.label}
+                      </a>
+                    ) : (
+                      <Link
+                        to={link.to}
+                        className="group relative inline-flex h-9 items-center px-3 font-mono text-[12px] uppercase tracking-[0.14em] text-[var(--lab-ink-soft)] no-underline transition-colors hover:text-[var(--lab-orange)]"
+                        activeProps={{
+                          className: "text-[var(--lab-orange)]",
+                        }}
+                      >
+                        {link.label}
+                      </Link>
+                    )}
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+              ))}
+            </NavigationMenuList>
+          </NavigationMenu>
+
+          <div className="ml-auto flex items-center gap-2 md:ml-3">
+            <Button
+              asChild
+              size="icon"
+              variant="ghost"
+              className="size-9 text-[var(--lab-ink-soft)] hover:text-[var(--lab-orange)]"
+              aria-label="View on GitHub"
+            >
+              <a
+                href="https://github.com/X90-labs"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <Github className="size-4" />
+              </a>
+            </Button>
+
+            <Sheet open={open} onOpenChange={setOpen}>
+              <SheetTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="md:hidden"
+                  aria-label="Open menu"
+                >
+                  <Menu className="size-5" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right" className="w-80 border-l-[var(--lab-line)] bg-[var(--lab-bg)]">
+                <SheetHeader>
+                  <SheetTitle className="flex items-center gap-2 text-[var(--lab-ink)]">
+                    <XninetzyLogo size={28} variant="mark" />
+                    <span className="flex flex-col leading-tight">
+                      <span className="text-sm font-bold tracking-[0.18em]">XNINETZY</span>
+                      <span className="font-mono text-[9px] uppercase tracking-[0.32em] text-[var(--lab-orange)]">
+                        Labs
+                      </span>
+                    </span>
+                  </SheetTitle>
+                </SheetHeader>
+                <nav className="mt-8 flex flex-col gap-1">
+                  {NAV_LINKS.map((link) => {
+                    if (link.kind === "section") {
+                      return (
+                        <a
+                          key={link.label}
+                          href={`${ROUTES.HOME}#${link.section}`}
+                          onClick={handleSectionClick(link.section, () => setOpen(false))}
+                          className="group flex items-center justify-between border-b border-transparent px-1 py-3 font-mono text-xs uppercase tracking-[0.18em] text-[var(--lab-ink-soft)] transition-colors hover:text-[var(--lab-orange)]"
+                        >
+                          <span>{link.label}</span>
+                        </a>
+                      )
+                    }
+                    return (
+                      <Link
+                        key={link.label}
+                        to={link.to}
+                        onClick={() => setOpen(false)}
+                        className="group flex items-center justify-between border-b border-transparent px-1 py-3 font-mono text-xs uppercase tracking-[0.18em] text-[var(--lab-ink-soft)] no-underline transition-colors hover:text-[var(--lab-orange)]"
+                      >
+                        <span>{link.label}</span>
+                      </Link>
+                    )
+                  })}
+                </nav>
+              </SheetContent>
+            </Sheet>
+          </div>
         </div>
-
-        <div className="order-3 flex w-full flex-wrap items-center gap-x-4 gap-y-1 pb-1 text-sm font-semibold sm:order-2 sm:w-auto sm:flex-nowrap sm:pb-0">
-          <Link
-            to="/"
-            className="nav-link"
-            activeProps={{ className: 'nav-link is-active' }}
-          >
-            Home
-          </Link>
-          <Link
-            to="/about"
-            className="nav-link"
-            activeProps={{ className: 'nav-link is-active' }}
-          >
-            About
-          </Link>
-          <a
-            href="https://tanstack.com/start/latest/docs/framework/react/overview"
-            className="nav-link"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Docs
-          </a>
-        </div>
-      </nav>
+      </div>
     </header>
   )
 }
+

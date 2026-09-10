@@ -1,0 +1,108 @@
+export const LANGUAGE_LABELS: Record<string, string> = {
+  "": "Plain Text",
+  text: "Plain Text",
+  txt: "Plain Text",
+  plain: "Plain Text",
+  js: "JavaScript",
+  javascript: "JavaScript",
+  jsx: "JSX",
+  ts: "TypeScript",
+  typescript: "TypeScript",
+  tsx: "TSX",
+  py: "Python",
+  python: "Python",
+  rb: "Ruby",
+  ruby: "Ruby",
+  go: "Go",
+  golang: "Go",
+  rs: "Rust",
+  rust: "Rust",
+  java: "Java",
+  kt: "Kotlin",
+  kotlin: "Kotlin",
+  swift: "Swift",
+  c: "C",
+  h: "C",
+  cpp: "C++",
+  "c++": "C++",
+  cs: "C#",
+  csharp: "C#",
+  php: "PHP",
+  sql: "SQL",
+  sh: "Shell",
+  bash: "Bash",
+  zsh: "Zsh",
+  shell: "Shell",
+  ps1: "PowerShell",
+  yaml: "YAML",
+  yml: "YAML",
+  toml: "TOML",
+  ini: "INI",
+  json: "JSON",
+  jsonc: "JSON",
+  xml: "XML",
+  html: "HTML",
+  htm: "HTML",
+  vue: "Vue",
+  css: "CSS",
+  scss: "SCSS",
+  sass: "Sass",
+  less: "Less",
+  stylus: "Stylus",
+  md: "Markdown",
+  markdown: "Markdown",
+  dockerfile: "Dockerfile",
+  makefile: "Makefile",
+  diff: "Diff",
+  patch: "Diff",
+}
+
+const FILE_EXTENSION_HINT: Record<string, string> = {
+  ts: "ts",
+  tsx: "tsx",
+  js: "js",
+  jsx: "jsx",
+  py: "py",
+  python: "py",
+  json: "json",
+  yaml: "yaml",
+  yml: "yml",
+  md: "md",
+  markdown: "md",
+  html: "html",
+  css: "css",
+  scss: "scss",
+  sass: "scss",
+  sh: "sh",
+  bash: "sh",
+  sql: "sql",
+  go: "go",
+  rust: "rs",
+  rs: "rs",
+  rb: "rb",
+  ruby: "rb",
+  java: "java",
+  kt: "kt",
+  swift: "swift",
+  c: "c",
+  cpp: "cpp",
+  cs: "cs",
+  php: "php",
+  toml: "toml",
+  xml: "xml",
+}
+
+export function languageLabel(raw: string | undefined | null): string {
+  const lang = (raw ?? "").toLowerCase().trim()
+  if (!lang) return "Plain Text"
+  return LANGUAGE_LABELS[lang] ?? lang.toUpperCase()
+}
+
+export function languageFileExtension(raw: string | undefined | null): string {
+  const lang = (raw ?? "").toLowerCase().trim()
+  return FILE_EXTENSION_HINT[lang] ?? "txt"
+}
+
+export function normalizeLanguage(raw: string | undefined | null): string {
+  return (raw ?? "").toLowerCase().trim()
+}

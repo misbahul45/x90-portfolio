@@ -1,0 +1,94 @@
+[     460ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:20102
+[   69332ms] [WARNING] React Flow: It seems like you are hiding the attribution. Please only do this when you are subscribed to React Flow Pro: https://reactflow.dev/remove-attr
+%cYou can ignore this warning if you are subscribed. font-style: italic; @ http://localhost:3000/src/routes/__root.tsx:55
+[  133918ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:20102
+[  135438ms] [WARNING] React Flow: It seems like you are hiding the attribution. Please only do this when you are subscribed to React Flow Pro: https://reactflow.dev/remove-attr
+%cYou can ignore this warning if you are subscribed. font-style: italic; @ http://localhost:3000/src/routes/__root.tsx?t=1789013025706:55
+[  144408ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:20102
+[  145897ms] [WARNING] React Flow: It seems like you are hiding the attribution. Please only do this when you are subscribed to React Flow Pro: https://reactflow.dev/remove-attr
+%cYou can ignore this warning if you are subscribed. font-style: italic; @ http://localhost:3000/src/routes/__root.tsx?t=1789013025706:55
+[  174434ms] [ERROR] React has detected a change in the order of Hooks called by %s. This will lead to bugs and errors if not fixed. For more information, read the Rules of Hooks: https://react.dev/link/rules-of-hooks
+
+   Previous render            Next render
+   ------------------------------------------------------
+%s   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ AIAssistantDialog 1. useState                   useState
+2. useState                   useState
+3. useState                   useState
+4. useState                   useState
+5. useState                   useState
+6. useState                   useState
+7. useState                   useState
+8. useRef                     useRef
+9. useEffect                  useEffect
+10. useCallback               useCallback
+11. useEffect                 useEffect
+12. useCallback               useCallback
+13. useCallback               useCallback
+14. useCallback               useCallback
+15. useCallback               useCallback
+16. useEffect                 useCallback
+ @ http://localhost:3000/src/routes/__root.tsx?t=1789013025706:55
+[  174460ms] [ERROR] %o
+
+%s
+
+%s
+ Error: Rendered more hooks than during the previous render.
+    at updateWorkInProgressHook (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:5792:19)
+    at updateEffectImpl (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:6414:20)
+    at Object.useEffect (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:18946:11)
+    at exports.useEffect (http://localhost:3000/node_modules/.vite/deps/chunk-25UIJRR4.js?v=983046e4:923:36)
+    at AIAssistantDialog (http://localhost:3000/src/components/ai/AIAssistantDialog.tsx?t=1789013092140:56:3)
+    at Object.react_stack_bottom_frame (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:18509:20)
+    at renderWithHooks (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:5654:24)
+    at updateFunctionComponent (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:7475:21)
+    at beginWork (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:8525:20)
+    at runWithFiberInDEV (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:997:72) The above error occurred in the <AIAssistantDialog> component. React will try to recreate this component tree from scratch using the error boundary you provided, CatchBoundaryImpl. @ http://localhost:3000/src/routes/__root.tsx?t=1789013025706:55
+[  174461ms] [WARNING] Warning: The following error wasn't caught by any route! At the very least, consider setting an 'errorComponent' in your RootRoute! @ http://localhost:3000/src/routes/__root.tsx?t=1789013025706:55
+[  174461ms] [WARNING] Warning: Rendered more hooks than during the previous render. @ http://localhost:3000/src/routes/__root.tsx?t=1789013025706:55
+[  174479ms] [ERROR] %o
+
+%s
+
+%s
+ NotFoundError: Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of this node.
+    at removeChild (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:15918:24)
+    at runWithFiberInDEV (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:997:72)
+    at commitDeletionEffectsOnFiber (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:10190:19)
+    at recursivelyTraverseDeletionEffects (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:10115:11)
+    at commitDeletionEffectsOnFiber (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:10237:13)
+    at recursivelyTraverseDeletionEffects (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:10115:11)
+    at commitDeletionEffectsOnFiber (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:10237:13)
+    at recursivelyTraverseDeletionEffects (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:10115:11)
+    at commitDeletionEffectsOnFiber (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:10146:13)
+    at recursivelyTraverseDeletionEffects (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:10115:11) The above error occurred in the <link> component. React will try to recreate this component tree from scratch using the error boundary you provided, CatchBoundaryImpl. @ http://localhost:3000/src/routes/__root.tsx?t=1789013025706:55
+[  174481ms] [WARNING] Warning: The following error wasn't caught by any route! At the very least, consider setting an 'errorComponent' in your RootRoute! @ http://localhost:3000/src/routes/__root.tsx?t=1789013025706:55
+[  174482ms] [WARNING] Warning: Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of this node. @ http://localhost:3000/src/routes/__root.tsx?t=1789013025706:55
+[  226975ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:20102
+[  228513ms] [WARNING] React Flow: It seems like you are hiding the attribution. Please only do this when you are subscribed to React Flow Pro: https://reactflow.dev/remove-attr
+%cYou can ignore this warning if you are subscribed. font-style: italic; @ http://localhost:3000/src/routes/__root.tsx?t=1789013116318:55
+[  332568ms] [LOG] [vite] server connection lost. Polling for restart... @ http://localhost:3000/src/routes/__root.tsx?t=1789013116318:55
+[  332569ms] [ERROR] Failed to load resource: net::ERR_INCOMPLETE_CHUNKED_ENCODING @ http://localhost:3000/__tsd/console-pipe/sse:0
+[  332669ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/__tsd/console-pipe:0
+[  335571ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/__tsd/console-pipe/sse:0
+[  338575ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/__tsd/console-pipe/sse:0
+[  341577ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/__tsd/console-pipe/sse:0
+[  344579ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/__tsd/console-pipe/sse:0
+[  347593ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/__tsd/console-pipe/sse:0
+[  350598ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/__tsd/console-pipe/sse:0
+[  353600ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/__tsd/console-pipe/sse:0
+[  356603ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/__tsd/console-pipe/sse:0
+[  359608ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/__tsd/console-pipe/sse:0
+[  362609ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/__tsd/console-pipe/sse:0
+[  365611ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/__tsd/console-pipe/sse:0
+[  383329ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:20102
+[  386836ms] [WARNING] React Flow: It seems like you are hiding the attribution. Please only do this when you are subscribed to React Flow Pro: https://reactflow.dev/remove-attr
+%cYou can ignore this warning if you are subscribed. font-style: italic; @ http://localhost:3000/src/routes/__root.tsx:55
+[  409801ms] [LOG] %c[Server]%c color: #9333ea; font-weight: bold; color: inherit; Defaulting to 'auto' which will select the first provider available for the model, sorted by the user's order in https://hf.co/settings/inference-providers. @ http://localhost:3000/src/routes/__root.tsx:118
+[  410366ms] [LOG] %c[Server]%c color: #9333ea; font-weight: bold; color: inherit; Auto selected provider: hf-inference @ http://localhost:3000/src/routes/__root.tsx:118
+[  414419ms] [LOG] %c[Server]%c color: #9333ea; font-weight: bold; color: inherit; Defaulting to 'auto' which will select the first provider available for the model, sorted by the user's order in https://hf.co/settings/inference-providers. @ http://localhost:3000/src/routes/__root.tsx:118
+[  414419ms] [LOG] %c[Server]%c color: #9333ea; font-weight: bold; color: inherit; Auto selected provider: hf-inference @ http://localhost:3000/src/routes/__root.tsx:118
+[  431965ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:20102
+[  433633ms] [WARNING] React Flow: It seems like you are hiding the attribution. Please only do this when you are subscribed to React Flow Pro: https://reactflow.dev/remove-attr
+%cYou can ignore this warning if you are subscribed. font-style: italic; @ http://localhost:3000/src/routes/__root.tsx:55

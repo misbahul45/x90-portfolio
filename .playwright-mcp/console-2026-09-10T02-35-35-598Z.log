@@ -1,0 +1,60 @@
+[    1800ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=943d6452:20102
+[    3642ms] [WARNING] React Flow: It seems like you are hiding the attribution. Please only do this when you are subscribed to React Flow Pro: https://reactflow.dev/remove-attr
+%cYou can ignore this warning if you are subscribed. font-style: italic; @ http://localhost:3000/src/routes/__root.tsx:55
+[   36511ms] [WARNING] Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}. @ http://localhost:3000/src/routes/__root.tsx:55
+[   36521ms] [WARNING] Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}. @ http://localhost:3000/src/routes/__root.tsx:55
+[  101321ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=943d6452:20102
+[  103563ms] [WARNING] React Flow: It seems like you are hiding the attribution. Please only do this when you are subscribed to React Flow Pro: https://reactflow.dev/remove-attr
+%cYou can ignore this warning if you are subscribed. font-style: italic; @ http://localhost:3000/src/routes/__root.tsx?t=1789007827575:55
+[  128903ms] [WARNING] Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}. @ http://localhost:3000/src/routes/__root.tsx?t=1789007827575:55
+[  128912ms] [WARNING] Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}. @ http://localhost:3000/src/routes/__root.tsx?t=1789007827575:55
+[  164097ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=943d6452:20102
+[  166014ms] [WARNING] React Flow: It seems like you are hiding the attribution. Please only do this when you are subscribed to React Flow Pro: https://reactflow.dev/remove-attr
+%cYou can ignore this warning if you are subscribed. font-style: italic; @ http://localhost:3000/src/routes/__root.tsx?t=1789007841895:55
+[  186462ms] [ERROR] React has detected a change in the order of Hooks called by %s. This will lead to bugs and errors if not fixed. For more information, read the Rules of Hooks: https://react.dev/link/rules-of-hooks
+
+   Previous render            Next render
+   ------------------------------------------------------
+%s   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ AIAssistantDialog 1. useState                   useState
+2. useState                   useState
+3. useState                   useState
+4. useState                   useState
+5. useEffect                  useRef
+ @ http://localhost:3000/src/routes/__root.tsx?t=1789007841895:55
+[  186499ms] [ERROR] %o
+
+%s
+
+%s
+ Error: Rendered more hooks than during the previous render.
+    at updateWorkInProgressHook (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=943d6452:5792:19)
+    at updateEffectImpl (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=943d6452:6414:20)
+    at Object.useEffect (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=943d6452:18946:11)
+    at exports.useEffect (http://localhost:3000/node_modules/.vite/deps/chunk-RY7GF66K.js?v=943d6452:923:36)
+    at useAIChat (http://localhost:3000/src/hooks/useAIChat.ts?t=1789007921542:116:3)
+    at AIAssistantDialog (http://localhost:3000/src/components/ai/AIAssistantDialog.tsx?t=1789007921542:33:7)
+    at Object.react_stack_bottom_frame (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=943d6452:18509:20)
+    at renderWithHooks (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=943d6452:5654:24)
+    at updateFunctionComponent (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=943d6452:7475:21)
+    at beginWork (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=943d6452:8525:20) The above error occurred in the <AIAssistantDialog> component. React will try to recreate this component tree from scratch using the error boundary you provided, CatchBoundaryImpl. @ http://localhost:3000/src/routes/__root.tsx?t=1789007841895:55
+[  186501ms] [WARNING] Warning: The following error wasn't caught by any route! At the very least, consider setting an 'errorComponent' in your RootRoute! @ http://localhost:3000/src/routes/__root.tsx?t=1789007841895:55
+[  186501ms] [WARNING] Warning: Rendered more hooks than during the previous render. @ http://localhost:3000/src/routes/__root.tsx?t=1789007841895:55
+[  186521ms] [ERROR] %o
+
+%s
+
+%s
+ NotFoundError: Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of this node.
+    at removeChild (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=943d6452:15918:24)
+    at runWithFiberInDEV (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=943d6452:997:72)
+    at commitDeletionEffectsOnFiber (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=943d6452:10190:19)
+    at recursivelyTraverseDeletionEffects (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=943d6452:10115:11)
+    at commitDeletionEffectsOnFiber (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=943d6452:10237:13)
+    at recursivelyTraverseDeletionEffects (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=943d6452:10115:11)
+    at commitDeletionEffectsOnFiber (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=943d6452:10237:13)
+    at recursivelyTraverseDeletionEffects (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=943d6452:10115:11)
+    at commitDeletionEffectsOnFiber (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=943d6452:10146:13)
+    at recursivelyTraverseDeletionEffects (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=943d6452:10115:11) The above error occurred in the <link> component. React will try to recreate this component tree from scratch using the error boundary you provided, CatchBoundaryImpl. @ http://localhost:3000/src/routes/__root.tsx?t=1789007841895:55
+[  186524ms] [WARNING] Warning: The following error wasn't caught by any route! At the very least, consider setting an 'errorComponent' in your RootRoute! @ http://localhost:3000/src/routes/__root.tsx?t=1789007841895:55
+[  186525ms] [WARNING] Warning: Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of this node. @ http://localhost:3000/src/routes/__root.tsx?t=1789007841895:55

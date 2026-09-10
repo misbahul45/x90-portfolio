@@ -1,0 +1,205 @@
+- generic:
+  - banner [aria-hidden]:
+    - generic:
+      - generic:
+        - link:
+          - /url: /
+          - generic:
+            - generic: XNINETZY
+            - generic: Labs
+        - navigation:
+          - generic:
+            - list:
+              - listitem:
+                - link:
+                  - /url: /projects
+                  - text: Projects
+              - listitem:
+                - link:
+                  - /url: /research
+                  - text: Research
+              - listitem:
+                - link:
+                  - /url: /#services
+                  - text: Services
+              - listitem:
+                - link:
+                  - /url: /#how-we-build
+                  - text: Process
+              - listitem:
+                - link:
+                  - /url: /#contact
+                  - text: Contact
+        - generic:
+          - link:
+            - /url: https://github.com/X90-labs
+  - main [aria-hidden]:
+    - generic:
+      - generic:
+        - generic:
+          - link:
+            - /url: /research
+            - text: All research
+          - paragraph: RAG
+          - heading [level=1]: Building Long-Context Retrieval Systems for Domain Knowledge
+          - paragraph: Chunking, embedding, re-ranking — a practical pipeline for getting the right 5 passages out of 50,000 documents.
+          - generic:
+            - generic: By Xninetzy Admin
+            - generic: September 08, 2026
+            - generic: 8 min read
+          - list:
+            - listitem: Engineering
+            - listitem: Deep Dive
+    - generic:
+      - generic:
+        - article:
+          - generic:
+            - paragraph: Chunking, embedding, re-ranking — a practical pipeline for getting the right 5 passages out of 50,000 documents.
+          - paragraph: Long-context retrieval is no longer a luxury. As context windows expand to 128k and beyond, the question shifts from how much we can fit to how reliably we can find what matters.
+          - heading [level=2]: Why naive chunking breaks
+          - paragraph: Naive fixed-size chunking loses structural cues. Tables, code blocks, and section boundaries all get sliced mid-thought. We need semantic chunking that respects the document topology.
+          - list:
+            - listitem:
+              - paragraph: Use heading + paragraph boundaries as natural splits
+            - listitem:
+              - paragraph: Keep code blocks whole when semantically related
+            - listitem:
+              - paragraph: Preserve table row relationships when context allows
+          - heading [level=2]: Embedding strategy
+          - generic:
+            - code: "from sentence_transformers import SentenceTransformer model = SentenceTransformer(\"BAAI/bge-large-en-v1.5\") def chunk_and_embed(text: str, chunk_size: int = 512): chunks = semantic_split(text, chunk_size) return model.encode(chunks, normalize_embeddings=True)"
+          - blockquote:
+            - paragraph: Re-ranking is non-optional at scale. Vector recall gives you 100 candidates; a cross-encoder trims that to the 5 that actually matter.
+          - blockquote:
+            - paragraph: The bottleneck is not generation. It is knowing which 5 of 10,000 documents to put in the context window.
+          - paragraph: We tested three configurations on a 50k-document corpus. Re-ranking lifted nDCG@10 from 0.41 to 0.78 — almost double — for under 80ms additional latency.
+        - complementary:
+          - generic:
+            - paragraph: Author
+            - generic:
+              - generic: X
+              - generic:
+                - paragraph: Xninetzy Admin
+                - paragraph: AI Labs contributor
+          - generic:
+            - paragraph: Meta
+            - generic:
+              - generic:
+                - term: Domain
+                - definition: RAG
+              - generic:
+                - term: Published
+                - definition: September 08, 2026
+              - generic:
+                - term: Reading time
+                - definition: 8 min
+              - generic:
+                - term: Status
+                - definition: PUBLISHED
+          - generic:
+            - paragraph: Tags
+            - list:
+              - listitem: Engineering
+              - listitem: Deep Dive
+          - generic:
+            - paragraph: Reading
+            - link:
+              - /url: /research
+              - text: More from AI Labs
+    - generic:
+      - generic:
+        - generic:
+          - generic:
+            - paragraph: Related
+            - heading [level=2]: More from this domain
+          - link:
+            - /url: /research
+            - text: View all research
+        - list:
+          - listitem:
+            - link:
+              - /url: /research/why-naive-rag-fails
+              - generic:
+                - paragraph: RAG
+              - heading [level=3]: Why Naive RAG Breaks on Multi-Hop Questions
+              - paragraph: Single-shot retrieval assumes the answer is in one place. Real questions usually aren't.
+  - contentinfo [aria-hidden]:
+    - generic:
+      - generic:
+        - link:
+          - /url: /
+          - generic:
+            - generic: XNINETZY
+            - generic: Labs
+        - paragraph: A technical AI lab that turns experiments, research, and engineering into useful systems.
+      - generic:
+        - paragraph: Research
+        - list:
+          - listitem:
+            - link:
+              - /url: /research
+              - text: Articles
+      - generic:
+        - paragraph: Build
+        - list:
+          - listitem:
+            - link:
+              - /url: /projects
+              - text: Projects
+      - generic:
+        - paragraph: Lab
+        - list:
+          - listitem:
+            - link:
+              - /url: /about
+              - text: About
+    - generic:
+      - generic:
+        - paragraph: © 2026 XNINETZY Labs. Research · Experiment · Build.
+        - generic:
+          - link:
+            - /url: https://x.com
+          - link:
+            - /url: https://github.com
+  - generic [aria-hidden]:
+    - button:
+      - generic: Ask Labs
+  - button [ref=f14e45] [cursor=pointer]
+  - dialog [ref=f14e145]:
+    - heading "XNINETZY Labs Research Assistant" [level=2] [ref=f14e146]
+    - banner [ref=f14e147]:
+      - generic [ref=f14e148]:
+        - img "XNINETZY Labs" [ref=f14e151]
+        - generic [ref=f14e154]:
+          - generic [ref=f14e155]: XNINETZY Labs
+          - generic [ref=f14e159]: Research Assistant
+    - generic [ref=f14e161]:
+      - generic [ref=f14e165]:
+        - paragraph [ref=f14e174]: Show me your latest research.
+        - generic [ref=f14e180]:
+          - generic [ref=f14e182]:
+            - paragraph [ref=f14e183]: "Our current research centers on two interconnected pillars: long-context retrieval architectures and structured tool-using agent design. You can review our practical breakdown of retrieval pipelines at /research/building-long-context-rag, which covers semantic chunking, hybrid search, cross-encoder re-ranking, and strategies for consistently surfacing high-signal passages from large corpora."
+            - paragraph [ref=f14e184]: We also publish ongoing work on agent orchestration at /research/designing-tool-agents. That piece maps memory, planning, tool execution, and reasoning into four discrete nodes, detailing how to wire them into stable execution graphs that handle retries, state transitions, and complex multi-step tasks.
+            - paragraph [ref=f14e185]: Both research tracks are directly implemented in our shipped systems. The retrieval methodology powers our Domain RAG Pipeline (/projects/domain-rag-pipeline), while the agent graph patterns drive our Research Agent Runtime (/projects/research-agent-runtime). To validate performance across both, we maintain the Open Agent Eval Suite (/projects/open-agent-eval), an open-source harness that measures pass-rates, tool-call efficiency, and error recovery behavior.
+            - paragraph [ref=f14e186]: "If you want to examine specific implementation choices, compare architectural trade-offs, or explore integration possibilities, please reach out through our contact form at #contact. Tell me which topic you’d like to dive into first, and I’ll point you to the relevant code, diagrams, or experimental notes."
+          - complementary [ref=f14e187]:
+            - paragraph [ref=f14e188]: Related research
+            - list [ref=f14e191]:
+              - listitem [ref=f14e192]:
+                - link "Building Long-Context Retrieval Systems for Domain Knowledge" [ref=f14e193] [cursor=pointer]:
+                  - /url: /research/building-long-context-rag
+              - listitem [ref=f14e198]:
+                - link "Why Naive RAG Breaks on Multi-Hop Questions" [ref=f14e199] [cursor=pointer]:
+                  - /url: /research/why-naive-rag-fails
+              - listitem [ref=f14e204]:
+                - link "Designing Tool-Using Agents with Execution Graphs" [ref=f14e205] [cursor=pointer]:
+                  - /url: /research/designing-tool-agents
+      - generic [ref=f14e210]:
+        - generic [ref=f14e211]:
+          - button "Attach PDF or markdown" [ref=f14e212]
+          - textbox "Ask anything about the lab…" [active] [ref=f14e214]
+          - generic [ref=f14e215]:
+            - button "Send message" [disabled]
+            - button "Clear conversation" [ref=f14e216]
+        - paragraph [ref=f14e217]: PDF · Markdown supported
+    - button "Close" [ref=f14e218]

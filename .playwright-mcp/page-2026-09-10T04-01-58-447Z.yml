@@ -1,0 +1,66 @@
+- generic [active] [ref=f7e1]:
+  - banner [ref=f7e2]:
+    - generic [ref=f7e4]:
+      - link "XNINETZY Labs home" [ref=f7e5] [cursor=pointer]:
+        - /url: /
+        - img "XNINETZY Labs" [ref=f7e7]
+        - generic [ref=f7e8]:
+          - generic [ref=f7e9]: XNINETZY
+          - generic [ref=f7e10]: Labs
+      - navigation "Main" [ref=f7e12]:
+        - list [ref=f7e14]:
+          - listitem [ref=f7e15]:
+            - link "Projects" [ref=f7e16] [cursor=pointer]:
+              - /url: /projects
+          - listitem [ref=f7e17]:
+            - link "Research" [ref=f7e18] [cursor=pointer]:
+              - /url: /research
+          - listitem [ref=f7e19]:
+            - link "Services" [ref=f7e20] [cursor=pointer]:
+              - /url: /#services
+          - listitem [ref=f7e21]:
+            - link "Process" [ref=f7e22] [cursor=pointer]:
+              - /url: /#how-we-build
+          - listitem [ref=f7e23]:
+            - link "Contact" [ref=f7e24] [cursor=pointer]:
+              - /url: /#contact
+      - link "View on GitHub" [ref=f7e26] [cursor=pointer]:
+        - /url: https://github.com/X90-labs
+  - main [ref=f7e27]
+  - contentinfo [ref=f7e35]:
+    - generic [ref=f7e36]:
+      - generic [ref=f7e37]:
+        - link "XNINETZY Labs home" [ref=f7e38] [cursor=pointer]:
+          - /url: /
+          - img "XNINETZY Labs" [ref=f7e40]
+          - generic [ref=f7e41]:
+            - generic [ref=f7e42]: XNINETZY
+            - generic [ref=f7e43]: Labs
+        - paragraph [ref=f7e44]: A technical AI lab that turns experiments, research, and engineering into useful systems.
+      - generic [ref=f7e45]:
+        - paragraph [ref=f7e46]: Research
+        - list [ref=f7e47]:
+          - listitem [ref=f7e48]:
+            - link "Articles" [ref=f7e49] [cursor=pointer]:
+              - /url: /research
+      - generic [ref=f7e50]:
+        - paragraph [ref=f7e51]: Build
+        - list [ref=f7e52]:
+          - listitem [ref=f7e53]:
+            - link "Projects" [ref=f7e54] [cursor=pointer]:
+              - /url: /projects
+      - generic [ref=f7e55]:
+        - paragraph [ref=f7e56]: Lab
+        - list [ref=f7e57]:
+          - listitem [ref=f7e58]:
+            - link "About" [ref=f7e59] [cursor=pointer]:
+              - /url: /about
+    - generic [ref=f7e61]:
+      - paragraph [ref=f7e62]: © 2026 XNINETZY Labs. Research · Experiment · Build.
+      - generic [ref=f7e63]:
+        - link "Follow XNINETZY Labs on X" [ref=f7e64] [cursor=pointer]:
+          - /url: https://x.com
+        - link "View XNINETZY Labs on GitHub" [ref=f7e67] [cursor=pointer]:
+          - /url: https://github.com
+  - button "Open Ask XNINETZY Labs" [ref=f7e73]:
+    - generic [ref=f7e74]: Ask Labs

@@ -1,28 +1,85 @@
-Welcome to your new TanStack Start app! 
+# XNINETZY Labs — Software House
 
-# Getting Started
+AI engineering studio. We design, build, and ship production software: websites, mobile apps, internal tools, AI agents, and workflow automation.
 
-To run this application:
+> **AI LABS · SOFTWARE HOUSE · SHIP ROOM**
+
+Positioning: a small senior team ("me + team") delivering end-to-end systems. Research and portfolio work sit alongside delivery as value-add, not as the main pitch.
+
+## Visual System
+
+One coherent identity. Locked palette:
+
+| Token | Value | Use |
+| --- | --- | --- |
+| `--lab-bg` | `#071426` | dominant navy surface |
+| `--lab-card` | `#0B1A30` | card / panel base |
+| `--lab-card-elevated` | `#112946` | hover, elevated container |
+| `--lab-orange` | `#F65A0B` | single accent (CTA, active, signal) |
+| `--lab-ink` | `#F8FAFC` | primary text |
+| `--lab-ink-soft` | `#8FA3BD` | secondary text |
+| `--lab-line` | `rgba(255,255,255,0.10)` | hairline border |
+
+Hero is the only moment orange takes visual lead. The rest of the landing surface stays navy with orange accents (5–15% of visual elements).
+
+**No decorative badges, pills, chips, or category tags on the landing surface.** Section hierarchy comes from typography, weight, spacing, grid, and borders. Functional controls inside the Brief Builder remain functional.
+
+All design tokens live in `src/styles.css`. Components reference them via Tailwind arbitrary values (`bg-[var(--lab-card)]`, `text-[var(--lab-ink)]`, …) — never hardcoded hex.
+
+## Getting Started
 
 ```bash
-pnpm install
-pnpm dev
+bun install
+bun run db:up
+cp .env.example .env.local
+bun run db:migrate
+bun run dev
 ```
 
-# Building For Production
+### Database
 
-To build this application for production:
+PostgreSQL 16 + pgvector runs in Docker (`pgvector/pgvector:pg16`). The init script at `docker/postgres/init.sql` enables the `vector` extension on first container start.
 
 ```bash
-pnpm build
+bun run db:up         # start postgres
+bun run db:down       # stop postgres
+bun run db:logs       # tail postgres logs
+bun run db:psql       # open psql shell in the container
+bun run db:reset      # wipe volume and recreate container
 ```
+
+Generate `BETTER_AUTH_SECRET` for `.env.local`:
+
+```bash
+bunx @better-auth/cli secret
+```
+
+## Building For Production
+
+```bash
+bun run build
+```
+
+## Engineering Conventions
+
+See [`AGENTS.md`](./AGENTS.md) for the full operating contract: locked visual system, no-badge rule, no-comment code rule, shadcn-only UI, strict TypeScript, API-route data flow, and quality gates before claiming something "done".
+
+## Brief submission flow
+
+The hero carries a live `BriefBuilder` (React Flow + chat preview). Submissions go to `POST /api/handlers/$` with the `brief.create` action, are persisted via Prisma, and trigger an outbound email through Brevo (`BREVO_*` env). Admin can review them at `/admin/briefs` after signing in with the seeded admin account.
+
+```bash
+bun run db:seed       # creates admin + sample content
+```
+
+Admin login: `admin@xninetzy.local` / password printed by the seed script (also written to `.seed-output.txt`).
 
 ## Testing
 
 This project uses [Vitest](https://vitest.dev/) for testing. You can run the tests with:
 
 ```bash
-pnpm test
+bun run test
 ```
 
 ## Styling
@@ -36,7 +93,7 @@ If you prefer not to use Tailwind CSS:
 1. Remove the demo pages in `src/routes/demo/`
 2. Replace the Tailwind import in `src/styles.css` with your own styles
 3. Remove `tailwindcss()` from the plugins array in `vite.config.ts`
-4. Uninstall the packages: `pnpm add @tailwindcss/vite tailwindcss --dev`
+4. Uninstall the packages: `bun add @tailwindcss/vite tailwindcss --dev`
 
 
 ## Shadcn
@@ -44,7 +101,7 @@ If you prefer not to use Tailwind CSS:
 Add components using the latest version of [Shadcn](https://ui.shadcn.com/).
 
 ```bash
-pnpm dlx shadcn@latest add button
+bunx shadcn@latest add button
 ```
 
 
@@ -71,7 +128,7 @@ console.log(env.VITE_APP_TITLE);
 1. Generate and set the `BETTER_AUTH_SECRET` environment variable in your `.env.local`:
 
    ```bash
-   pnpm dlx @better-auth/cli secret
+   bunx @better-auth/cli secret
    ```
 
 2. Visit the [Better Auth documentation](https://www.better-auth.com) to unlock the full potential of authentication in your app.
@@ -96,7 +153,7 @@ export const auth = betterAuth({
 Then run migrations:
 
 ```bash
-pnpm dlx @better-auth/cli migrate
+bunx @better-auth/cli migrate
 ```
 
 

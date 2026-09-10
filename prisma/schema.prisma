@@ -7,8 +7,310 @@ datasource db {
   provider = "postgresql"
 }
 
-model Todo {
-  id        Int      @id @default(autoincrement())
-  title     String
+enum UserRole {
+  READER
+  EDITOR
+  ADMIN
+}
+
+enum ArticleStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum FeedbackType {
+  GENERAL
+  PROJECT
+  RESEARCH
+  COLLABORATION
+  OTHER
+}
+
+enum FeedbackStatus {
+  NEW
+  READ
+  ARCHIVED
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String
+  email         String    @unique
+  emailVerified Boolean   @default(false)
+  image         String?
+  role          UserRole  @default(READER)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  sessions Session[]
+  accounts Account[]
+  articles Article[]
+
+  @@map("user")
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  expiresAt DateTime
+  token     String   @unique
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id @default(cuid())
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@map("account")
+}
+
+model Verification {
+  id         String   @id @default(cuid())
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@map("verification")
+}
+
+model Category {
+  id        String    @id @default(cuid())
+  slug      String    @unique
+  name      String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  articles Article[]
+  projects Project[]
+
+  @@map("category")
+}
+
+model Tag {
+  id        String         @id @default(cuid())
+  slug      String         @unique
+  name      String
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+
+  articles TagOnArticle[]
+
+  @@map("tag")
+}
+
+model TagOnArticle {
+  articleId String
+  tagId     String
+  article   Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  tag       Tag     @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([articleId, tagId])
+  @@map("tag_on_article")
+}
+
+model Article {
+  id          String        @id @default(cuid())
+  title       String
+  slug        String        @unique
+  excerpt     String
+  content     String
+  coverImage  String?
+  status      ArticleStatus @default(DRAFT)
+  publishedAt DateTime?
+  readingTime Int?
+  categoryId  String?
+  authorId    String
+  embedding   Unsupported("vector(384)")?
+  embeddedAt  DateTime?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  author   User          @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  category Category?     @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  tags     TagOnArticle[]
+
+  @@index([status, publishedAt])
+  @@index([slug])
+  @@index([categoryId])
+  @@map("article")
+}
+
+model Project {
+  id           String    @id @default(cuid())
+  title        String
+  slug         String    @unique
+  description  String
+  content      String
+  coverImage   String?
+  technologies String[]
+  categoryId   String?
+  githubUrl    String?
+  demoUrl      String?
+  featured     Boolean   @default(false)
+  order        Int       @default(0)
+  embedding    Unsupported("vector(384)")?
+  embeddedAt   DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  category Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+
+  @@index([featured, order])
+  @@index([slug])
+  @@map("project")
+}
+
+enum JobType {
+  FULL_TIME
+  PART_TIME
+  CONTRACT
+  INTERNSHIP
+  RESEARCH
+}
+
+enum JobLocation {
+  REMOTE
+  HYBRID
+  ONSITE
+  UNSITE_REMOTE
+}
+
+enum JobStatus {
+  OPEN
+  CLOSED
+  DRAFT
+}
+
+model BackgroundJob {
+  id           String     @id @default(cuid())
+  title        String
+  slug         String     @unique
+  company      String?
+  role         String
+  type         JobType    @default(FULL_TIME)
+  location     JobLocation @default(REMOTE)
+  city         String?
+  country      String?
+  compensation String?
+  description  String
+  requirements String
+  applyUrl     String?
+  contactEmail String?
+  tags         String[]
+  status       JobStatus  @default(OPEN)
+  publishedAt  DateTime?
+  embedding    Unsupported("vector(384)")?
+  embeddedAt   DateTime?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  @@index([status, publishedAt])
+  @@index([type])
+  @@index([slug])
+  @@map("background_job")
+}
+
+model TeamMember {
+  id        String   @id @default(cuid())
+  name      String
+  role      String
+  bio       String?
+  avatar    String?
+  github    String?
+  linkedin  String?
+  website   String?
+  featured  Boolean  @default(false)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([featured, order])
+  @@map("team_member")
+}
+
+model UploadedFile {
+  id           String   @id @default(cuid())
+  name         String
+  mimeType     String
+  size         Int
+  purpose      String
+  data         Bytes
+  createdAt    DateTime @default(now())
+
+  @@index([purpose, createdAt])
+  @@map("uploaded_file")
+}
+
+model Feedback {
+  id        String         @id @default(cuid())
+  name      String
+  email     String
+  message   String
+  type      FeedbackType   @default(GENERAL)
+  status    FeedbackStatus @default(NEW)
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+
+  @@index([status, createdAt])
+  @@index([type])
+  @@map("feedback")
+}
+
+enum BriefStatus {
+  NEW
+  REVIEWED
+  QUOTED
+  ARCHIVED
+}
+
+enum BriefService {
+  AUTOMATION
+  AI_ASSISTANT
+  AGENTIC_SYSTEM
+  WEB
+  MOBILE
+  OTHER
+}
+
+model Brief {
+  id               String       @id @default(cuid())
+  name             String
+  email            String
+  company          String?
+  whatsapp         String?
+  service          BriefService @default(OTHER)
+  budget           String?
+  timeline         String?
+  message          String
+  documentUrl      String?
+  documentName     String?
+  documentMimeType String?
+  status           BriefStatus  @default(NEW)
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+
+  @@index([status, createdAt])
+  @@index([service])
+  @@map("brief")
 }

@@ -3,22 +3,37 @@
   "private": true,
   "type": "module",
   "imports": {
-    "#/*": "./src/*"
+    "#/*": "./src/*",
+    "#tanstack-router-entry": "./src/router.tsx",
+    "#tanstack-start-entry": "./src/router.tsx"
   },
+  "trustedDependencies": [
+    "esbuild",
+    "lightningcss",
+    "sharp"
+  ],
   "scripts": {
     "dev": "vite dev --port 3000",
     "build": "vite build",
     "preview": "vite preview",
     "test": "vitest run",
-    "post-cta-init": "pnpm dlx create-db@latest --user-agent tanstack/tsrouter",
-    "db:generate": "dotenv -e .env.local -- prisma generate",
-    "db:push": "dotenv -e .env.local -- prisma db push",
-    "db:migrate": "dotenv -e .env.local -- prisma migrate dev",
-    "db:studio": "dotenv -e .env.local -- prisma studio",
-    "db:seed": "dotenv -e .env.local -- prisma db seed"
+    "typecheck": "tsc --noEmit",
+    "db:up": "docker compose up -d postgres",
+    "db:down": "docker compose stop postgres",
+    "db:logs": "docker compose logs -f postgres",
+    "db:psql": "docker compose exec postgres psql -U x90 -d x90_portfolio",
+    "db:reset": "docker compose down -v && docker compose up -d postgres",
+    "db:generate": "bunx dotenv-cli -e .env.local -- prisma generate",
+    "db:push": "bunx dotenv-cli -e .env.local -- prisma db push",
+    "db:migrate": "bunx dotenv-cli -e .env.local -- prisma migrate dev",
+    "db:studio": "bunx dotenv-cli -e .env.local -- prisma studio",
+    "db:seed": "bunx dotenv-cli -e .env.local -- prisma db seed",
+    "secret:generate": "bunx @better-auth/cli secret"
   },
   "dependencies": {
-    "@faker-js/faker": "^10.3.0",
+    "@hookform/resolvers": "^5.9.1",
+    "@huggingface/inference": "^4.13.28",
+    "@langchain/openai": "^1.5.12",
     "@prisma/adapter-pg": "^7.4.2",
     "@prisma/client": "^7.4.2",
     "@t3-oss/env-core": "^0.13.10",
@@ -34,18 +49,38 @@
     "@tanstack/react-start": "latest",
     "@tanstack/react-table": "latest",
     "@tanstack/router-plugin": "^1.132.0",
+    "@tiptap/extension-code-block-lowlight": "^3.31.3",
+    "@tiptap/extension-image": "^3.31.3",
+    "@tiptap/extension-link": "^3.31.3",
+    "@tiptap/pm": "^3.31.3",
+    "@tiptap/react": "^3.31.3",
+    "@tiptap/starter-kit": "^3.31.3",
+    "@uploadthing/react": "^7.3.3",
+    "@xyflow/react": "^12.11.6",
     "better-auth": "^1.5.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "cn": "^0.2.6",
+    "langchain": "^1.5.11",
+    "lowlight": "^3.3.0",
     "lucide-react": "^0.577.0",
+    "motion": "^13.2.0",
+    "next-themes": "^0.4.6",
     "nitro": "npm:nitro-nightly@latest",
+    "openai": "^7.13.0",
+    "pdf-parse": "^2.4.5",
+    "pdfjs-dist": "^6.3.289",
     "prisma": "^7.4.2",
     "radix-ui": "^1.4.3",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "react-hook-form": "^7.87.0",
+    "server-only": "^0.0.1",
+    "sonner": "^2.0.8",
     "tailwind-merge": "^3.0.2",
     "tailwindcss": "^4.1.18",
     "tw-animate-css": "^1.3.6",
+    "uploadthing": "^7.7.4",
     "zod": "^4.3.6"
   },
   "devDependencies": {
@@ -65,11 +100,5 @@
     "vite": "^7.3.1",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^3.0.5"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "esbuild",
-      "lightningcss"
-    ]
   }
 }

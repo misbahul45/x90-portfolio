@@ -1,43 +1,99 @@
+import { Link } from "@tanstack/react-router"
+import { Github, Twitter } from "lucide-react"
+import { XninetzyLogo } from "#/components/XninetzyLogo"
+import { ROUTES } from "#/lib/domain/routes"
+
+const NAV_COLUMNS: Array<{
+  title: string
+  links: Array<{ to: string; label: string }>
+}> = [
+  {
+    title: "Research",
+    links: [{ to: ROUTES.RESEARCH, label: "Articles" }],
+  },
+  {
+    title: "Build",
+    links: [{ to: ROUTES.PROJECTS, label: "Projects" }],
+  },
+  {
+    title: "Lab",
+    links: [{ to: ROUTES.ABOUT, label: "About" }],
+  },
+]
+
 export default function Footer() {
   const year = new Date().getFullYear()
 
   return (
-    <footer className="mt-20 border-t border-[var(--line)] px-4 pb-14 pt-10 text-[var(--sea-ink-soft)]">
-      <div className="page-wrap flex flex-col items-center justify-between gap-4 text-center sm:flex-row sm:text-left">
-        <p className="m-0 text-sm">
-          &copy; {year} Your name here. All rights reserved.
-        </p>
-        <p className="island-kicker m-0">Built with TanStack Start</p>
+    <footer className="mt-24 border-t border-[var(--lab-line)] bg-[var(--lab-bg)]">
+      <div className="mx-auto grid w-full max-w-[1240px] gap-10 px-4 py-14 sm:grid-cols-3">
+        <div>
+          <Link
+            to={ROUTES.HOME}
+            aria-label="XNINETZY Labs home"
+            className="inline-flex items-center gap-3 no-underline"
+          >
+            <XninetzyLogo size={36} variant="mark" className="relative" />
+            <span className="flex flex-col leading-none">
+              <span className="text-sm font-bold tracking-[0.18em] text-[var(--lab-ink)] sm:text-[15px]">
+                XNINETZY
+              </span>
+              <span className="mt-0.5 font-mono text-[9px] uppercase tracking-[0.32em] text-[var(--lab-orange)] sm:text-[10px]">
+                Labs
+              </span>
+            </span>
+          </Link>
+          <p className="mt-4 max-w-xs text-sm leading-relaxed text-[var(--lab-ink-soft)]">
+            A technical AI lab that turns experiments, research, and engineering
+            into useful systems.
+          </p>
+        </div>
+
+        {NAV_COLUMNS.map((column) => (
+          <div key={column.title}>
+            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--lab-orange)]">
+              {column.title}
+            </p>
+            <ul className="mt-4 space-y-2">
+              {column.links.map((link) => (
+                <li key={link.to}>
+                  <Link
+                    to={link.to}
+                    className="text-sm text-[var(--lab-ink)] no-underline transition-colors hover:text-[var(--lab-orange)]"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
       </div>
-      <div className="mt-4 flex justify-center gap-4">
-        <a
-          href="https://x.com/tan_stack"
-          target="_blank"
-          rel="noreferrer"
-          className="rounded-xl p-2 text-[var(--sea-ink-soft)] transition hover:bg-[var(--link-bg-hover)] hover:text-[var(--sea-ink)]"
-        >
-          <span className="sr-only">Follow TanStack on X</span>
-          <svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32">
-            <path
-              fill="currentColor"
-              d="M12.6 1h2.2L10 6.48 15.64 15h-4.41L7.78 9.82 3.23 15H1l5.14-5.84L.72 1h4.52l3.12 4.73L12.6 1zm-.77 12.67h1.22L4.57 2.26H3.26l8.57 11.41z"
-            />
-          </svg>
-        </a>
-        <a
-          href="https://github.com/TanStack"
-          target="_blank"
-          rel="noreferrer"
-          className="rounded-xl p-2 text-[var(--sea-ink-soft)] transition hover:bg-[var(--link-bg-hover)] hover:text-[var(--sea-ink)]"
-        >
-          <span className="sr-only">Go to TanStack GitHub</span>
-          <svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32">
-            <path
-              fill="currentColor"
-              d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"
-            />
-          </svg>
-        </a>
+
+      <div className="border-t border-[var(--lab-line)]">
+        <div className="mx-auto flex w-full max-w-[1240px] flex-col items-center justify-between gap-3 px-4 py-6 text-xs text-[var(--lab-ink-soft)] sm:flex-row">
+          <p>© {year} XNINETZY Labs. Research · Experiment · Build.</p>
+          <div className="flex items-center gap-5">
+            <a
+              href="https://x.com"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Follow XNINETZY Labs on X"
+              className="text-[var(--lab-ink-soft)] transition-colors hover:text-[var(--lab-orange)]"
+            >
+              <Twitter className="size-4" />
+            </a>
+            <a
+              href="https://github.com"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="View XNINETZY Labs on GitHub"
+              className="text-[var(--lab-ink-soft)] transition-colors hover:text-[var(--lab-orange)]"
+            >
+              <Github className="size-4" />
+            </a>
+          </div>
+        </div>
       </div>
     </footer>
   )

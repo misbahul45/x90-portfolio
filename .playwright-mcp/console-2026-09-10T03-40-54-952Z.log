@@ -1,0 +1,3 @@
+[     694ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:20102
+[  103822ms] [LOG] %c[Server]%c color: #9333ea; font-weight: bold; color: inherit; Defaulting to 'auto' which will select the first provider available for the model, sorted by the user's order in https://hf.co/settings/inference-providers. @ http://localhost:3000/src/routes/__root.tsx:118
+[  103987ms] [WARNING] %c[Server]%c color: #9333ea; font-weight: bold; color: inherit; [embeddings] Hugging Face call failed; using fallback: {} @ http://localhost:3000/src/routes/__root.tsx:118

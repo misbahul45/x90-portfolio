@@ -1,0 +1,687 @@
+- generic [active] [ref=f1e1]:
+  - banner [ref=f1e2]:
+    - generic [ref=f1e4]:
+      - link "XNINETZY Labs home" [ref=f1e5] [cursor=pointer]:
+        - /url: /
+        - img "XNINETZY Labs" [ref=f1e7]
+        - generic [ref=f1e8]:
+          - generic [ref=f1e9]: XNINETZY
+          - generic [ref=f1e10]: Labs
+      - navigation "Main" [ref=f1e12]:
+        - list [ref=f1e14]:
+          - listitem [ref=f1e15]:
+            - link "Projects" [ref=f1e16] [cursor=pointer]:
+              - /url: /projects
+          - listitem [ref=f1e17]:
+            - link "Research" [ref=f1e18] [cursor=pointer]:
+              - /url: /research
+          - listitem [ref=f1e19]:
+            - link "Services" [ref=f1e20] [cursor=pointer]:
+              - /url: /#services
+          - listitem [ref=f1e21]:
+            - link "Process" [ref=f1e22] [cursor=pointer]:
+              - /url: /#how-we-build
+          - listitem [ref=f1e23]:
+            - link "Contact" [ref=f1e24] [cursor=pointer]:
+              - /url: /#contact
+      - link "View on GitHub" [ref=f1e26] [cursor=pointer]:
+        - /url: https://github.com/X90-labs
+  - main [ref=f1e27]:
+    - generic [ref=f1e30]:
+      - generic [ref=f1e32]:
+        - paragraph [ref=f1e33]: Founder · M. · XNINETZY Labs
+        - heading "From idea to shipped product." [level=1] [ref=f1e34]:
+          - text: From idea to
+          - generic [ref=f1e35]: shipped product.
+        - paragraph [ref=f1e36]: Me + the team. Automation, AI assistants, agentic systems, full web, full mobile. Brief in, working product out — production-grade, not prototypes.
+        - generic [ref=f1e37]:
+          - link "Start a brief" [ref=f1e38] [cursor=pointer]:
+            - /url: "#brief"
+          - link "GitHub" [ref=f1e39] [cursor=pointer]:
+            - /url: https://github.com/X90-labs
+        - generic [ref=f1e40]:
+          - generic [ref=f1e41]:
+            - generic [ref=f1e42]: Brief reply
+            - paragraph [ref=f1e46]: < 24h
+          - generic [ref=f1e47]:
+            - generic [ref=f1e48]: Price scope
+            - paragraph [ref=f1e53]: Fixed
+          - generic [ref=f1e54]:
+            - generic [ref=f1e55]: Demo loop
+            - paragraph [ref=f1e59]: Weekly
+        - generic [ref=f1e60]:
+          - generic [ref=f1e61]:
+            - paragraph [ref=f1e62]: Process
+            - paragraph [ref=f1e63]: Brief → Scope → Build → Ship
+          - generic [ref=f1e65]:
+            - generic [ref=f1e67]:
+              - generic [ref=f1e68]: "01"
+              - generic [ref=f1e69]: Brief
+            - generic [ref=f1e72]:
+              - generic [ref=f1e73]: "02"
+              - generic [ref=f1e74]: Scope
+            - generic [ref=f1e77]:
+              - generic [ref=f1e78]: "03"
+              - generic [ref=f1e79]: Build
+            - generic [ref=f1e82]:
+              - generic [ref=f1e83]: "04"
+              - generic [ref=f1e84]: Ship
+      - generic [ref=f1e85]:
+        - paragraph [ref=f1e86]: Brief Builder
+        - generic [ref=f1e87]:
+          - generic [ref=f1e88]:
+            - generic [ref=f1e89]:
+              - generic [ref=f1e90]: Brief Builder
+              - generic [ref=f1e91]: 0/5
+            - button "Reset" [ref=f1e92]
+          - generic [ref=f1e93]:
+            - generic [ref=f1e94]:
+              - generic [ref=f1e95]: "01"
+              - generic [ref=f1e96]: Project
+            - generic [ref=f1e98]:
+              - generic [ref=f1e99]: "02"
+              - generic [ref=f1e100]: Problem
+            - generic [ref=f1e102]:
+              - generic [ref=f1e103]: "03"
+              - generic [ref=f1e104]: Audience
+            - generic [ref=f1e106]:
+              - generic [ref=f1e107]: "04"
+              - generic [ref=f1e108]: Priorities
+            - generic [ref=f1e110]:
+              - generic [ref=f1e111]: "05"
+              - generic [ref=f1e112]: Outcome
+          - application [ref=f1e114]
+          - generic [ref=f1e118]:
+            - paragraph [ref=f1e119]: Try a sample
+            - list [ref=f1e120]:
+              - listitem [ref=f1e121]:
+                - button "AI customer support platform" [ref=f1e122]
+              - listitem [ref=f1e123]:
+                - button "Internal workflow automation" [ref=f1e124]
+              - listitem [ref=f1e125]:
+                - button "Mobile learning app" [ref=f1e126]
+              - listitem [ref=f1e127]:
+                - button "Data dashboard for ops" [ref=f1e128]
+    - generic [ref=f1e130]:
+      - generic [ref=f1e131]:
+        - heading "Five services, one software house" [level=2] [ref=f1e132]
+        - paragraph [ref=f1e133]: Automation, AI assistants, agentic systems, full web, and full mobile. Pick one or combine — we deliver from research to production.
+      - generic [ref=f1e134]:
+        - article [ref=f1e135]:
+          - generic [ref=f1e136]: "01"
+          - heading "Automation" [level=3] [ref=f1e142]
+          - paragraph [ref=f1e143]: Workflows that run themselves
+          - paragraph [ref=f1e144]: We design and ship n8n pipelines that connect APIs, databases, and humans into repeatable workflows. Triggers, branches, retries, audit — built once, run forever.
+          - generic [ref=f1e145]:
+            - paragraph [ref=f1e146]: Deliverables
+            - list [ref=f1e147]:
+              - listitem [ref=f1e148]:
+                - generic [ref=f1e150]: n8n workflow design + self-host
+              - listitem [ref=f1e151]:
+                - generic [ref=f1e153]: API + database connectors
+              - listitem [ref=f1e154]:
+                - generic [ref=f1e156]: Error handling, retries, alerts
+              - listitem [ref=f1e157]:
+                - generic [ref=f1e159]: Operational runbook + handover
+          - paragraph [ref=f1e160]: Stack
+          - paragraph [ref=f1e161]: n8n · Node.js · Postgres · Redis · Webhooks
+          - link "Brief us" [ref=f1e162] [cursor=pointer]:
+            - /url: "#contact"
+        - article [ref=f1e166]:
+          - generic [ref=f1e167]: "02"
+          - heading "AI Assistant" [level=3] [ref=f1e171]
+          - paragraph [ref=f1e172]: Domain assistants that know your business
+          - paragraph [ref=f1e173]: Retrieval-grounded chat assistants tied to your docs, knowledge base, or product data. Citation-backed answers, role-aware permissions, deployment where your data lives.
+          - generic [ref=f1e174]:
+            - paragraph [ref=f1e175]: Deliverables
+            - list [ref=f1e176]:
+              - listitem [ref=f1e177]:
+                - generic [ref=f1e179]: Knowledge ingestion pipeline
+              - listitem [ref=f1e180]:
+                - generic [ref=f1e182]: Retrieval + reranking layer
+              - listitem [ref=f1e183]:
+                - generic [ref=f1e185]: Conversational UX + citations
+              - listitem [ref=f1e186]:
+                - generic [ref=f1e188]: Analytics dashboard + feedback loop
+          - paragraph [ref=f1e189]: Stack
+          - paragraph [ref=f1e190]: LLM APIs · pgvector · Tiptap · TanStack · Better Auth
+          - link "Brief us" [ref=f1e191] [cursor=pointer]:
+            - /url: "#contact"
+        - article [ref=f1e195]:
+          - generic [ref=f1e196]: "03"
+          - heading "Agentic System" [level=3] [ref=f1e201]
+          - paragraph [ref=f1e202]: Autonomous workflows that think
+          - paragraph [ref=f1e203]: Tool-using agents that plan, retrieve, act, and verify. Memory, observability, guardrails. Production-grade — not demos. Built on the same stack our lab publishes research on.
+          - generic [ref=f1e204]:
+            - paragraph [ref=f1e205]: Deliverables
+            - list [ref=f1e206]:
+              - listitem [ref=f1e207]:
+                - generic [ref=f1e209]: Planner + tool runtime
+              - listitem [ref=f1e210]:
+                - generic [ref=f1e212]: Episodic + semantic memory
+              - listitem [ref=f1e213]:
+                - generic [ref=f1e215]: Execution graph observability
+              - listitem [ref=f1e216]:
+                - generic [ref=f1e218]: Eval harness + regression suite
+          - paragraph [ref=f1e219]: Stack
+          - paragraph [ref=f1e220]: Python · TypeScript · LangGraph · PostgreSQL · Docker
+          - link "Brief us" [ref=f1e221] [cursor=pointer]:
+            - /url: "#contact"
+        - article [ref=f1e225]:
+          - generic [ref=f1e226]: "04"
+          - heading "Web End-to-End" [level=3] [ref=f1e232]
+          - paragraph [ref=f1e233]: Full-stack products, shipped
+          - paragraph [ref=f1e234]: From landing pages to dashboards to SaaS. Modern stack, strong UX foundations, real auth and data. You bring the idea, we ship the product.
+          - generic [ref=f1e235]:
+            - paragraph [ref=f1e236]: Deliverables
+            - list [ref=f1e237]:
+              - listitem [ref=f1e238]:
+                - generic [ref=f1e240]: Design system + page composition
+              - listitem [ref=f1e241]:
+                - generic [ref=f1e243]: Full-stack app + database
+              - listitem [ref=f1e244]:
+                - generic [ref=f1e246]: Auth, billing, admin panel
+              - listitem [ref=f1e247]:
+                - generic [ref=f1e249]: CI/CD + observability
+          - paragraph [ref=f1e250]: Stack
+          - paragraph [ref=f1e251]: TanStack Start · React 19 · Postgres · Tailwind · Prisma
+          - link "Brief us" [ref=f1e252] [cursor=pointer]:
+            - /url: "#contact"
+        - article [ref=f1e256]:
+          - generic [ref=f1e257]: "05"
+          - heading "Mobile End-to-End" [level=3] [ref=f1e261]
+          - paragraph [ref=f1e262]: Native-feel apps on iOS + Android
+          - paragraph [ref=f1e263]: Cross-platform mobile apps with shared backend. Push notifications, offline sync, biometric auth. Ship to both stores without doubling the codebase.
+          - generic [ref=f1e264]:
+            - paragraph [ref=f1e265]: Deliverables
+            - list [ref=f1e266]:
+              - listitem [ref=f1e267]:
+                - generic [ref=f1e269]: Cross-platform app (iOS + Android)
+              - listitem [ref=f1e270]:
+                - generic [ref=f1e272]: Shared backend API
+              - listitem [ref=f1e273]:
+                - generic [ref=f1e275]: Push notifications + auth
+              - listitem [ref=f1e276]:
+                - generic [ref=f1e278]: Store submission + release pipeline
+          - paragraph [ref=f1e279]: Stack
+          - paragraph [ref=f1e280]: React Native · Expo · Native modules · EAS · REST/GraphQL
+          - link "Brief us" [ref=f1e281] [cursor=pointer]:
+            - /url: "#contact"
+        - article [ref=f1e285]:
+          - generic [ref=f1e286]:
+            - heading "AI Labs — Research as a service" [level=3] [ref=f1e290]
+            - paragraph [ref=f1e291]: Beyond shipping, we publish. Our AI Labs publishes research on retrieval, agents, and long-context systems — the same ideas that power what we build for clients.
+            - list [ref=f1e292]:
+              - listitem [ref=f1e293]: Custom retrieval + reranking R&D
+              - listitem [ref=f1e295]: Agent evaluation harnesses
+              - listitem [ref=f1e297]: Benchmark + ablation studies
+          - link "Read research" [ref=f1e299] [cursor=pointer]:
+            - /url: /research
+    - generic [ref=f1e304]:
+      - generic [ref=f1e305]:
+        - heading "An agentic delivery pipeline" [level=2] [ref=f1e306]
+        - paragraph [ref=f1e307]: From intent to execution, our systems route context, invoke models, use tools, verify results, and deliver production-ready outputs.
+      - generic [ref=f1e308]:
+        - generic [ref=f1e309]:
+          - generic [ref=f1e310]: xninetzy-labs / delivery-pipeline
+          - generic [ref=f1e314]: running · 12ms
+        - application [ref=f1e320]
+        - generic [ref=f1e324]:
+          - paragraph [ref=f1e325]: Pipeline execution
+          - list [ref=f1e326]:
+            - listitem [ref=f1e327]:
+              - generic [ref=f1e328]: Webhook received
+              - generic [ref=f1e332]: 12ms
+            - listitem [ref=f1e333]:
+              - generic [ref=f1e334]: Intent classified
+              - generic [ref=f1e338]: 34ms
+            - listitem [ref=f1e339]:
+              - generic [ref=f1e340]: Context retrieved
+              - generic [ref=f1e344]: 88ms
+            - listitem [ref=f1e345]:
+              - generic [ref=f1e346]: Plan drafted
+              - generic [ref=f1e350]: 142ms
+            - listitem [ref=f1e351]:
+              - generic [ref=f1e352]: Grounded & cited
+              - generic [ref=f1e356]: 198ms
+            - listitem [ref=f1e357]:
+              - generic [ref=f1e358]: Response shipped
+              - generic [ref=f1e362]: 221ms
+      - generic [ref=f1e363]:
+        - generic [ref=f1e364]: — Fixed-price scope before any code.
+        - generic [ref=f1e365]: — Weekly demos in staging.
+        - generic [ref=f1e366]: — Production deploy + handover runbook.
+        - generic [ref=f1e367]: — Optional maintenance retainer.
+    - generic [ref=f1e369]:
+      - generic [ref=f1e370]:
+        - heading "Production system, end to end" [level=2] [ref=f1e371]
+        - paragraph [ref=f1e372]: The agent runtime, the application surface, the data layer, and the infrastructure we ship on. This is how we actually build.
+      - generic [ref=f1e373]:
+        - generic [ref=f1e374]:
+          - generic [ref=f1e375]: xninetzy-labs / agent-runtime
+          - generic [ref=f1e384]: running · 84ms
+        - application [ref=f1e390]
+        - generic [ref=f1e394]:
+          - paragraph [ref=f1e395]: Execution log
+          - list [ref=f1e396]:
+            - listitem [ref=f1e397]:
+              - generic [ref=f1e398]: Planner
+              - generic [ref=f1e402]: 84ms
+            - listitem [ref=f1e403]:
+              - generic [ref=f1e404]: Retriever
+              - generic [ref=f1e408]: 152ms
+            - listitem [ref=f1e409]:
+              - generic [ref=f1e410]: Tool call
+              - generic [ref=f1e414]: 220ms
+            - listitem [ref=f1e415]:
+              - generic [ref=f1e416]: Reasoner
+              - generic [ref=f1e420]: —
+      - generic [ref=f1e421]:
+        - generic [ref=f1e422]:
+          - paragraph [ref=f1e423]: Clients
+          - paragraph [ref=f1e424]: Web · Mobile · API
+        - generic [ref=f1e425]:
+          - paragraph [ref=f1e426]: Application
+          - paragraph [ref=f1e427]: Dashboard · Workflow · Auth
+        - generic [ref=f1e428]:
+          - paragraph [ref=f1e429]: Intelligence
+          - paragraph [ref=f1e430]: Agents · ML · LLMs · RAG
+        - generic [ref=f1e431]:
+          - paragraph [ref=f1e432]: Data
+          - paragraph [ref=f1e433]: Postgres · pgvector · Cache
+        - generic [ref=f1e434]:
+          - paragraph [ref=f1e435]: Infrastructure
+          - paragraph [ref=f1e436]: Docker · CI/CD · Cloud · Observability
+    - generic [ref=f1e439]:
+      - generic [ref=f1e440]:
+        - heading "Selected projects" [level=2] [ref=f1e441]
+        - paragraph [ref=f1e442]: Systems we've engineered from research — production-grade and battle-tested.
+      - link "View all →" [ref=f1e443] [cursor=pointer]:
+        - /url: /projects
+    - generic [ref=f1e449]:
+      - generic [ref=f1e450]:
+        - heading "From brief to shipped, in four steps" [level=2] [ref=f1e451]
+        - paragraph [ref=f1e452]: Every project — automation, AI, web, or mobile — moves through the same four stages. You see progress every Friday, not at the end.
+      - list [ref=f1e453]:
+        - listitem [ref=f1e454]:
+          - generic [ref=f1e455]:
+            - generic [ref=f1e456]: "01"
+            - generic [ref=f1e457]: Day 0
+          - heading "Brief" [level=3] [ref=f1e458]
+          - paragraph [ref=f1e459]: Tell us what you want to build. Drop a doc, fill the form, or message on WhatsApp. We reply within 24 hours.
+        - listitem [ref=f1e462]:
+          - generic [ref=f1e463]:
+            - generic [ref=f1e464]: "02"
+            - generic [ref=f1e465]: Day 1–2
+          - heading "Scope" [level=3] [ref=f1e466]
+          - paragraph [ref=f1e467]: We translate the brief into deliverables, milestones, and a fixed-price quote. You sign off before any code is written.
+        - listitem [ref=f1e470]:
+          - generic [ref=f1e471]:
+            - generic [ref=f1e472]: "03"
+            - generic [ref=f1e473]: Week 1–N
+          - heading "Build" [level=3] [ref=f1e474]
+          - paragraph [ref=f1e475]: Weekly demos in staging. You see real progress every Friday. No black boxes, no surprises.
+        - listitem [ref=f1e478]:
+          - generic [ref=f1e479]:
+            - generic [ref=f1e480]: "04"
+            - generic [ref=f1e481]: End
+          - heading "Ship" [level=3] [ref=f1e482]
+          - paragraph [ref=f1e483]: Production deploy, monitoring, runbook handover. Optional ongoing retainer for maintenance.
+    - generic [ref=f1e487]:
+      - generic [ref=f1e488]:
+        - heading "Production-grade by default" [level=2] [ref=f1e489]
+        - paragraph [ref=f1e490]: Same stack we use to ship our own products and lab research. Boring choices, fast delivery, easy handover.
+      - generic [ref=f1e491]:
+        - generic [ref=f1e492]:
+          - paragraph [ref=f1e493]: Frontend
+          - list [ref=f1e494]:
+            - listitem [ref=f1e495]: TanStack Start
+            - listitem [ref=f1e496]: React 19
+            - listitem [ref=f1e497]: Tailwind CSS
+            - listitem [ref=f1e498]: Motion
+            - listitem [ref=f1e499]: shadcn
+        - generic [ref=f1e500]:
+          - paragraph [ref=f1e501]: Backend
+          - list [ref=f1e502]:
+            - listitem [ref=f1e503]: Node.js
+            - listitem [ref=f1e504]: Python
+            - listitem [ref=f1e505]: PostgreSQL
+            - listitem [ref=f1e506]: Prisma
+            - listitem [ref=f1e507]: tRPC
+        - generic [ref=f1e508]:
+          - paragraph [ref=f1e509]: AI / Data
+          - list [ref=f1e510]:
+            - listitem [ref=f1e511]: LLM APIs
+            - listitem [ref=f1e512]: pgvector
+            - listitem [ref=f1e513]: Rerankers
+            - listitem [ref=f1e514]: Embeddings
+            - listitem [ref=f1e515]: LangGraph
+        - generic [ref=f1e516]:
+          - paragraph [ref=f1e517]: Automation
+          - list [ref=f1e518]:
+            - listitem [ref=f1e519]: n8n
+            - listitem [ref=f1e520]: Webhooks
+            - listitem [ref=f1e521]: REST + GraphQL
+            - listitem [ref=f1e522]: Redis
+            - listitem [ref=f1e523]: Workers
+        - generic [ref=f1e524]:
+          - paragraph [ref=f1e525]: Mobile
+          - list [ref=f1e526]:
+            - listitem [ref=f1e527]: React Native
+            - listitem [ref=f1e528]: Expo
+            - listitem [ref=f1e529]: EAS
+            - listitem [ref=f1e530]: Push
+            - listitem [ref=f1e531]: Biometrics
+        - generic [ref=f1e532]:
+          - paragraph [ref=f1e533]: DevOps
+          - list [ref=f1e534]:
+            - listitem [ref=f1e535]: Docker
+            - listitem [ref=f1e536]: GitHub Actions
+            - listitem [ref=f1e537]: Cloudflare
+            - listitem [ref=f1e538]: Postgres backups
+            - listitem [ref=f1e539]: Logs
+    - generic [ref=f1e541]:
+      - generic [ref=f1e542]:
+        - heading "Research console" [level=2] [ref=f1e543]
+        - paragraph [ref=f1e544]: "Every experiment moves through the same loop: signals become features, features train models, models are evaluated, evidence is captured, and a decision ships to production."
+      - generic [ref=f1e545]:
+        - generic [ref=f1e546]:
+          - generic [ref=f1e547]: xninetzy-labs / experiment-loop
+          - generic [ref=f1e548]: experiment 04 · live
+        - list [ref=f1e552]:
+          - listitem [ref=f1e553]:
+            - generic [ref=f1e554]: "01"
+            - generic [ref=f1e555]:
+              - paragraph [ref=f1e556]: Signals
+              - paragraph [ref=f1e557]: ingest · clean
+          - listitem [ref=f1e558]:
+            - generic [ref=f1e559]: "02"
+            - generic [ref=f1e560]:
+              - paragraph [ref=f1e561]: Features
+              - paragraph [ref=f1e562]: parse · embed
+          - listitem [ref=f1e563]:
+            - generic [ref=f1e564]: "03"
+            - generic [ref=f1e565]:
+              - paragraph [ref=f1e566]: Model
+              - paragraph [ref=f1e567]: train · tune
+          - listitem [ref=f1e568]:
+            - generic [ref=f1e569]: "04"
+            - generic [ref=f1e570]:
+              - paragraph [ref=f1e571]: Evaluate
+              - paragraph [ref=f1e572]: k-fold · holdout
+          - listitem [ref=f1e573]:
+            - generic [ref=f1e574]: "05"
+            - generic [ref=f1e575]:
+              - paragraph [ref=f1e576]: Evidence
+              - paragraph [ref=f1e577]: ground · cite
+          - listitem [ref=f1e578]:
+            - generic [ref=f1e579]: "06"
+            - generic [ref=f1e580]:
+              - paragraph [ref=f1e581]: Decision
+              - paragraph [ref=f1e582]: ship · monitor
+        - generic [ref=f1e583]:
+          - generic [ref=f1e584]:
+            - paragraph [ref=f1e585]: MAE
+            - paragraph [ref=f1e586]: mean abs error
+            - paragraph [ref=f1e587]: structural placeholder
+          - generic [ref=f1e588]:
+            - paragraph [ref=f1e589]: R²
+            - paragraph [ref=f1e590]: variance explained
+            - paragraph [ref=f1e591]: structural placeholder
+          - generic [ref=f1e592]:
+            - paragraph [ref=f1e593]: F1
+            - paragraph [ref=f1e594]: precision · recall
+            - paragraph [ref=f1e595]: structural placeholder
+          - generic [ref=f1e596]:
+            - paragraph [ref=f1e597]: CV%
+            - paragraph [ref=f1e598]: cross-validation
+            - paragraph [ref=f1e599]: structural placeholder
+    - generic [ref=f1e601]:
+      - generic [ref=f1e602]:
+        - heading "Signals from the people we shipped for" [level=2] [ref=f1e604]
+        - generic [ref=f1e605]:
+          - paragraph [ref=f1e606]: 01 / 02
+          - generic [ref=f1e607]:
+            - button "Previous testimonial" [ref=f1e608]: ←
+            - button "Next testimonial" [ref=f1e609]: →
+      - generic [ref=f1e611]:
+        - generic [ref=f1e612]:
+          - article [ref=f1e613]:
+            - paragraph [ref=f1e629]: “The team shipped our AI assistant in 6 weeks. Retrieval hits 92% on the eval set — production users trust it enough to actually use it.”
+            - generic [ref=f1e630]:
+              - paragraph [ref=f1e631]: Aditya Pradana
+              - paragraph [ref=f1e632]: Head of Product · Legaltech Co.
+              - paragraph [ref=f1e633]: AI Assistant
+          - article [ref=f1e634]:
+            - paragraph [ref=f1e650]: “Our n8n pipeline replaced a $14k/yr SaaS bundle. The handover runbook was cleaner than what we got from agencies 3× the price.”
+            - generic [ref=f1e651]:
+              - paragraph [ref=f1e652]: Rina Kusuma
+              - paragraph [ref=f1e653]: Ops Lead · Distribution Network
+              - paragraph [ref=f1e654]: Automation
+          - article [ref=f1e655]:
+            - paragraph [ref=f1e671]: “They didn't just build the dashboard. They picked our stack, set up CI, and stayed through two launch weekends. Real engineers.”
+            - generic [ref=f1e672]:
+              - paragraph [ref=f1e673]: Bayu Hartono
+              - paragraph [ref=f1e674]: CTO · Healthtech Startup
+              - paragraph [ref=f1e675]: Web End-to-End
+        - generic [aria-hidden] [ref=f1e676]:
+          - article [ref=f1e677]:
+            - paragraph [ref=f1e693]: “The agent they built books our support queue autonomously. Tickets get triaged before any human reads them — we sleep better.”
+            - generic [ref=f1e694]:
+              - paragraph [ref=f1e695]: Maya Larasati
+              - paragraph [ref=f1e696]: Customer Success · SaaS Platform
+              - paragraph [ref=f1e697]: Agentic System
+          - article [ref=f1e698]:
+            - paragraph [ref=f1e714]: “Mobile + dashboard shipped together. The shared API meant we never had to chase two codebases. Worth every rupiah.”
+            - generic [ref=f1e715]:
+              - paragraph [ref=f1e716]: Reza Mahendra
+              - paragraph [ref=f1e717]: Founder · Field Service Co.
+              - paragraph [ref=f1e718]: Mobile End-to-End
+          - article [ref=f1e719]:
+            - paragraph [ref=f1e735]: “Research-to-product loop is rare. They read the latest RAG papers, picked what works, and shipped. Felt like having a senior on staff.”
+            - generic [ref=f1e736]:
+              - paragraph [ref=f1e737]: Citra Wibawa
+              - paragraph [ref=f1e738]: Engineering Director · Edtech Scaleup
+              - paragraph [ref=f1e739]: AI Assistant
+      - generic [ref=f1e740]:
+        - button "Go to testimonial page 1" [ref=f1e741]
+        - button "Go to testimonial page 2" [ref=f1e742]
+    - generic [ref=f1e743]:
+      - paragraph [ref=f1e746]: 8+ projects shipped
+      - generic [ref=f1e748]:
+        - generic [ref=f1e749]:
+          - generic [ref=f1e750]: LT
+          - generic [ref=f1e751]:
+            - paragraph [ref=f1e752]: Legaltech Co.
+            - paragraph [ref=f1e753]: Legal
+        - generic [ref=f1e754]:
+          - generic [ref=f1e755]: HT
+          - generic [ref=f1e756]:
+            - paragraph [ref=f1e757]: Healthtech Startup
+            - paragraph [ref=f1e758]: Health
+        - generic [ref=f1e759]:
+          - generic [ref=f1e760]: DN
+          - generic [ref=f1e761]:
+            - paragraph [ref=f1e762]: Distribution Network
+            - paragraph [ref=f1e763]: Logistics
+        - generic [ref=f1e764]:
+          - generic [ref=f1e765]: SP
+          - generic [ref=f1e766]:
+            - paragraph [ref=f1e767]: SaaS Platform
+            - paragraph [ref=f1e768]: Support
+        - generic [ref=f1e769]:
+          - generic [ref=f1e770]: FS
+          - generic [ref=f1e771]:
+            - paragraph [ref=f1e772]: Field Service Co.
+            - paragraph [ref=f1e773]: Field Ops
+        - generic [ref=f1e774]:
+          - generic [ref=f1e775]: ET
+          - generic [ref=f1e776]:
+            - paragraph [ref=f1e777]: Edtech Scaleup
+            - paragraph [ref=f1e778]: Education
+        - generic [ref=f1e779]:
+          - generic [ref=f1e780]: FP
+          - generic [ref=f1e781]:
+            - paragraph [ref=f1e782]: Fintech Pilot
+            - paragraph [ref=f1e783]: Finance
+        - generic [ref=f1e784]:
+          - generic [ref=f1e785]: LL
+          - generic [ref=f1e786]:
+            - paragraph [ref=f1e787]: Logistics Labs
+            - paragraph [ref=f1e788]: Logistics
+        - generic [ref=f1e789]:
+          - generic [ref=f1e790]: LT
+          - generic [ref=f1e791]:
+            - paragraph [ref=f1e792]: Legaltech Co.
+            - paragraph [ref=f1e793]: Legal
+        - generic [ref=f1e794]:
+          - generic [ref=f1e795]: HT
+          - generic [ref=f1e796]:
+            - paragraph [ref=f1e797]: Healthtech Startup
+            - paragraph [ref=f1e798]: Health
+        - generic [ref=f1e799]:
+          - generic [ref=f1e800]: DN
+          - generic [ref=f1e801]:
+            - paragraph [ref=f1e802]: Distribution Network
+            - paragraph [ref=f1e803]: Logistics
+        - generic [ref=f1e804]:
+          - generic [ref=f1e805]: SP
+          - generic [ref=f1e806]:
+            - paragraph [ref=f1e807]: SaaS Platform
+            - paragraph [ref=f1e808]: Support
+        - generic [ref=f1e809]:
+          - generic [ref=f1e810]: FS
+          - generic [ref=f1e811]:
+            - paragraph [ref=f1e812]: Field Service Co.
+            - paragraph [ref=f1e813]: Field Ops
+        - generic [ref=f1e814]:
+          - generic [ref=f1e815]: ET
+          - generic [ref=f1e816]:
+            - paragraph [ref=f1e817]: Edtech Scaleup
+            - paragraph [ref=f1e818]: Education
+        - generic [ref=f1e819]:
+          - generic [ref=f1e820]: FP
+          - generic [ref=f1e821]:
+            - paragraph [ref=f1e822]: Fintech Pilot
+            - paragraph [ref=f1e823]: Finance
+        - generic [ref=f1e824]:
+          - generic [ref=f1e825]: LL
+          - generic [ref=f1e826]:
+            - paragraph [ref=f1e827]: Logistics Labs
+            - paragraph [ref=f1e828]: Logistics
+    - generic [ref=f1e830]:
+      - generic [ref=f1e831]:
+        - heading "Tell us what you want to build" [level=2] [ref=f1e832]
+        - paragraph [ref=f1e833]: Submit the form for an email reply. Open WhatsApp for instant chat. We answer both within 24 hours.
+      - generic [ref=f1e834]:
+        - generic [ref=f1e835]:
+          - generic [ref=f1e836]:
+            - generic [ref=f1e837]:
+              - generic [ref=f1e838]: Name
+              - textbox "Name" [ref=f1e839]:
+                - /placeholder: Your name
+            - generic [ref=f1e840]:
+              - generic [ref=f1e841]: Email
+              - textbox "Email" [ref=f1e842]:
+                - /placeholder: you@company.com
+            - generic [ref=f1e843]:
+              - generic [ref=f1e844]:
+                - text: Company
+                - generic [ref=f1e845]: (optional)
+              - textbox "Company (optional)" [ref=f1e846]:
+                - /placeholder: Company / Personal
+            - generic [ref=f1e847]:
+              - generic [ref=f1e848]:
+                - text: WhatsApp
+                - generic [ref=f1e849]: (optional)
+              - textbox "WhatsApp (optional)" [ref=f1e850]:
+                - /placeholder: +62 8xx-xxxx-xxxx
+          - generic [ref=f1e851]:
+            - generic [ref=f1e852]:
+              - generic [ref=f1e853]: Service
+              - combobox "Service" [ref=f1e854]
+              - combobox [aria-hidden] [ref=f1e855]
+            - generic [ref=f1e856]:
+              - generic [ref=f1e857]:
+                - text: Budget
+                - generic [ref=f1e858]: (optional)
+              - textbox "Budget (optional)" [ref=f1e859]:
+                - /placeholder: e.g. 50–100jt
+          - generic [ref=f1e860]:
+            - generic [ref=f1e861]:
+              - text: Timeline
+              - generic [ref=f1e862]: (optional)
+            - textbox "Timeline (optional)" [ref=f1e863]:
+              - /placeholder: e.g. 6 weeks
+          - generic [ref=f1e864]:
+            - generic [ref=f1e865]: Brief
+            - textbox "Brief" [ref=f1e866]:
+              - /placeholder: What you want to build, the problem to solve, or the key features needed…
+          - generic [ref=f1e867]:
+            - generic [ref=f1e868]:
+              - text: Attachment
+              - generic [ref=f1e869]: (PDF / DOC / image, max 4 MB)
+            - button "Upload brief / mockup" [ref=f1e871]
+          - generic [ref=f1e872]:
+            - paragraph [ref=f1e873]: Reply within 24 hours
+            - button "Send brief" [ref=f1e874]
+        - complementary [ref=f1e875]:
+          - link "Chat on WhatsApp Opens WhatsApp with your brief pre-filled. Fastest path to a live conversation. +62 856-4920-4151 Open chat →" [ref=f1e876] [cursor=pointer]:
+            - /url: https://wa.me/6285649204151?text=Hi%20XNINETZY%20Labs%2C%20I'm%20%5BYour%20name%5D.%0A%0AService%3A%20Web%20End-to-End%0A%0AMessage%3A%0A%5BTell%20us%20what%20you%20want%20to%20build%5D%0A%0AEmail%3A%20%5BYour%20email%5D%0ABrief%20ID%3A%20draft
+            - paragraph [ref=f1e879]: Chat on WhatsApp
+            - paragraph [ref=f1e880]: Opens WhatsApp with your brief pre-filled. Fastest path to a live conversation.
+            - paragraph [ref=f1e881]: +62 856-4920-4151
+            - generic [ref=f1e882]: Open chat →
+          - link [ref=f1e883] [cursor=pointer]:
+            - /url: mailto:xninetzy@gmail.com
+            - paragraph [ref=f1e887]: xninetzy@gmail.com
+            - paragraph [ref=f1e888]: For longer briefs, RFPs, or anything that needs attachments beyond 4 MB.
+    - generic [ref=f1e892]:
+      - generic [ref=f1e893]:
+        - heading "Have a problem worth engineering?" [level=2] [ref=f1e894]
+        - paragraph [ref=f1e895]: Build something with XNINETZY Labs. Drop a brief, send a WhatsApp, or email us. We reply within 24 hours — usually faster.
+        - generic [ref=f1e896]:
+          - generic [ref=f1e897]: xninetzy@gmail.com
+          - generic [aria-hidden] [ref=f1e901]: ·
+          - generic [ref=f1e902]: +62 856-4920-4151
+          - generic [aria-hidden] [ref=f1e903]: ·
+          - generic [ref=f1e904]: Reply within 24 hours
+      - generic [ref=f1e905]:
+        - link "Start a brief" [ref=f1e906] [cursor=pointer]:
+          - /url: "#contact"
+        - link "Chat on WhatsApp" [ref=f1e907] [cursor=pointer]:
+          - /url: https://wa.me/6285649204151
+        - link "GitHub" [ref=f1e908] [cursor=pointer]:
+          - /url: https://github.com/X90-labs
+  - contentinfo [ref=f1e909]:
+    - generic [ref=f1e910]:
+      - generic [ref=f1e911]:
+        - generic [ref=f1e912]: XNINETZY LABS
+        - paragraph [ref=f1e914]: A technical AI lab that turns experiments, research, and engineering into useful systems.
+      - generic [ref=f1e915]:
+        - paragraph [ref=f1e916]: Research
+        - list [ref=f1e917]:
+          - listitem [ref=f1e918]:
+            - link "Articles" [ref=f1e919] [cursor=pointer]:
+              - /url: /research
+      - generic [ref=f1e920]:
+        - paragraph [ref=f1e921]: Build
+        - list [ref=f1e922]:
+          - listitem [ref=f1e923]:
+            - link "Projects" [ref=f1e924] [cursor=pointer]:
+              - /url: /projects
+      - generic [ref=f1e925]:
+        - paragraph [ref=f1e926]: Lab
+        - list [ref=f1e927]:
+          - listitem [ref=f1e928]:
+            - link "About" [ref=f1e929] [cursor=pointer]:
+              - /url: /about
+    - generic [ref=f1e931]:
+      - paragraph [ref=f1e932]: © 2026 XNINETZY Labs. Research · Experiment · Build.
+      - generic [ref=f1e933]:
+        - link "Follow XNINETZY Labs on X" [ref=f1e934] [cursor=pointer]:
+          - /url: https://x.com
+        - link "View XNINETZY Labs on GitHub" [ref=f1e937] [cursor=pointer]:
+          - /url: https://github.com
+  - button "Open Ask XNINETZY Labs" [ref=f1e943]:
+    - generic [ref=f1e944]: Ask Labs

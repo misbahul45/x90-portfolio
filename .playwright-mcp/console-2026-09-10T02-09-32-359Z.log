@@ -1,0 +1,217 @@
+[    1290ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=943d6452:20102
+[    3051ms] [WARNING] React Flow: It seems like you are hiding the attribution. Please only do this when you are subscribed to React Flow Pro: https://reactflow.dev/remove-attr
+%cYou can ignore this warning if you are subscribed. font-style: italic; @ http://localhost:3000/src/routes/__root.tsx:55
+[  106930ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=943d6452:20102
+[  107888ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=943d6452:20102
+[  109614ms] [WARNING] React Flow: It seems like you are hiding the attribution. Please only do this when you are subscribed to React Flow Pro: https://reactflow.dev/remove-attr
+%cYou can ignore this warning if you are subscribed. font-style: italic; @ http://localhost:3000/src/routes/__root.tsx:55
+[  138723ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=943d6452:20102
+[  140734ms] [WARNING] React Flow: It seems like you are hiding the attribution. Please only do this when you are subscribed to React Flow Pro: https://reactflow.dev/remove-attr
+%cYou can ignore this warning if you are subscribed. font-style: italic; @ http://localhost:3000/src/routes/__root.tsx:55
+[  146402ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=943d6452:20102
+[  148188ms] [WARNING] React Flow: It seems like you are hiding the attribution. Please only do this when you are subscribed to React Flow Pro: https://reactflow.dev/remove-attr
+%cYou can ignore this warning if you are subscribed. font-style: italic; @ http://localhost:3000/src/routes/__root.tsx:55
+[  149220ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=943d6452:20102
+[  149974ms] [ERROR] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <SafeFragment getResetKey={function getResetKey} errorComponent={function ErrorComponent} onCatch={function onCatch}>
+      <SafeFragment fallback={function fallback}>
+        <MatchInnerImpl matchId="//">
+          <Lazy>
+            <HomePage>
+              <main data-tsd-source="/src/route...">
+                ...
+                  <div className="react-flow..." style={{position:"...", ...}}>
+                    <NodeWrapper>
+                    ...
+                      <motion.div initial={false} animate={{scale:1, ...}} transition={{duration:0.28, ...}} ...>
+                        <div className="min-w-[280..." data-tsd-source="/src/compo..." style={{opacity:0.62, ...}} ...>
+                          <HandleComponent>
+                          <div>
+                          <h3>
+                          <p>
+                          <div className="mt-4" data-tsd-source="/src/compo...">
+                            <NodeBody stepId="problem" state={{...}} update={function t0} data-tsd-source="/src/compo...">
+                              <div className="space-y-2" data-tsd-source="/src/compo...">
+                                <textarea
+                                  value=""
+                                  onChange={function t1}
+                                  placeholder="Describe the problem in one or two sentences."
+                                  rows={3}
+                                  className="w-full resize-none rounded-lg border border-slate-200 bg-white px-3 py-2 ..."
+                                  data-tsd-source="/src/components/hero/BriefBuilder.tsx:389:11"
+-                                 style={{}}
+                                >
+                          ...
+                    <NodeWrapper>
+                    <NodeWrapper>
+                    ...
+                      <BriefNode id="success" data={{index:"05", ...}} type="brief" positionAbsoluteX={330} ...>
+                        <motion.div initial={false} animate={{scale:1, ...}} transition={{duration:0.28, ...}} ...>
+                          <div className="min-w-[280..." data-tsd-source="/src/compo..." style={{opacity:0.62, ...}} ...>
+                            <HandleComponent>
+                            <div>
+                            <h3>
+                            <p>
+                            <div className="mt-4" data-tsd-source="/src/compo...">
+                              <NodeBody stepId="success" state={{...}} update={function t0} ...>
+                                <textarea
+                                  value=""
+                                  onChange={function t1}
+                                  placeholder={"A metric, a moment, or an outcome you'd celebrate."}
+                                  rows={3}
+                                  className="w-full resize-none rounded-lg border border-slate-200 bg-white px-3 py-2 ..."
+                                  data-tsd-source="/src/components/hero/BriefBuilder.tsx:464:9"
+-                                 style={{}}
+                                >
+                            ...
+                <ServicesGrid>
+                <WorkflowSection>
+                <ArchitectureShowcase>
+                <SelectedProjects>
+                <ProcessTimeline>
+                <TechStackGrid>
+                <ResearchPipeline>
+                <TestimonialCarousel>
+                <ClientLogos>
+                <ContactSection data-tsd-source="/src/route...">
+                  <section id="contact" className="lab-page-b..." data-tsd-source="/src/compo...">
+                    <div className="mx-auto w-..." data-tsd-source="/src/compo...">
+                      <motion.div>
+                      <div className="grid gap-6..." data-tsd-source="/src/compo...">
+                        <motion.form initial={{opacity:0,y:16}} whileInView={{opacity:1,y:0}} viewport={{once:true, ...}} ...>
+                          <form onSubmit={function onSubmit} className="research-c..." data-tsd-source="/src/compo..." ...>
+                            <div className="grid gap-4..." data-tsd-source="/src/compo...">
+                              <div className="space-y-1.5" data-tsd-source="/src/compo...">
+                                <Label>
+                                <Input id="brief-name" value="" onChange={function onChange} required={true} ...>
+                                  <input
+                                    type={undefined}
+                                    data-slot="input"
+                                    className="h-9 w-full min-w-0 rounded-md border px-3 py-1 text-base shadow-xs tran..."
+                                    id="brief-name"
+                                    value=""
+                                    onChange={function onChange}
+                                    required={true}
+                                    placeholder="Your name"
+                                    data-tsd-source="/src/components/home/ContactSection.tsx:173:17"
+-                                   style={{}}
+                                  >
+                              <div className="space-y-1.5" data-tsd-source="/src/compo...">
+                                <Label>
+                                <Input id="brief-email" type="email" value="" onChange={function onChange} ...>
+                                  <input
+                                    type="email"
+                                    data-slot="input"
+                                    className="h-9 w-full min-w-0 rounded-md border px-3 py-1 text-base shadow-xs tran..."
+                                    id="brief-email"
+                                    value=""
+                                    onChange={function onChange}
+                                    required={true}
+                                    placeholder="you@company.com"
+                                    data-tsd-source="/src/components/home/ContactSection.tsx:187:17"
+-                                   style={{}}
+                                  >
+                              <div className="space-y-1.5" data-tsd-source="/src/compo...">
+                                <Label>
+                                <Input id="brief-company" value="" onChange={function onChange} className="border-[va..." ...>
+                                  <input
+                                    type={undefined}
+                                    data-slot="input"
+                                    className="h-9 w-full min-w-0 rounded-md border px-3 py-1 text-base shadow-xs tran..."
+                                    id="brief-company"
+                                    value=""
+                                    onChange={function onChange}
+                                    placeholder="Company / Personal"
+                                    data-tsd-source="/src/components/home/ContactSection.tsx:202:17"
+-                                   style={{}}
+                                  >
+                              <div className="space-y-1.5" data-tsd-source="/src/compo...">
+                                <Label>
+                                <Input id="brief-what..." value="" onChange={function onChange} className="border-[va..." ...>
+                                  <input
+                                    type={undefined}
+                                    data-slot="input"
+                                    className="h-9 w-full min-w-0 rounded-md border px-3 py-1 text-base shadow-xs tran..."
+                                    id="brief-whatsapp"
+                                    value=""
+                                    onChange={function onChange}
+                                    placeholder="+62 8xx-xxxx-xxxx"
+                                    data-tsd-source="/src/components/home/ContactSection.tsx:214:17"
+-                                   style={{}}
+                                  >
+                            <div className="mt-4 grid ..." data-tsd-source="/src/compo...">
+                              <div>
+                              <div className="space-y-1.5" data-tsd-source="/src/compo...">
+                                <Label>
+                                <Input id="brief-budget" value="" onChange={function onChange} className="border-[va..." ...>
+                                  <input
+                                    type={undefined}
+                                    data-slot="input"
+                                    className="h-9 w-full min-w-0 rounded-md border px-3 py-1 text-base shadow-xs tran..."
+                                    id="brief-budget"
+                                    value=""
+                                    onChange={function onChange}
+                                    placeholder="e.g. 50–100jt"
+                                    data-tsd-source="/src/components/home/ContactSection.tsx:249:17"
+-                                   style={{}}
+                                  >
+                            <div className="mt-4 space..." data-tsd-source="/src/compo...">
+                              <Label>
+                              <Input id="brief-time..." value="" onChange={function onChange} className="border-[va..." ...>
+                                <input
+                                  type={undefined}
+                                  data-slot="input"
+                                  className="h-9 w-full min-w-0 rounded-md border px-3 py-1 text-base shadow-xs transi..."
+                                  id="brief-timeline"
+                                  value=""
+                                  onChange={function onChange}
+                                  placeholder="e.g. 6 weeks"
+                                  data-tsd-source="/src/components/home/ContactSection.tsx:263:15"
+-                                 style={{}}
+                                >
+                            <div className="mt-4 space..." data-tsd-source="/src/compo...">
+                              <Label>
+                              <Textarea id="brief-message" rows={5} value="" onChange={function onChange} required={true} ...>
+                                <textarea
+                                  data-slot="textarea"
+                                  className="flex field-sizing-content min-h-16 w-full rounded-md border px-3 py-2 tex..."
+                                  id="brief-message"
+                                  rows={5}
+                                  value=""
+                                  onChange={function onChange}
+                                  required={true}
+                                  placeholder="What you want to build, the problem to solve, or the key features needed…"
+                                  data-tsd-source="/src/components/home/ContactSection.tsx:276:15"
+-                                 style={{}}
+                                >
+                            <div className="mt-4 space..." data-tsd-source="/src/compo...">
+                              <Label>
+                              <div className="flex flex-..." data-tsd-source="/src/compo...">
+                                <input
+                                  ref={{current:null}}
+                                  type="file"
+                                  accept="application/pdf,image/*,.doc,.docx,.txt"
+                                  onChange={function onFileChange}
+                                  className="hidden"
+                                  data-tsd-source="/src/components/home/ContactSection.tsx:295:17"
+-                                 style={{}}
+                                >
+                                ...
+                            ...
+                        ...
+                ...
+ @ http://localhost:3000/src/routes/__root.tsx:55
+[  150990ms] [WARNING] React Flow: It seems like you are hiding the attribution. Please only do this when you are subscribed to React Flow Pro: https://reactflow.dev/remove-attr
+%cYou can ignore this warning if you are subscribed. font-style: italic; @ http://localhost:3000/src/routes/__root.tsx:55

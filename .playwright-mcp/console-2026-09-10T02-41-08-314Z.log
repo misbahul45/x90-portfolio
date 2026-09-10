@@ -1,0 +1,124 @@
+[     998ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=943d6452:20102
+[    3198ms] [WARNING] React Flow: It seems like you are hiding the attribution. Please only do this when you are subscribed to React Flow Pro: https://reactflow.dev/remove-attr
+%cYou can ignore this warning if you are subscribed. font-style: italic; @ http://localhost:3000/src/routes/__root.tsx?t=1789007980052:55
+[   11304ms] [WARNING] Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}. @ http://localhost:3000/src/routes/__root.tsx?t=1789007980052:55
+[   11317ms] [WARNING] Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}. @ http://localhost:3000/src/routes/__root.tsx?t=1789007980052:55
+[  273529ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=943d6452:20102
+[  275357ms] [WARNING] React Flow: It seems like you are hiding the attribution. Please only do this when you are subscribed to React Flow Pro: https://reactflow.dev/remove-attr
+%cYou can ignore this warning if you are subscribed. font-style: italic; @ http://localhost:3000/src/routes/__root.tsx?t=1789008218021:55
+[  336488ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=943d6452:20102
+[  338204ms] [WARNING] React Flow: It seems like you are hiding the attribution. Please only do this when you are subscribed to React Flow Pro: https://reactflow.dev/remove-attr
+%cYou can ignore this warning if you are subscribed. font-style: italic; @ http://localhost:3000/src/routes/__root.tsx?t=1789008218021:55
+[  346065ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=943d6452:20102
+[  347721ms] [WARNING] React Flow: It seems like you are hiding the attribution. Please only do this when you are subscribed to React Flow Pro: https://reactflow.dev/remove-attr
+%cYou can ignore this warning if you are subscribed. font-style: italic; @ http://localhost:3000/src/routes/__root.tsx?t=1789008218021:55
+[  367823ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=943d6452:20102
+[  369581ms] [WARNING] React Flow: It seems like you are hiding the attribution. Please only do this when you are subscribed to React Flow Pro: https://reactflow.dev/remove-attr
+%cYou can ignore this warning if you are subscribed. font-style: italic; @ http://localhost:3000/src/routes/__root.tsx?t=1789008218021:55
+[  374142ms] [LOG] [vite] server connection lost. Polling for restart... @ http://localhost:3000/src/routes/__root.tsx?t=1789008218021:55
+[  374147ms] [ERROR] Failed to load resource: net::ERR_INCOMPLETE_CHUNKED_ENCODING @ http://localhost:3000/__tsd/console-pipe/sse:0
+[  374280ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/__tsd/console-pipe:0
+[  385870ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=e9414e7c:20102
+[  390372ms] [WARNING] React Flow: It seems like you are hiding the attribution. Please only do this when you are subscribed to React Flow Pro: https://reactflow.dev/remove-attr
+%cYou can ignore this warning if you are subscribed. font-style: italic; @ http://localhost:3000/src/routes/__root.tsx:55
+[  395652ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=e9414e7c:20102
+[  397794ms] [WARNING] React Flow: It seems like you are hiding the attribution. Please only do this when you are subscribed to React Flow Pro: https://reactflow.dev/remove-attr
+%cYou can ignore this warning if you are subscribed. font-style: italic; @ http://localhost:3000/src/routes/__root.tsx:55
+[  405354ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=e9414e7c:20102
+[  407333ms] [WARNING] React Flow: It seems like you are hiding the attribution. Please only do this when you are subscribed to React Flow Pro: https://reactflow.dev/remove-attr
+%cYou can ignore this warning if you are subscribed. font-style: italic; @ http://localhost:3000/src/routes/__root.tsx:55
+[  430570ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=e9414e7c:20102
+[  432553ms] [WARNING] React Flow: It seems like you are hiding the attribution. Please only do this when you are subscribed to React Flow Pro: https://reactflow.dev/remove-attr
+%cYou can ignore this warning if you are subscribed. font-style: italic; @ http://localhost:3000/src/routes/__root.tsx:55
+[  467814ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=e9414e7c:20102
+[  469870ms] [WARNING] React Flow: It seems like you are hiding the attribution. Please only do this when you are subscribed to React Flow Pro: https://reactflow.dev/remove-attr
+%cYou can ignore this warning if you are subscribed. font-style: italic; @ http://localhost:3000/src/routes/__root.tsx:55
+[  534757ms] [ERROR] React has detected a change in the order of Hooks called by %s. This will lead to bugs and errors if not fixed. For more information, read the Rules of Hooks: https://react.dev/link/rules-of-hooks
+
+   Previous render            Next render
+   ------------------------------------------------------
+%s   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ AIAssistantDialog 1. useState                   useState
+2. useState                   useState
+3. useState                   useState
+4. useState                   useState
+5. useRef                     useState
+ @ http://localhost:3000/src/routes/__root.tsx:55
+[  534803ms] [ERROR] %o
+
+%s
+
+%s
+ Error: Should have a queue. You are likely calling Hooks conditionally, which is not allowed. (https://react.dev/link/invalid-hook-call)
+    at updateReducerImpl (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=e9414e7c:5892:17)
+    at updateReducer (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=e9414e7c:5887:16)
+    at Object.useState (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=e9414e7c:18996:20)
+    at exports.useState (http://localhost:3000/node_modules/.vite/deps/chunk-RY7GF66K.js?v=60f28fee:959:36)
+    at useAIChat (http://localhost:3000/src/hooks/useAIChat.ts?t=1789008602656:115:39)
+    at AIAssistantDialog (http://localhost:3000/src/components/ai/AIAssistantDialog.tsx?t=1789008602656:34:7)
+    at Object.react_stack_bottom_frame (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=e9414e7c:18509:20)
+    at renderWithHooks (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=e9414e7c:5654:24)
+    at updateFunctionComponent (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=e9414e7c:7475:21)
+    at beginWork (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=e9414e7c:8525:20) The above error occurred in the <AIAssistantDialog> component. React will try to recreate this component tree from scratch using the error boundary you provided, CatchBoundaryImpl. @ http://localhost:3000/src/routes/__root.tsx:55
+[  534806ms] [WARNING] Warning: The following error wasn't caught by any route! At the very least, consider setting an 'errorComponent' in your RootRoute! @ http://localhost:3000/src/routes/__root.tsx:55
+[  534807ms] [WARNING] Warning: Should have a queue. You are likely calling Hooks conditionally, which is not allowed. (https://react.dev/link/invalid-hook-call) @ http://localhost:3000/src/routes/__root.tsx:55
+[  534833ms] [ERROR] %o
+
+%s
+
+%s
+ NotFoundError: Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of this node.
+    at removeChild (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=e9414e7c:15918:24)
+    at runWithFiberInDEV (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=e9414e7c:997:72)
+    at commitDeletionEffectsOnFiber (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=e9414e7c:10190:19)
+    at recursivelyTraverseDeletionEffects (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=e9414e7c:10115:11)
+    at commitDeletionEffectsOnFiber (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=e9414e7c:10237:13)
+    at recursivelyTraverseDeletionEffects (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=e9414e7c:10115:11)
+    at commitDeletionEffectsOnFiber (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=e9414e7c:10237:13)
+    at recursivelyTraverseDeletionEffects (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=e9414e7c:10115:11)
+    at commitDeletionEffectsOnFiber (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=e9414e7c:10146:13)
+    at recursivelyTraverseDeletionEffects (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=e9414e7c:10115:11) The above error occurred in the <link> component. React will try to recreate this component tree from scratch using the error boundary you provided, CatchBoundaryImpl. @ http://localhost:3000/src/routes/__root.tsx:55
+[  534838ms] [WARNING] Warning: The following error wasn't caught by any route! At the very least, consider setting an 'errorComponent' in your RootRoute! @ http://localhost:3000/src/routes/__root.tsx:55
+[  534838ms] [WARNING] Warning: Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of this node. @ http://localhost:3000/src/routes/__root.tsx:55
+[  570817ms] [ERROR] %o
+
+%s
+
+%s
+ ReferenceError: uploading is not defined
+    at AIAssistantDialog (http://localhost:3000/src/components/ai/AIAssistantDialog.tsx?t=1789008638798:102:29)
+    at Object.react_stack_bottom_frame (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=e9414e7c:18509:20)
+    at renderWithHooks (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=e9414e7c:5654:24)
+    at updateFunctionComponent (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=e9414e7c:7475:21)
+    at beginWork (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=e9414e7c:8525:20)
+    at runWithFiberInDEV (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=e9414e7c:997:72)
+    at performUnitOfWork (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=e9414e7c:12561:98)
+    at workLoopSync (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=e9414e7c:12424:43)
+    at renderRootSync (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=e9414e7c:12408:13)
+    at performWorkOnRoot (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=e9414e7c:11827:37) The above error occurred in the <AIAssistantDialog> component. React will try to recreate this component tree from scratch using the error boundary you provided, CatchBoundaryImpl. @ http://localhost:3000/src/routes/__root.tsx:55
+[  570817ms] [WARNING] Warning: The following error wasn't caught by any route! At the very least, consider setting an 'errorComponent' in your RootRoute! @ http://localhost:3000/src/routes/__root.tsx:55
+[  570817ms] [WARNING] Warning: uploading is not defined @ http://localhost:3000/src/routes/__root.tsx:55
+[  580592ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3000/src/components/ai/AIAssistantDialog.tsx?t=1789008648833:0
+[  580595ms] [ERROR] [vite] Failed to reload /src/components/ai/AIAssistantDialog.tsx. This could be due to syntax errors or importing non-existent modules. (see errors above) @ http://localhost:3000/src/routes/__root.tsx:55
+[  598802ms] [ERROR] %c[Server]%c color: #9333ea; font-weight: bold; color: inherit; {status: 500, unhandled: true, message: HTTPError} @ http://localhost:3000/src/routes/__root.tsx:118
+[  631493ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=e9414e7c:20102
+[  633605ms] [WARNING] React Flow: It seems like you are hiding the attribution. Please only do this when you are subscribed to React Flow Pro: https://reactflow.dev/remove-attr
+%cYou can ignore this warning if you are subscribed. font-style: italic; @ http://localhost:3000/src/routes/__root.tsx?t=1789008671170:55
+[  700459ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=e9414e7c:20102
+[  702249ms] [WARNING] React Flow: It seems like you are hiding the attribution. Please only do this when you are subscribed to React Flow Pro: https://reactflow.dev/remove-attr
+%cYou can ignore this warning if you are subscribed. font-style: italic; @ http://localhost:3000/src/routes/__root.tsx?t=1789008671170:55
+[  728811ms] [LOG] [vite] server connection lost. Polling for restart... @ http://localhost:3000/src/routes/__root.tsx?t=1789008671170:55
+[  728814ms] [ERROR] Failed to load resource: net::ERR_INCOMPLETE_CHUNKED_ENCODING @ http://localhost:3000/__tsd/console-pipe/sse:0
+[  728914ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/__tsd/console-pipe:0
+[  731818ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/__tsd/console-pipe/sse:0
+[  734821ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/__tsd/console-pipe/sse:0
+[  737825ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/__tsd/console-pipe/sse:0
+[  740829ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/__tsd/console-pipe/sse:0
+[  743831ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/__tsd/console-pipe/sse:0
+[  746833ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/__tsd/console-pipe/sse:0
+[  749839ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/__tsd/console-pipe/sse:0
+[  752840ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/__tsd/console-pipe/sse:0
+[  755843ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/__tsd/console-pipe/sse:0
+[  758845ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/__tsd/console-pipe/sse:0
+[  761846ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/__tsd/console-pipe/sse:0
+[  764849ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/__tsd/console-pipe/sse:0

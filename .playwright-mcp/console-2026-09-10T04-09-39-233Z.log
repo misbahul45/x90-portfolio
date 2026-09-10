@@ -1,0 +1,138 @@
+[     767ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:20102
+[    1590ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:20102
+[    3277ms] [WARNING] React Flow: It seems like you are hiding the attribution. Please only do this when you are subscribed to React Flow Pro: https://reactflow.dev/remove-attr
+%cYou can ignore this warning if you are subscribed. font-style: italic; @ http://localhost:3000/src/routes/__root.tsx:55
+[   15077ms] [WARNING] Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}. @ http://localhost:3000/src/routes/__root.tsx:55
+[   15085ms] [WARNING] Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}. @ http://localhost:3000/src/routes/__root.tsx:55
+[   33066ms] [LOG] %c[Server]%c color: #9333ea; font-weight: bold; color: inherit; Defaulting to 'auto' which will select the first provider available for the model, sorted by the user's order in https://hf.co/settings/inference-providers. @ http://localhost:3000/src/routes/__root.tsx:118
+[   33066ms] [LOG] %c[Server]%c color: #9333ea; font-weight: bold; color: inherit; Auto selected provider: hf-inference @ http://localhost:3000/src/routes/__root.tsx:118
+[   45927ms] [LOG] %c[Server]%c color: #9333ea; font-weight: bold; color: inherit; Defaulting to 'auto' which will select the first provider available for the model, sorted by the user's order in https://hf.co/settings/inference-providers. @ http://localhost:3000/src/routes/__root.tsx:118
+[   45927ms] [LOG] %c[Server]%c color: #9333ea; font-weight: bold; color: inherit; Auto selected provider: hf-inference @ http://localhost:3000/src/routes/__root.tsx:118
+[   78930ms] [WARNING] Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}. @ http://localhost:3000/src/routes/__root.tsx:55
+[   78937ms] [WARNING] Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}. @ http://localhost:3000/src/routes/__root.tsx:55
+[  106461ms] [LOG] %c[Server]%c color: #9333ea; font-weight: bold; color: inherit; Defaulting to 'auto' which will select the first provider available for the model, sorted by the user's order in https://hf.co/settings/inference-providers. @ http://localhost:3000/src/routes/__root.tsx:118
+[  106462ms] [LOG] %c[Server]%c color: #9333ea; font-weight: bold; color: inherit; Auto selected provider: hf-inference @ http://localhost:3000/src/routes/__root.tsx:118
+[  106689ms] [WARNING] %c[Server]%c color: #9333ea; font-weight: bold; color: inherit; [embeddings] Hugging Face call failed; using fallback: {} @ http://localhost:3000/src/routes/__root.tsx:118
+[  120475ms] [LOG] %c[Server]%c color: #9333ea; font-weight: bold; color: inherit; Defaulting to 'auto' which will select the first provider available for the model, sorted by the user's order in https://hf.co/settings/inference-providers. @ http://localhost:3000/src/routes/__root.tsx:118
+[  120475ms] [LOG] %c[Server]%c color: #9333ea; font-weight: bold; color: inherit; Auto selected provider: hf-inference @ http://localhost:3000/src/routes/__root.tsx:118
+[  280502ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:20102
+[  286564ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:20102
+[  293610ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:20102
+[  307818ms] [ERROR] %o
+
+%s
+
+%s
+ ReferenceError: extractTextFromChildren is not defined
+    at RenderNode (http://localhost:3000/src/lib/tiptap-renderer.tsx?t=1789013686029:250:7)
+    at Object.react_stack_bottom_frame (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:18509:20)
+    at renderWithHooks (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:5654:24)
+    at updateFunctionComponent (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:7475:21)
+    at beginWork (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:8525:20)
+    at runWithFiberInDEV (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:997:72)
+    at performUnitOfWork (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:12561:98)
+    at workLoopSync (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:12424:43)
+    at renderRootSync (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:12408:13)
+    at performWorkOnRoot (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:11827:37) The above error occurred in the <RenderNode> component. React will try to recreate this component tree from scratch using the error boundary you provided, CatchBoundaryImpl. @ http://localhost:3000/src/routes/__root.tsx:55
+[  307821ms] [WARNING] Warning: The following error wasn't caught by any route! At the very least, consider setting an 'errorComponent' in your RootRoute! @ http://localhost:3000/src/routes/__root.tsx:55
+[  307821ms] [WARNING] Warning: extractTextFromChildren is not defined @ http://localhost:3000/src/routes/__root.tsx:55
+[  307829ms] [ERROR] %o
+
+%s
+
+%s
+ NotFoundError: Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of this node.
+    at removeChild (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:15918:24)
+    at runWithFiberInDEV (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:997:72)
+    at commitDeletionEffectsOnFiber (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:10190:19)
+    at recursivelyTraverseDeletionEffects (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:10115:11)
+    at commitDeletionEffectsOnFiber (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:10237:13)
+    at recursivelyTraverseDeletionEffects (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:10115:11)
+    at commitDeletionEffectsOnFiber (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:10237:13)
+    at recursivelyTraverseDeletionEffects (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:10115:11)
+    at commitDeletionEffectsOnFiber (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:10146:13)
+    at recursivelyTraverseDeletionEffects (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:10115:11) The above error occurred in the <link> component. React will try to recreate this component tree from scratch using the error boundary you provided, CatchBoundaryImpl. @ http://localhost:3000/src/routes/__root.tsx:55
+[  307831ms] [WARNING] Warning: The following error wasn't caught by any route! At the very least, consider setting an 'errorComponent' in your RootRoute! @ http://localhost:3000/src/routes/__root.tsx:55
+[  307832ms] [WARNING] Warning: Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of this node. @ http://localhost:3000/src/routes/__root.tsx:55
+[  340510ms] [ERROR] %o
+
+%s
+
+%s
+ ReferenceError: extractTextFromChildren is not defined
+    at RenderNode (http://localhost:3000/src/lib/tiptap-renderer.tsx?t=1789013719105:250:7)
+    at Object.react_stack_bottom_frame (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:18509:20)
+    at renderWithHooks (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:5654:24)
+    at updateFunctionComponent (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:7475:21)
+    at beginWork (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:8525:20)
+    at runWithFiberInDEV (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:997:72)
+    at performUnitOfWork (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:12561:98)
+    at workLoopSync (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:12424:43)
+    at renderRootSync (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:12408:13)
+    at performWorkOnRoot (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:11827:37) The above error occurred in the <RenderNode> component. React will try to recreate this component tree from scratch using the error boundary you provided, CatchBoundaryImpl. @ http://localhost:3000/src/routes/__root.tsx:55
+[  340511ms] [WARNING] Warning: The following error wasn't caught by any route! At the very least, consider setting an 'errorComponent' in your RootRoute! @ http://localhost:3000/src/routes/__root.tsx:55
+[  340511ms] [WARNING] Warning: extractTextFromChildren is not defined @ http://localhost:3000/src/routes/__root.tsx:55
+[  353333ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:20102
+[  353875ms] [ERROR] %o
+
+%s
+
+%s
+ ReferenceError: extractTextFromChildren is not defined
+    at RenderNode (http://localhost:3000/src/lib/tiptap-renderer.tsx?t=1789013719105:250:7)
+    at Object.react_stack_bottom_frame (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:18509:20)
+    at renderWithHooks (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:5654:24)
+    at updateFunctionComponent (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:7475:21)
+    at beginWork (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:8525:20)
+    at runWithFiberInDEV (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:997:72)
+    at performUnitOfWork (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:12561:98)
+    at workLoopSync (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:12424:43)
+    at renderRootSync (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:12408:13)
+    at performWorkOnRoot (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:11827:37) The above error occurred in the <RenderNode> component. React will try to recreate this component tree from scratch using the error boundary you provided, CatchBoundaryImpl. @ http://localhost:3000/src/routes/__root.tsx:55
+[  353876ms] [WARNING] Warning: The following error wasn't caught by any route! At the very least, consider setting an 'errorComponent' in your RootRoute! @ http://localhost:3000/src/routes/__root.tsx:55
+[  353876ms] [WARNING] Warning: extractTextFromChildren is not defined @ http://localhost:3000/src/routes/__root.tsx:55
+[  399659ms] [ERROR] [vite] SyntaxError: The requested module '/src/components/editor/CodeBlock/index.ts?t=1789013765492' does not provide an export named 'extractTextFromChildren' @ http://localhost:3000/src/routes/__root.tsx:55
+[  399660ms] [ERROR] [vite] Failed to reload /src/lib/tiptap-renderer.tsx. This could be due to syntax errors or importing non-existent modules. (see errors above) @ http://localhost:3000/src/routes/__root.tsx:55
+[  448976ms] [LOG] [vite] server connection lost. Polling for restart... @ http://localhost:3000/src/routes/__root.tsx:55
+[  448981ms] [ERROR] Failed to load resource: net::ERR_INCOMPLETE_CHUNKED_ENCODING @ http://localhost:3000/__tsd/console-pipe/sse:0
+[  449078ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/__tsd/console-pipe:0
+[  451982ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/__tsd/console-pipe/sse:0
+[  454984ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/__tsd/console-pipe/sse:0
+[  457985ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/__tsd/console-pipe/sse:0
+[  460987ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/__tsd/console-pipe/sse:0
+[  463988ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/__tsd/console-pipe/sse:0
+[  466990ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/__tsd/console-pipe/sse:0
+[  469991ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/__tsd/console-pipe/sse:0
+[  472993ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/__tsd/console-pipe/sse:0
+[  475994ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/__tsd/console-pipe/sse:0
+[  478996ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/__tsd/console-pipe/sse:0
+[  481998ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/__tsd/console-pipe/sse:0
+[  484999ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/__tsd/console-pipe/sse:0
+[  488000ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/__tsd/console-pipe/sse:0
+[  491003ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/__tsd/console-pipe/sse:0
+[  509085ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:20102
+[  594293ms] [WARNING] React Flow: It seems like you are hiding the attribution. Please only do this when you are subscribed to React Flow Pro: https://reactflow.dev/remove-attr
+%cYou can ignore this warning if you are subscribed. font-style: italic; @ http://localhost:3000/src/routes/__root.tsx:55
+[  596412ms] [LOG] %c[Server]%c color: #9333ea; font-weight: bold; color: inherit; Defaulting to 'auto' which will select the first provider available for the model, sorted by the user's order in https://hf.co/settings/inference-providers. @ http://localhost:3000/src/routes/__root.tsx:118
+[  597041ms] [LOG] %c[Server]%c color: #9333ea; font-weight: bold; color: inherit; Auto selected provider: hf-inference @ http://localhost:3000/src/routes/__root.tsx:118
+[  612015ms] [LOG] %c[Server]%c color: #9333ea; font-weight: bold; color: inherit; Defaulting to 'auto' which will select the first provider available for the model, sorted by the user's order in https://hf.co/settings/inference-providers. @ http://localhost:3000/src/routes/__root.tsx:118
+[  612015ms] [LOG] %c[Server]%c color: #9333ea; font-weight: bold; color: inherit; Auto selected provider: hf-inference @ http://localhost:3000/src/routes/__root.tsx:118
+[  683910ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:20102
+[  685821ms] [WARNING] React Flow: It seems like you are hiding the attribution. Please only do this when you are subscribed to React Flow Pro: https://reactflow.dev/remove-attr
+%cYou can ignore this warning if you are subscribed. font-style: italic; @ http://localhost:3000/src/routes/__root.tsx:55
+[  700101ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:20102
+[  701922ms] [WARNING] React Flow: It seems like you are hiding the attribution. Please only do this when you are subscribed to React Flow Pro: https://reactflow.dev/remove-attr
+%cYou can ignore this warning if you are subscribed. font-style: italic; @ http://localhost:3000/src/routes/__root.tsx:55
+[  721141ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:20102
+[  722936ms] [WARNING] React Flow: It seems like you are hiding the attribution. Please only do this when you are subscribed to React Flow Pro: https://reactflow.dev/remove-attr
+%cYou can ignore this warning if you are subscribed. font-style: italic; @ http://localhost:3000/src/routes/__root.tsx:55
+[  820526ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:20102
+[  822373ms] [WARNING] React Flow: It seems like you are hiding the attribution. Please only do this when you are subscribed to React Flow Pro: https://reactflow.dev/remove-attr
+%cYou can ignore this warning if you are subscribed. font-style: italic; @ http://localhost:3000/src/routes/__root.tsx:55
+[  843299ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:20102
+[  845165ms] [WARNING] React Flow: It seems like you are hiding the attribution. Please only do this when you are subscribed to React Flow Pro: https://reactflow.dev/remove-attr
+%cYou can ignore this warning if you are subscribed. font-style: italic; @ http://localhost:3000/src/routes/__root.tsx:55
+[  852594ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=983046e4:20102
+[  854352ms] [WARNING] React Flow: It seems like you are hiding the attribution. Please only do this when you are subscribed to React Flow Pro: https://reactflow.dev/remove-attr
+%cYou can ignore this warning if you are subscribed. font-style: italic; @ http://localhost:3000/src/routes/__root.tsx:55
+[  948396ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3000/:0
