@@ -209,22 +209,6 @@ const MOBILE_LABELS: Record<string, string> = {
 
 const STEP_INTERVAL_MS = 1600
 
-function getPhaseIndex(
-  phases: readonly RuntimePhase[],
-  nodeId: string,
-) {
-  for (let index = phases.length - 1; index >= 0; index -= 1) {
-    if (
-      phases[index]?.active.includes(nodeId) ||
-      phases[index]?.completed.includes(nodeId)
-    ) {
-      return index
-    }
-  }
-
-  return -1
-}
-
 function getNodeState(
   phaseIndex: number,
   nodeId: string,

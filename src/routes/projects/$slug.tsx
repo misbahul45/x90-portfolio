@@ -1,56 +1,67 @@
 import { createFileRoute, Link } from "@tanstack/react-router"
 import { motion } from "motion/react"
-import {
-  ArrowLeft,
-  ArrowUpRight,
-  Code2,
-  ExternalLink,
-  Github,
-  Layers,
-} from "lucide-react"
-import {
-  useInfiniteProjects,
-  useProject,
-  type ProjectListItem,
-} from "#/hooks/useProjects"
+import { ArrowLeft, ArrowUpRight, Calendar, ExternalLink, Github, Layers } from "lucide-react"
+import { useProject, type ProjectListItem, type ProjectRelatedArticle } from "#/hooks/useProjects"
 import { Skeleton } from "#/components/ui/skeleton"
 import { fadeInUp, VIEWPORT_OPTIONS } from "#/lib/motion-variants"
 import { ROUTES } from "#/lib/domain/routes"
 import { TiptapContent } from "#/lib/tiptap-renderer"
+import { RelatedArticles, RelatedProjects } from "#/components/projects/RelatedContent"
+import { ProjectCTA } from "#/components/projects/ProjectCTA"
 
 export const Route = createFileRoute("/projects/$slug")({
-  head: () => ({
-    meta: [{ title: "Project — XNINETZY Labs" }],
+  head: ({ params }) => ({
+    meta: [
+      { title: `${params.slug} — Project · XNINETZY Labs` },
+      {
+        name: "description",
+        content:
+          "An engineering case study from XNINETZY Labs: what we built, why, and what we learned.",
+      },
+    ],
   }),
   component: ProjectDetailPage,
 })
+
+function formatDate(value: Date | string | null | undefined): string {
+  if (!value) return ""
+  const date = typeof value === "string" ? new Date(value) : value
+  return new Intl.DateTimeFormat("en", { month: "short", day: "2-digit", year: "numeric" }).format(date)
+}
 
 function ProjectDetailPage() {
   const { slug } = Route.useParams()
   const { data: project, isPending, isError } = useProject(slug)
 
-  if (isPending) {
-    return <ProjectSkeleton />
-  }
-
-  if (isError || !project) {
-    return (
-      <main className="lab-page-bg border-t border-[var(--lab-line)]">
-        <div className="mx-auto w-full max-w-3xl px-4 py-24">
-          <p className="text-sm text-[var(--lab-ink-soft)]">Project not found.</p>
-          <Link
-            to={ROUTES.PROJECTS}
-            className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-[var(--lab-orange)] no-underline hover:underline"
-          >
-            <ArrowLeft className="size-3.5" />
-            Back to projects
-          </Link>
-        </div>
-      </main>
-    )
-  }
+  if (isPending) return <ProjectSkeleton />
+  if (isError || !project) return <ProjectNotFound />
 
   return <ProjectDetailView project={project} />
+}
+
+function ProjectNotFound() {
+  return (
+    <main className="lab-page-bg border-t border-[var(--lab-line)]">
+      <div className="mx-auto w-full max-w-3xl px-4 py-24">
+        <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-[var(--lab-orange)]">
+          404 · Project
+        </p>
+        <h1 className="mt-3 text-3xl font-semibold tracking-tight text-[var(--lab-ink)]">
+          This system is not available.
+        </h1>
+        <p className="mt-3 text-sm text-[var(--lab-ink-soft)]">
+          The project may have been moved, archived, or never published publicly.
+        </p>
+        <Link
+          to={ROUTES.PROJECTS}
+          className="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-[var(--lab-orange)] no-underline hover:underline"
+        >
+          <ArrowLeft className="size-3.5" />
+          Back to projects
+        </Link>
+      </div>
+    </main>
+  )
 }
 
 function ProjectSkeleton() {
@@ -70,342 +81,285 @@ function ProjectSkeleton() {
 }
 
 function ProjectDetailView({ project }: { project: ProjectListItem }) {
-  const { data: related } = useInfiniteProjects({
-    categorySlug: project.category?.slug,
-    pageSize: 3,
-  })
-  const relatedItems = (related?.pages.flatMap((page) => page.items) ?? [])
-    .filter((item) => item.id !== project.id)
-    .slice(0, 3)
+  const relatedArticles: ProjectRelatedArticle[] = project.research ?? []
+  const relatedResearchItems = relatedArticles
+    .filter((r) => r.article.status === "PUBLISHED")
+    .map((r) => ({
+      id: r.article.id,
+      slug: r.article.slug,
+      title: r.article.title,
+      excerpt: r.article.excerpt,
+      category: r.article.category,
+      publishedAt: r.article.publishedAt,
+    }))
 
   return (
     <main className="lab-page-bg border-t border-[var(--lab-line)] text-[var(--lab-ink)]">
-      <section className="border-b border-[var(--lab-line)] bg-[var(--lab-bg-soft)] py-16 sm:py-20">
-        <div className="mx-auto w-full max-w-[1240px] px-4">
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={fadeInUp}
-          >
-            <Link
-              to={ROUTES.PROJECTS}
-              className="inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--lab-ink-soft)] no-underline transition-colors hover:text-[var(--lab-orange)]"
-            >
-              <ArrowLeft className="size-3.5" />
-              All projects
-            </Link>
+      <ProjectHero project={project} />
+      {project.coverImage ? <ProjectCover image={project.coverImage} title={project.title} /> : null}
 
-            {project.category && (
-              <p className="mt-6 font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--lab-orange)]">
-                {project.category.name}
-              </p>
-            )}
+      <ProjectBody project={project} />
 
-            <h1 className="mt-3 max-w-3xl text-balance text-4xl font-semibold leading-[1.08] tracking-tight text-[var(--lab-ink)] sm:text-5xl">
-              {project.title}
-            </h1>
+      <RelatedArticles
+        title="Research behind this system"
+        caption="Where this project connects to investigations, experiments, or applied notes from the lab."
+        viewAllHref={ROUTES.RESEARCH}
+        viewAllLabel="View all research"
+        items={relatedResearchItems}
+      />
 
-            <p className="mt-5 max-w-2xl text-lg leading-relaxed text-[var(--lab-ink-soft)]">
-              {project.description}
-            </p>
+      <ProjectRelatedProjects currentId={project.id} categoryId={project.category?.id} />
 
-            <div className="mt-7 flex flex-wrap items-center gap-3">
-              {project.githubUrl && (
-                <a
-                  href={project.githubUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-2 border border-[var(--lab-line)] bg-[var(--lab-card)] px-4 py-2 font-mono text-xs uppercase tracking-[0.18em] text-[var(--lab-ink)] no-underline transition-colors hover:border-[var(--lab-orange)] hover:text-[var(--lab-orange)]"
-                >
-                  <Github className="size-3.5" />
-                  Source
-                </a>
-              )}
-              {project.demoUrl && (
-                <a
-                  href={project.demoUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-2 bg-[var(--lab-orange)] !text-white px-4 py-2 font-mono text-xs uppercase tracking-[0.18em] no-underline transition-colors hover:bg-[var(--lab-orange-light)]"
-                >
-                  <ExternalLink className="size-3.5" />
-                  Live demo
-                </a>
-              )}
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {project.coverImage && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6 }}
-          className="border-b border-[var(--lab-line)]"
-        >
-          <div className="mx-auto w-full max-w-[1240px] px-4 py-8">
-            <div className="overflow-hidden border border-[var(--lab-line)] bg-[var(--lab-card)]">
-              <img
-                src={project.coverImage}
-                alt={project.title}
-                className="w-full"
-                loading="lazy"
-              />
-            </div>
-          </div>
-        </motion.div>
-      )}
-
-      <section className="mx-auto w-full max-w-[1240px] px-4 py-16">
-        <div className="grid gap-10 lg:grid-cols-[1fr_320px]">
-          <div className="max-w-3xl">
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={VIEWPORT_OPTIONS}
-              variants={fadeInUp}
-            >
-              <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-[var(--lab-orange)]">
-                Overview
-              </p>
-              <h2 className="mt-2 text-2xl font-semibold tracking-tight text-[var(--lab-ink)] sm:text-3xl">
-                What we built
-              </h2>
-            </motion.div>
-
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={VIEWPORT_OPTIONS}
-              variants={fadeInUp}
-              className="mt-8"
-            >
-              <div className="text-base leading-7 text-[var(--lab-ink)]">
-                <TiptapContent content={project.content} fallbackClassName="text-[var(--lab-ink)]" />
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={VIEWPORT_OPTIONS}
-              variants={fadeInUp}
-              className="mt-12"
-            >
-              <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-[var(--lab-orange)]">
-                Architecture
-              </p>
-              <h3 className="mt-2 text-xl font-semibold tracking-tight text-[var(--lab-ink)]">
-                How it fits together
-              </h3>
-              <ProjectArchitecture technologies={project.technologies} />
-            </motion.div>
-          </div>
-
-          <aside className="space-y-8 lg:sticky lg:top-24 lg:self-start">
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={VIEWPORT_OPTIONS}
-              variants={fadeInUp}
-              className="research-card-surface p-6"
-            >
-              <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--lab-orange)]">
-                Stack
-              </p>
-              <ul className="mt-4 space-y-2 text-sm text-[var(--lab-ink)]">
-                {project.technologies.map((tech) => (
-                  <li key={tech} className="flex items-center gap-2">
-                    <span aria-hidden className="inline-block size-1 shrink-0 bg-[var(--lab-orange)]" />
-                    <span>{tech}</span>
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={VIEWPORT_OPTIONS}
-              variants={fadeInUp}
-              className="research-card-surface p-6"
-            >
-              <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--lab-orange)]">
-                Links
-              </p>
-              <ul className="mt-4 space-y-3 text-sm">
-                {project.githubUrl && (
-                  <li>
-                    <a
-                      href={project.githubUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-2 text-[var(--lab-ink)] no-underline transition-colors hover:text-[var(--lab-orange)]"
-                    >
-                      <Github className="size-3.5" aria-hidden />
-                      Source repository
-                      <ArrowUpRight className="size-3" aria-hidden />
-                    </a>
-                  </li>
-                )}
-                {project.demoUrl && (
-                  <li>
-                    <a
-                      href={project.demoUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-2 text-[var(--lab-ink)] no-underline transition-colors hover:text-[var(--lab-orange)]"
-                    >
-                      <ExternalLink className="size-3.5" aria-hidden />
-                      Live demo
-                      <ArrowUpRight className="size-3" aria-hidden />
-                    </a>
-                  </li>
-                )}
-                {!project.githubUrl && !project.demoUrl && (
-                  <li className="text-[var(--lab-ink-soft)]">Case study only</li>
-                )}
-              </ul>
-            </motion.div>
-
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={VIEWPORT_OPTIONS}
-              variants={fadeInUp}
-              className="research-card-surface p-6"
-            >
-              <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--lab-orange)]">
-                Meta
-              </p>
-              <dl className="mt-4 space-y-3 text-sm">
-                <div className="flex items-center justify-between gap-3">
-                  <dt className="text-[var(--lab-ink-soft)]">Category</dt>
-                  <dd className="text-[var(--lab-ink)]">{project.category?.name ?? "—"}</dd>
-                </div>
-                <div className="flex items-center justify-between gap-3">
-                  <dt className="text-[var(--lab-ink-soft)]">Featured</dt>
-                  <dd className="text-[var(--lab-ink)]">{project.featured ? "Yes" : "—"}</dd>
-                </div>
-                <div className="flex items-center justify-between gap-3">
-                  <dt className="text-[var(--lab-ink-soft)]">Order</dt>
-                  <dd className="font-mono text-[var(--lab-ink)]">{project.order}</dd>
-                </div>
-              </dl>
-            </motion.div>
-          </aside>
-        </div>
-      </section>
-
-      {relatedItems.length > 0 && (
-        <section className="border-t border-[var(--lab-line)] bg-[var(--lab-bg-soft)] py-16">
-          <div className="mx-auto w-full max-w-[1240px] px-4">
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={VIEWPORT_OPTIONS}
-              variants={fadeInUp}
-              className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between"
-            >
-              <div>
-                <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-[var(--lab-orange)]">
-                  Related
-                </p>
-                <h2 className="mt-2 text-2xl font-semibold tracking-tight text-[var(--lab-ink)] sm:text-3xl">
-                  More from this domain
-                </h2>
-              </div>
-              <Link
-                to={ROUTES.PROJECTS}
-                className="inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--lab-ink-soft)] no-underline transition-colors hover:text-[var(--lab-orange)]"
-              >
-                View all projects
-                <ArrowUpRight className="size-3" aria-hidden />
-              </Link>
-            </motion.div>
-
-            <ul className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {relatedItems.map((item) => (
-                <li key={item.id}>
-                  <Link
-                    to="/projects/$slug"
-                    params={{ slug: item.slug }}
-                    className="research-card-surface group block h-full p-6 no-underline"
-                  >
-                    <div className="flex items-center justify-between">
-                      <p className="font-mono text-[10.5px] uppercase tracking-[0.18em] text-[var(--lab-ink-soft)]">
-                        {item.category?.name ?? "System"}
-                      </p>
-                      <ArrowUpRight className="size-4 text-[var(--lab-ink-soft)] transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[var(--lab-orange)]" />
-                    </div>
-                    <h3 className="mt-4 text-lg font-semibold leading-snug tracking-tight text-[var(--lab-ink)]">
-                      {item.title}
-                    </h3>
-                    <p className="mt-2 text-sm leading-relaxed text-[var(--lab-ink-soft)]">
-                      {item.description}
-                    </p>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
-      )}
+      <ProjectCTA />
     </main>
   )
 }
 
-function ProjectArchitecture({ technologies }: { technologies: string[] }) {
-  const layers = [
-    { label: "Clients", items: ["Web", "Mobile", "API"] },
-    { label: "Application", items: ["Dashboard", "Workflow", "Auth"] },
-    { label: "Intelligence", items: ["Agents", "RAG", "Eval"] },
-    { label: "Data", items: ["Postgres", "pgvector", "Cache"] },
-    { label: "Infrastructure", items: ["Docker", "CI/CD", "Observability"] },
-  ]
-
+function ProjectHero({ project }: { project: ProjectListItem }) {
   return (
-    <div className="research-card-surface mt-6 overflow-hidden">
-      <div className="flex items-center gap-2 border-b border-[var(--lab-line)] px-4 py-2.5">
-        <Layers className="size-3.5 text-[var(--lab-orange)]" aria-hidden />
-        <span className="font-mono text-xs text-[var(--lab-ink-soft)]">
-          xninetzy-labs / architecture
-        </span>
-        <span className="ml-auto font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--lab-orange)]">
-          {technologies.length} technologies
-        </span>
-      </div>
+    <section className="border-b border-[var(--lab-line)] bg-[var(--lab-bg-soft)] py-16 sm:py-20">
+      <div className="mx-auto w-full max-w-[1240px] px-4">
+        <motion.div initial="hidden" animate="visible" variants={fadeInUp}>
+          <Link
+            to={ROUTES.PROJECTS}
+            className="inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--lab-ink-soft)] no-underline transition-colors hover:text-[var(--lab-orange)]"
+          >
+            <ArrowLeft className="size-3.5" />
+            All projects
+          </Link>
 
-      <div className="grid gap-px bg-[var(--lab-line)] sm:grid-cols-2 lg:grid-cols-5">
-        {layers.map((layer) => (
-          <div key={layer.label} className="bg-[var(--lab-bg)] px-5 py-4">
-            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--lab-orange)]">
-              {layer.label}
-            </p>
-            <p className="mt-2 text-sm text-[var(--lab-ink)]">
-              {layer.items.join(" · ")}
-            </p>
+          <div className="mt-6 flex flex-wrap items-center gap-2 font-mono text-[10.5px] uppercase tracking-[0.18em]">
+            <span className="inline-flex items-center gap-1.5 border border-[var(--lab-line)] bg-[var(--lab-card)] px-2.5 py-1 text-[var(--lab-orange)]">
+              <span aria-hidden className="size-1.5 bg-[var(--lab-orange)]" />
+              {project.category?.name ?? "System"}
+            </span>
+            {project.featured ? (
+              <span className="border border-[var(--lab-line)] bg-[var(--lab-card)] px-2.5 py-1 text-[var(--lab-ink-soft)]">
+                Featured
+              </span>
+            ) : null}
+            {project.publishedAt ? (
+              <span className="inline-flex items-center gap-1.5 border border-[var(--lab-line)] bg-[var(--lab-card)] px-2.5 py-1 text-[var(--lab-ink-soft)]">
+                <Calendar className="size-3" aria-hidden />
+                {formatDate(project.publishedAt)}
+              </span>
+            ) : null}
           </div>
-        ))}
-      </div>
 
-      <div className="border-t border-[var(--lab-line)] bg-[var(--lab-card)]/40 px-4 py-3">
-        <div className="flex items-center justify-between gap-3">
-          <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-[var(--lab-ink-soft)]">
-            Tech mapping
+          <h1 className="mt-5 max-w-3xl text-balance text-4xl font-semibold leading-[1.08] tracking-tight text-[var(--lab-ink)] sm:text-5xl">
+            {project.title}
+          </h1>
+
+          <p className="mt-5 max-w-2xl text-lg leading-relaxed text-[var(--lab-ink-soft)]">
+            {project.description}
           </p>
-          <Code2 className="size-3.5 text-[var(--lab-ink-soft)]" aria-hidden />
-        </div>
-        <ul className="mt-3 flex flex-wrap gap-x-4 gap-y-1.5 font-mono text-[11px] text-[var(--lab-ink-soft)]">
-          {technologies.slice(0, 8).map((tech) => (
-            <li key={tech} className="flex items-center gap-1.5">
-              <span aria-hidden className="size-1 bg-[var(--lab-orange)]" />
-              {tech}
-            </li>
-          ))}
-        </ul>
+
+          <div className="mt-7 flex flex-wrap items-center gap-3">
+            {project.githubUrl ? (
+              <a
+                href={project.githubUrl}
+                target="_blank"
+                rel="noreferrer noopener"
+                className="inline-flex items-center gap-2 border border-[var(--lab-line)] bg-[var(--lab-card)] px-4 py-2 font-mono text-xs uppercase tracking-[0.18em] text-[var(--lab-ink)] no-underline transition-colors hover:border-[var(--lab-orange)] hover:text-[var(--lab-orange)]"
+              >
+                <Github className="size-3.5" aria-hidden />
+                Source
+              </a>
+            ) : null}
+            {project.demoUrl ? (
+              <a
+                href={project.demoUrl}
+                target="_blank"
+                rel="noreferrer noopener"
+                className="inline-flex items-center gap-2 bg-[var(--lab-orange)] !text-white px-4 py-2 font-mono text-xs uppercase tracking-[0.18em] no-underline transition-colors hover:bg-[var(--lab-orange-light)]"
+              >
+                <ExternalLink className="size-3.5" aria-hidden />
+                Live demo
+              </a>
+            ) : null}
+          </div>
+        </motion.div>
       </div>
+    </section>
+  )
+}
+
+function ProjectCover({ image, title }: { image: string; title: string }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.6 }}
+      className="border-b border-[var(--lab-line)]"
+    >
+      <div className="mx-auto w-full max-w-[1240px] px-4 py-8">
+        <div className="overflow-hidden border border-[var(--lab-line)] bg-[var(--lab-card)]">
+          <img src={image} alt={`${title} cover`} className="w-full" loading="lazy" />
+        </div>
+      </div>
+    </motion.div>
+  )
+}
+
+function ProjectBody({
+  project,
+}: {
+  project: ProjectListItem
+}) {
+  return (
+    <section className="mx-auto w-full max-w-[1240px] px-4 py-16">
+      <div className="grid gap-10 lg:grid-cols-[1fr_320px]">
+        <motion.article
+          initial="hidden"
+          whileInView="visible"
+          viewport={VIEWPORT_OPTIONS}
+          variants={fadeInUp}
+          className="max-w-3xl"
+        >
+          <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-[var(--lab-orange)]">
+            Engineering case study
+          </p>
+          <h2 className="mt-2 text-2xl font-semibold tracking-tight text-[var(--lab-ink)] sm:text-3xl">
+            How we built it
+          </h2>
+          <div className="mt-8 text-base leading-7 text-[var(--lab-ink)]">
+            <TiptapContent content={project.content} fallbackClassName="text-[var(--lab-ink)]" />
+          </div>
+        </motion.article>
+
+        <aside className="space-y-8 lg:sticky lg:top-24 lg:self-start">
+          <Panel icon={Layers} title="Stack">
+            <ul className="mt-4 space-y-2 text-sm text-[var(--lab-ink)]">
+              {project.technologies.length === 0 ? (
+                <li className="text-[var(--lab-ink-soft)]">Not documented.</li>
+              ) : (
+                project.technologies.map((tech) => (
+                  <li key={tech} className="flex items-center gap-2">
+                    <span aria-hidden className="inline-block size-1 shrink-0 bg-[var(--lab-orange)]" />
+                    <span>{tech}</span>
+                  </li>
+                ))
+              )}
+            </ul>
+          </Panel>
+
+          <Panel title="Links">
+            <ul className="mt-4 space-y-3 text-sm">
+              {project.githubUrl ? (
+                <li>
+                  <a
+                    href={project.githubUrl}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    className="inline-flex items-center gap-2 text-[var(--lab-ink)] no-underline transition-colors hover:text-[var(--lab-orange)]"
+                  >
+                    <Github className="size-3.5" aria-hidden />
+                    Source repository
+                    <ArrowUpRight className="size-3" aria-hidden />
+                  </a>
+                </li>
+              ) : null}
+              {project.demoUrl ? (
+                <li>
+                  <a
+                    href={project.demoUrl}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    className="inline-flex items-center gap-2 text-[var(--lab-ink)] no-underline transition-colors hover:text-[var(--lab-orange)]"
+                  >
+                    <ExternalLink className="size-3.5" aria-hidden />
+                    Live demo
+                    <ArrowUpRight className="size-3" aria-hidden />
+                  </a>
+                </li>
+              ) : null}
+              {!project.githubUrl && !project.demoUrl ? (
+                <li className="text-[var(--lab-ink-soft)]">Case study only</li>
+              ) : null}
+            </ul>
+          </Panel>
+
+          <Panel title="Meta">
+            <dl className="mt-4 space-y-3 text-sm">
+              <Row label="Domain" value={project.category?.name ?? "—"} />
+              <Row label="Status" value={project.status} />
+              {project.publishedAt ? <Row label="Published" value={formatDate(project.publishedAt)} /> : null}
+              <Row label="Featured" value={project.featured ? "Yes" : "—"} />
+            </dl>
+          </Panel>
+        </aside>
+      </div>
+    </section>
+  )
+}
+
+function Panel({
+  icon: Icon,
+  title,
+  children,
+}: {
+  icon?: typeof Layers
+  title: string
+  children: React.ReactNode
+}) {
+  return (
+    <motion.div
+      initial="hidden"
+      whileInView="visible"
+      viewport={VIEWPORT_OPTIONS}
+      variants={fadeInUp}
+      className="research-card-surface p-6"
+    >
+      <p className="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--lab-orange)]">
+        {Icon ? <Icon className="size-3" aria-hidden /> : null}
+        {title}
+      </p>
+      {children}
+    </motion.div>
+  )
+}
+
+function Row({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="flex items-center justify-between gap-3">
+      <dt className="text-[var(--lab-ink-soft)]">{label}</dt>
+      <dd className="text-[var(--lab-ink)]">{value}</dd>
     </div>
   )
+}
+
+function ProjectRelatedProjects({
+  currentId,
+  categoryId,
+}: {
+  currentId: string
+  categoryId?: string
+}) {
+  const projects = useRelatedProjects(categoryId)
+  const items = projects
+    .filter((p) => p.id !== currentId)
+    .slice(0, 3)
+    .map((p) => ({
+      id: p.id,
+      slug: p.slug,
+      title: p.title,
+      description: p.description,
+      category: p.category,
+    }))
+  if (items.length === 0) return null
+  return (
+    <RelatedProjects
+      title="More from this domain"
+      viewAllHref={ROUTES.PROJECTS}
+      viewAllLabel="View all projects"
+      items={items}
+    />
+  )
+}
+
+import { useInfiniteProjects } from "#/hooks/useProjects"
+
+function useRelatedProjects(_categoryId?: string) {
+  const { data } = useInfiniteProjects({ pageSize: 12 })
+  return data?.pages.flatMap((page) => page.items) ?? []
 }

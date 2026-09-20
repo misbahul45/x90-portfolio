@@ -1,6 +1,20 @@
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query"
 import { projectKeys } from "#/lib/domain/query-keys"
 import { apiGet } from "#/lib/api-client"
+import type { ProjectStatus } from "#/lib/domain/project-status"
+
+export type ProjectRelatedArticle = {
+  relation: string
+  article: {
+    id: string
+    slug: string
+    title: string
+    excerpt: string
+    status: string
+    publishedAt: string | Date | null
+    category: { id: string; slug: string; name: string } | null
+  }
+}
 
 export type ProjectListItem = {
   id: string
@@ -14,7 +28,10 @@ export type ProjectListItem = {
   demoUrl: string | null
   featured: boolean
   order: number
+  status: ProjectStatus
+  publishedAt: string | Date | null
   category: { id: string; slug: string; name: string } | null
+  research: ProjectRelatedArticle[]
 }
 
 export type ProjectPage = {

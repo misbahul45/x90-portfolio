@@ -80,7 +80,7 @@ function AdminLayout() {
   return (
     <div className="lab-page-bg min-h-screen text-[var(--lab-ink)]">
       <div className="flex min-h-screen">
-        <AdminSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+        <AdminSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} session={session} />
 
         <div className="flex min-h-screen flex-1 flex-col">
           <AdminTopbar
@@ -100,7 +100,15 @@ function AdminLayout() {
   )
 }
 
-function AdminSidebar({ open, onClose }: { open: boolean; onClose: () => void }) {
+function AdminSidebar({
+  open,
+  onClose,
+  session,
+}: {
+  open: boolean
+  onClose: () => void
+  session?: { user: { email: string } }
+}) {
   return (
     <>
       <div
@@ -186,7 +194,9 @@ function AdminSidebar({ open, onClose }: { open: boolean; onClose: () => void })
           <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--lab-ink-soft)]">
             Signed in as
           </p>
-          <p className="mt-1 truncate text-sm font-medium text-[var(--lab-ink)]">admin@xninetzy.local</p>
+          <p className="mt-1 truncate text-sm font-medium text-[var(--lab-ink)]">
+            {session?.user?.email ?? ""}
+          </p>
         </div>
       </aside>
     </>

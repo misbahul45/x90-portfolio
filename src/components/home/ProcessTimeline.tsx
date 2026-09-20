@@ -3,7 +3,6 @@ import { PROCESS_STEPS } from "#/lib/domain/services"
 import {
   fadeInUp,
   staggerContainer,
-  staggerItem,
   VIEWPORT_OPTIONS,
 } from "#/lib/motion-variants"
 import { cn } from "#/lib/utils"

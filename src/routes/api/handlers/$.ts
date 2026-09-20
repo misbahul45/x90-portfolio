@@ -117,7 +117,7 @@ async function routeGet(segments: string[], request: Request, url: URL): Promise
 
   if (resource === "articles") {
     if (id) {
-      const article = await articleService.bySlug(id)
+      const article = await articleService.bySlugPublic(id)
       return article ? json(article) : fail("Not found", 404)
     }
     const page = await articleService.listPublished({
@@ -175,7 +175,7 @@ async function routeGet(segments: string[], request: Request, url: URL): Promise
         const project = await projectService.byId(subId)
         return project ? json(project) : fail("Not found", 404)
       }
-      const projects = await projectService.listAll({})
+      const projects = await projectService.listAll({ includeStatuses: ["DRAFT", "PUBLISHED", "ARCHIVED"] })
       return json(projects.items)
     }
     if (sub === "team") {

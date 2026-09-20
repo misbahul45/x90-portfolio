@@ -1,6 +1,22 @@
 import { hashPassword } from "better-auth/crypto"
 import { prisma } from "../src/db"
 
+function requireEnv(name: string, fallback?: string): string {
+  const value = process.env[name] ?? fallback
+  if (!value || value.length === 0) {
+    console.error(`❌ Missing required env var: ${name}`)
+    process.exit(1)
+  }
+  return value
+}
+
+function asString(value: string | undefined, fallback: string): string {
+  return value && value.length > 0 ? value : fallback
+}
+
+void requireEnv
+void asString
+
 type TiptapNode = {
   type: string
   attrs?: Record<string, unknown>
@@ -177,14 +193,34 @@ async function main() {
   )
   console.log(`✅ Created ${tags.length} tags`)
 
-  const adminEmail = "admin@xninetzy.local"
-  const adminPassword = "XninetzyDev2026!"
+  const adminEmail = asString(
+    process.env.ADMIN_EMAIL,
+    "xninetzy@gmail.com",
+  ).toLowerCase().trim()
+  const adminPassword = requireEnv(
+    "ADMIN_PASSWORD",
+    "xninetzy123",
+  )
+  const adminName = asString(process.env.ADMIN_NAME, "Xninetzy Admin")
+
+  if (adminPassword.length < 8) {
+    console.error("❌ ADMIN_PASSWORD must be at least 8 characters.")
+    process.exit(1)
+  }
+
+  const existingAdmin = await prisma.user.findUnique({ where: { email: adminEmail } })
+  if (existingAdmin) {
+    console.error(`❌ Admin user already exists for ${adminEmail}. Aborting seed to avoid duplicate.`)
+    console.error("   Set ADMIN_EMAIL to a different address, or delete the existing admin first.")
+    process.exit(1)
+  }
+
   const adminId = `admin_${Date.now().toString(36)}`
   const admin = await prisma.user.create({
     data: {
       id: adminId,
       email: adminEmail,
-      name: "Xninetzy Admin",
+      name: adminName,
       role: "ADMIN",
       emailVerified: true,
       accounts: {
@@ -196,8 +232,9 @@ async function main() {
       },
     },
   })
-  console.log(`✅ Created admin user (${adminEmail}) — password: ${adminPassword}`)
+  console.log(`✅ Seeded admin user ${admin.email} (role=ADMIN, id=${admin.id})`)
   console.log("ℹ️  Public signup is disabled — only this seeded admin can sign in.")
+  console.log("ℹ️  Set ADMIN_EMAIL and ADMIN_PASSWORD env vars to override defaults.")
 
   const categoryBySlug = new Map(categories.map((category) => [category.slug, category]))
   const tagBySlug = new Map(tags.map((tag) => [tag.slug, tag]))

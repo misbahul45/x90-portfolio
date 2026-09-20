@@ -42,6 +42,17 @@ export function TiptapContent({ content, fallbackClassName }: RendererProps): Re
   )
 }
 
+function extractText(node: TiptapNode | undefined): string {
+  if (!node) return ""
+  if (node.type === "text") return node.text ?? ""
+  if (!node.content) return ""
+  return node.content.map(extractText).join("")
+}
+
+function headingText(node: TiptapNode): string {
+  return (node.content ?? []).map(extractText).join("").trim().toLowerCase()
+}
+
 function RenderNode({ node }: { node: TiptapNode }): ReactNode {
   const children = node.content?.map((child, index) => (
     <RenderNode key={index} node={child} />
@@ -52,6 +63,7 @@ function RenderNode({ node }: { node: TiptapNode }): ReactNode {
   }
   if (node.type === "heading") {
     const level = (node.attrs?.level as number) ?? 2
+    const text = headingText(node)
     if (level === 1) {
       return (
         <h1 className="mt-12 mb-4 text-3xl font-semibold leading-tight tracking-tight text-[var(--lab-ink)]">
@@ -61,20 +73,29 @@ function RenderNode({ node }: { node: TiptapNode }): ReactNode {
     }
     if (level === 2) {
       return (
-        <h2 className="mt-12 mb-3 text-2xl font-semibold leading-snug tracking-tight text-[var(--lab-ink)]">
+        <h2
+          id={slugifyAnchor(text)}
+          className="mt-12 mb-3 text-2xl font-semibold leading-snug tracking-tight text-[var(--lab-ink)]"
+        >
           {children}
         </h2>
       )
     }
     if (level === 3) {
       return (
-        <h3 className="mt-8 mb-2 text-xl font-semibold leading-snug tracking-tight text-[var(--lab-ink)]">
+        <h3
+          id={slugifyAnchor(text)}
+          className="mt-8 mb-2 text-xl font-semibold leading-snug tracking-tight text-[var(--lab-ink)]"
+        >
           {children}
         </h3>
       )
     }
     return (
-      <h4 className="mt-6 mb-2 text-lg font-semibold leading-snug tracking-tight text-[var(--lab-ink)]">
+      <h4
+        id={slugifyAnchor(text)}
+        className="mt-6 mb-2 text-lg font-semibold leading-snug tracking-tight text-[var(--lab-ink)]"
+      >
         {children}
       </h4>
     )
@@ -152,7 +173,7 @@ function RenderNode({ node }: { node: TiptapNode }): ReactNode {
         <a
           href={href}
           target={target}
-          rel={target === "_blank" ? "noreferrer" : undefined}
+          rel={target === "_blank" ? "noreferrer noopener" : undefined}
           className="text-[var(--lab-orange)] underline-offset-4 transition-colors hover:text-[var(--lab-orange-light)] hover:underline"
         >
           {element}
@@ -162,4 +183,19 @@ function RenderNode({ node }: { node: TiptapNode }): ReactNode {
     return element
   }
   return <>{children}</>
+}
+
+function slugifyAnchor(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+}
+
+export function getTiptapText(content: string, maxChars = 320): string {
+  const parsed = parseTiptapContent(content)
+  if (!parsed?.content) return ""
+  const text = parsed.content.map(extractText).join(" ").replace(/\s+/g, " ").trim()
+  if (text.length <= maxChars) return text
+  return text.slice(0, maxChars).trimEnd() + "…"
 }

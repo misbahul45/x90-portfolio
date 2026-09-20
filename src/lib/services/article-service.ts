@@ -196,4 +196,48 @@ export const articleService = {
     ])
     return { published, drafts, total }
   },
+
+  async relatedProjects(articleId: string) {
+    return prisma.projectResearch.findMany({
+      where: {
+        articleId,
+        project: { status: "PUBLISHED" },
+      },
+      include: {
+        project: {
+          select: {
+            id: true,
+            slug: true,
+            title: true,
+            description: true,
+            featured: true,
+            category: { select: { id: true, slug: true, name: true } },
+          },
+        },
+      },
+      take: 4,
+    })
+  },
+
+  async bySlugPublic(slug: string) {
+    return prisma.article.findFirst({
+      where: { slug, status: ARTICLE_STATUS.PUBLISHED },
+      include: {
+        ...articleInclude,
+        projects: {
+          include: {
+            project: {
+              select: {
+                id: true,
+                slug: true,
+                title: true,
+                description: true,
+                status: true,
+              },
+            },
+          },
+        },
+      },
+    })
+  },
 }

@@ -16,6 +16,16 @@ export type ArticleListItem = {
   author: { id: string; name: string; email: string; image: string | null }
   category: { id: string; slug: string; name: string } | null
   tags: Array<{ tag: { id: string; slug: string; name: string } }>
+  projects?: Array<{
+    relation: string
+    project: {
+      id: string
+      slug: string
+      title: string
+      description: string
+      status: string
+    }
+  }>
 }
 
 export type ArticlePage = {

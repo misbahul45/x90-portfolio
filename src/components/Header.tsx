@@ -155,6 +155,14 @@ export default function Header() {
     scrolled
       ? "!text-[var(--lab-orange)]"
       : "!text-white",
+    "hover:!text-[var(--lab-orange)]",
+    "focus-visible:!text-[var(--lab-orange)]",
+    "data-[active]:!text-[var(--lab-orange)]",
+    "data-[active=true]:!text-[var(--lab-orange)]",
+    "data-[state=active]:!text-[var(--lab-orange)]",
+    "data-[active]:!bg-[var(--lab-orange)]/10",
+    "data-[active=true]:!bg-[var(--lab-orange)]/10",
+    "data-[state=active]:!bg-[var(--lab-orange)]/10",
   )
 
   const mobileLinkClass =
@@ -375,6 +383,8 @@ export default function Header() {
                             className: cn(
                               desktopLinkClass,
                               "!text-[var(--lab-orange)]",
+                              "!bg-[var(--lab-orange)]/10",
+                              "data-[active]:!text-[var(--lab-orange)]",
                             ),
                           }}
                         >
@@ -487,6 +497,14 @@ export default function Header() {
                           to={link.to}
                           onClick={() => setOpen(false)}
                           className={mobileLinkClass}
+                          activeProps={{
+                            className: cn(
+                              mobileLinkClass,
+                              "!border-[var(--lab-orange)]/30",
+                              "!text-[var(--lab-orange)]",
+                              "!bg-[var(--lab-orange)]/5",
+                            ),
+                          }}
                         >
                           <span>{link.label}</span>
 

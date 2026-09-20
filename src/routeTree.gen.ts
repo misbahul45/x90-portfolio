@@ -31,6 +31,9 @@ import { Route as AdminArticlesIndexRouteImport } from './routes/admin/articles/
 import { Route as ApiHandlersSplatRouteImport } from './routes/api/handlers/$'
 import { Route as ApiFilesIdRouteImport } from './routes/api/files/$id'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
+import { Route as ApiAskLabsSourcesRouteImport } from './routes/api/ask-labs/sources'
+import { Route as ApiAskLabsChatRouteImport } from './routes/api/ask-labs/chat'
+import { Route as ApiAskLabsBriefRouteImport } from './routes/api/ask-labs/brief'
 import { Route as ApiAiRelatedRouteImport } from './routes/api/ai/related'
 import { Route as ApiAiChatRouteImport } from './routes/api/ai/chat'
 import { Route as AdminProjectsIdRouteImport } from './routes/admin/projects/$id'
@@ -147,6 +150,21 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   path: '/api/auth/$',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAskLabsSourcesRoute = ApiAskLabsSourcesRouteImport.update({
+  id: '/api/ask-labs/sources',
+  path: '/api/ask-labs/sources',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAskLabsChatRoute = ApiAskLabsChatRouteImport.update({
+  id: '/api/ask-labs/chat',
+  path: '/api/ask-labs/chat',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAskLabsBriefRoute = ApiAskLabsBriefRouteImport.update({
+  id: '/api/ask-labs/brief',
+  path: '/api/ask-labs/brief',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiAiRelatedRoute = ApiAiRelatedRouteImport.update({
   id: '/api/ai/related',
   path: '/api/ai/related',
@@ -195,6 +213,9 @@ export interface FileRoutesByFullPath {
   '/admin/projects/$id': typeof AdminProjectsIdRoute
   '/api/ai/chat': typeof ApiAiChatRoute
   '/api/ai/related': typeof ApiAiRelatedRoute
+  '/api/ask-labs/brief': typeof ApiAskLabsBriefRoute
+  '/api/ask-labs/chat': typeof ApiAskLabsChatRoute
+  '/api/ask-labs/sources': typeof ApiAskLabsSourcesRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/files/$id': typeof ApiFilesIdRoute
   '/api/handlers/$': typeof ApiHandlersSplatRoute
@@ -221,6 +242,9 @@ export interface FileRoutesByTo {
   '/admin/projects/$id': typeof AdminProjectsIdRoute
   '/api/ai/chat': typeof ApiAiChatRoute
   '/api/ai/related': typeof ApiAiRelatedRoute
+  '/api/ask-labs/brief': typeof ApiAskLabsBriefRoute
+  '/api/ask-labs/chat': typeof ApiAskLabsChatRoute
+  '/api/ask-labs/sources': typeof ApiAskLabsSourcesRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/files/$id': typeof ApiFilesIdRoute
   '/api/handlers/$': typeof ApiHandlersSplatRoute
@@ -251,6 +275,9 @@ export interface FileRoutesById {
   '/admin/projects/$id': typeof AdminProjectsIdRoute
   '/api/ai/chat': typeof ApiAiChatRoute
   '/api/ai/related': typeof ApiAiRelatedRoute
+  '/api/ask-labs/brief': typeof ApiAskLabsBriefRoute
+  '/api/ask-labs/chat': typeof ApiAskLabsChatRoute
+  '/api/ask-labs/sources': typeof ApiAskLabsSourcesRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/files/$id': typeof ApiFilesIdRoute
   '/api/handlers/$': typeof ApiHandlersSplatRoute
@@ -282,6 +309,9 @@ export interface FileRouteTypes {
     | '/admin/projects/$id'
     | '/api/ai/chat'
     | '/api/ai/related'
+    | '/api/ask-labs/brief'
+    | '/api/ask-labs/chat'
+    | '/api/ask-labs/sources'
     | '/api/auth/$'
     | '/api/files/$id'
     | '/api/handlers/$'
@@ -308,6 +338,9 @@ export interface FileRouteTypes {
     | '/admin/projects/$id'
     | '/api/ai/chat'
     | '/api/ai/related'
+    | '/api/ask-labs/brief'
+    | '/api/ask-labs/chat'
+    | '/api/ask-labs/sources'
     | '/api/auth/$'
     | '/api/files/$id'
     | '/api/handlers/$'
@@ -337,6 +370,9 @@ export interface FileRouteTypes {
     | '/admin/projects/$id'
     | '/api/ai/chat'
     | '/api/ai/related'
+    | '/api/ask-labs/brief'
+    | '/api/ask-labs/chat'
+    | '/api/ask-labs/sources'
     | '/api/auth/$'
     | '/api/files/$id'
     | '/api/handlers/$'
@@ -354,6 +390,9 @@ export interface RootRouteChildren {
   ApiUploadRoute: typeof ApiUploadRoute
   ApiAiChatRoute: typeof ApiAiChatRoute
   ApiAiRelatedRoute: typeof ApiAiRelatedRoute
+  ApiAskLabsBriefRoute: typeof ApiAskLabsBriefRoute
+  ApiAskLabsChatRoute: typeof ApiAskLabsChatRoute
+  ApiAskLabsSourcesRoute: typeof ApiAskLabsSourcesRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
   ApiFilesIdRoute: typeof ApiFilesIdRoute
   ApiHandlersSplatRoute: typeof ApiHandlersSplatRoute
@@ -515,6 +554,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAuthSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/ask-labs/sources': {
+      id: '/api/ask-labs/sources'
+      path: '/api/ask-labs/sources'
+      fullPath: '/api/ask-labs/sources'
+      preLoaderRoute: typeof ApiAskLabsSourcesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/ask-labs/chat': {
+      id: '/api/ask-labs/chat'
+      path: '/api/ask-labs/chat'
+      fullPath: '/api/ask-labs/chat'
+      preLoaderRoute: typeof ApiAskLabsChatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/ask-labs/brief': {
+      id: '/api/ask-labs/brief'
+      path: '/api/ask-labs/brief'
+      fullPath: '/api/ask-labs/brief'
+      preLoaderRoute: typeof ApiAskLabsBriefRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/ai/related': {
       id: '/api/ai/related'
       path: '/api/ai/related'
@@ -632,6 +692,9 @@ const rootRouteChildren: RootRouteChildren = {
   ApiUploadRoute: ApiUploadRoute,
   ApiAiChatRoute: ApiAiChatRoute,
   ApiAiRelatedRoute: ApiAiRelatedRoute,
+  ApiAskLabsBriefRoute: ApiAskLabsBriefRoute,
+  ApiAskLabsChatRoute: ApiAskLabsChatRoute,
+  ApiAskLabsSourcesRoute: ApiAskLabsSourcesRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
   ApiFilesIdRoute: ApiFilesIdRoute,
   ApiHandlersSplatRoute: ApiHandlersSplatRoute,

@@ -46,6 +46,7 @@ function AdminProjectEdit() {
   const [categoryId, setCategoryId] = useState<string>("")
   const [featured, setFeatured] = useState(false)
   const [order, setOrder] = useState(0)
+  const [status, setStatus] = useState<"DRAFT" | "PUBLISHED" | "ARCHIVED">("DRAFT")
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [submitError, setSubmitError] = useState<string | null>(null)
 
@@ -61,6 +62,7 @@ function AdminProjectEdit() {
     setCategoryId(project.category?.id ?? "")
     setFeatured(project.featured)
     setOrder(project.order)
+    setStatus(project.status ?? "DRAFT")
   }, [project])
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -86,6 +88,8 @@ function AdminProjectEdit() {
         featured,
         order: Number(order) || 0,
         categoryId: categoryId || null,
+        status,
+        researchArticleIds: (project.research ?? []).map((r) => r.article.id),
       })
     } catch (error) {
       const fieldErrors = extractZodErrors(error)
@@ -294,6 +298,22 @@ function AdminProjectEdit() {
               onChange={(event) => setOrder(Number(event.target.value))}
               className="border-[var(--lab-line)] bg-[var(--lab-card)] font-mono text-xs text-[var(--lab-ink)]"
             />
+          </div>
+          <div className="space-y-1.5">
+            <Label className="text-[var(--lab-ink)]">Status</Label>
+            <Select
+              value={status}
+              onValueChange={(value) => setStatus(value as "DRAFT" | "PUBLISHED" | "ARCHIVED")}
+            >
+              <SelectTrigger className="border-[var(--lab-line)] bg-[var(--lab-card)] text-[var(--lab-ink)]">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent className="border-[var(--lab-line)] bg-[var(--lab-card)] text-[var(--lab-ink)]">
+                <SelectItem value="DRAFT">Draft</SelectItem>
+                <SelectItem value="PUBLISHED">Published</SelectItem>
+                <SelectItem value="ARCHIVED">Archived</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
           <label className="flex items-center gap-3 font-mono text-xs uppercase tracking-[0.18em] text-[var(--lab-ink-soft)]">
             <Switch

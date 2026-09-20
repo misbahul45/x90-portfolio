@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import {
   HeadContent,
   Scripts,
@@ -16,8 +16,8 @@ import TanStackQueryDevtools from "#/integrations/tanstack-query/devtools"
 import appCss from "#/styles.css?url"
 
 import type { QueryClient } from "@tanstack/react-query"
-import { FloatingAIButton } from "#/components/ai/FloatingAIButton"
-import { AIAssistantDialog } from "#/components/ai/AIAssistantDialog"
+import { AskLabsDialog } from "#/components/asklabs/AskLabsDialog"
+import { AskLabsFab } from "#/components/asklabs/AskLabsFab"
 
 interface MyRouterContext {
   queryClient: QueryClient
@@ -75,9 +75,26 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 })
 
 function RootDocument({ children }: { children: React.ReactNode }) {
-  const [currentPath] = useState(() =>
+  const [currentPath, setCurrentPath] = useState(() =>
     typeof window === "undefined" ? "/" : window.location.pathname,
   )
+  useEffect(() => {
+    if (typeof window === "undefined") return
+    const handler = () => setCurrentPath(window.location.pathname)
+    window.addEventListener("popstate", handler)
+    const orig = window.history.pushState
+    window.history.pushState = function (...args: Parameters<typeof orig>) {
+      const result = orig.apply(this, args)
+      window.dispatchEvent(new Event("locationchange"))
+      return result
+    }
+    window.addEventListener("locationchange", handler)
+    return () => {
+      window.removeEventListener("popstate", handler)
+      window.removeEventListener("locationchange", handler)
+      window.history.pushState = orig
+    }
+  }, [])
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
       <head>
@@ -88,8 +105,8 @@ function RootDocument({ children }: { children: React.ReactNode }) {
           <Header />
           {children}
           <Footer />
-          <FloatingAIButton onOpen={() => document.dispatchEvent(new CustomEvent("xninetzy:ai-open"))} />
-          <AIAssistantDialog currentPath={currentPath} />
+          <AskLabsFab />
+          <AskLabsDialog currentPath={currentPath} />
           <TanStackDevtools
             config={{
               position: "bottom-right",

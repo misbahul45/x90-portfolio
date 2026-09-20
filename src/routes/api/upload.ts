@@ -46,6 +46,12 @@ const ALLOWED_MIME_TYPES: Record<Purpose, ReadonlySet<string>> = {
   ]),
 }
 
+const PURPOSE_TO_ENUM: Record<Purpose, "RESEARCH_COVER" | "BRIEF_ATTACHMENT" | "TEAM_AVATAR"> = {
+  "research-cover": "RESEARCH_COVER",
+  "brief-attachment": "BRIEF_ATTACHMENT",
+  "team-avatar": "TEAM_AVATAR",
+}
+
 function inferMime(name: string, declared: string): string {
   if (declared && declared !== "application/octet-stream") return declared
   const lower = name.toLowerCase()
@@ -96,7 +102,7 @@ export const Route = createFileRoute("/api/upload")({
               name: fileName,
               mimeType: fileType,
               size: file.size,
-              purpose,
+              purpose: PURPOSE_TO_ENUM[purpose],
               data: buffer,
             },
           })

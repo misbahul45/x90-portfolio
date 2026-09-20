@@ -50,6 +50,8 @@ function AdminProjectsPage() {
         featured,
         order: 0,
         categoryId: null,
+        status: "DRAFT",
+        researchArticleIds: [],
       })
       setName("")
       setSlug("")
