@@ -424,4 +424,48 @@ a {
     background-color: var(--background);
     color: var(--foreground);
   }
+
+  @keyframes xn-border-flow {
+    0% {
+      transform: translateX(-50%);
+    }
+
+    100% {
+      transform: translateX(0%);
+    }
+  }
+  @property --xn-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes xn-rotate {
+  to {
+    --xn-angle: 360deg;
+  }
+}
+
+@keyframes xn-shimmer {
+  0% {
+    background-position: -200% center;
+  }
+
+  100% {
+    background-position: 200% center;
+  }
+}
+
+@keyframes xn-pulse {
+  0%,
+  100% {
+    opacity: .45;
+    filter: blur(20px);
+  }
+
+  50% {
+    opacity: .9;
+    filter: blur(28px);
+  }
+}
 }
