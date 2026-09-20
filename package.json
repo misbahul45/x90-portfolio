@@ -22,13 +22,14 @@
     "db:down": "docker compose stop postgres",
     "db:logs": "docker compose logs -f postgres",
     "db:psql": "docker compose exec postgres psql -U x90 -d x90_portfolio",
-    "db:reset": "docker compose down -v && docker compose up -d postgres",
+    "db:docker:reset": "docker compose down -v && docker compose up -d postgres",
     "db:generate": "bunx dotenv-cli -e .env.local -- prisma generate",
     "db:push": "bunx dotenv-cli -e .env.local -- prisma db push",
     "db:migrate": "bunx dotenv-cli -e .env.local -- prisma migrate dev",
     "db:studio": "bunx dotenv-cli -e .env.local -- prisma studio",
     "db:seed": "bunx dotenv-cli -e .env.local -- prisma db seed",
-    "secret:generate": "bunx @better-auth/cli secret"
+    "secret:generate": "bunx @better-auth/cli secret",
+    "db:reset": "bunx dotenv-cli -e .env.local -- prisma migrate reset"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.9.1",
