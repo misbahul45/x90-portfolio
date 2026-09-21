@@ -274,14 +274,6 @@ export function ServicesGrid() {
           className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-end"
         >
           <div>
-            <div className="mb-5 flex items-center gap-3">
-              <span className="font-mono text-[9px] uppercase tracking-[0.26em] text-[var(--lab-orange)]">
-                Capabilities
-              </span>
-
-              <span className="h-px w-12 bg-[var(--lab-orange)]/35" />
-            </div>
-
             <h2 className="max-w-3xl text-3xl font-semibold tracking-[-0.03em] text-[var(--lab-ink)] sm:text-4xl lg:text-[46px] lg:leading-[1.05]">
               Five services.
               <br />

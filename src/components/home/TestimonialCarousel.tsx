@@ -228,13 +228,6 @@ export function TestimonialCarousel() {
           className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end"
         >
           <div>
-            <div className="mb-5 flex items-center gap-3">
-              <span className="font-mono text-[9px] uppercase tracking-[0.28em] text-[var(--lab-orange)]">
-                Field feedback
-              </span>
-
-              <span className="h-px w-12 bg-[var(--lab-orange)]/30" />
-            </div>
 
             <h2 className="max-w-3xl text-3xl font-semibold tracking-[-0.04em] text-[var(--lab-ink)] sm:text-4xl lg:text-[46px] lg:leading-[1.05]">
               Signals from people

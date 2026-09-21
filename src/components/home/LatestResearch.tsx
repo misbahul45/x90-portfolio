@@ -30,18 +30,21 @@ export function LatestResearch() {
           className="mx-auto flex max-w-3xl flex-col gap-4 sm:flex-row sm:items-end sm:justify-between"
         >
           <div>
-            <h2 className="text-3xl font-semibold tracking-tight text-[var(--lab-ink)] sm:text-4xl">
+            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--lab-blue)]">
+              {articles.length > 0 ? `${articles.length} recent articles` : "Research feed"}
+            </p>
+            <h2 className="mt-2 text-3xl font-semibold tracking-tight text-[var(--lab-ink)] sm:text-4xl">
               Latest research
             </h2>
-            <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[var(--lab-ink-soft)] sm:text-base">
+            <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[var(--lab-ink-soft)] sm:text-[15px]">
               Experiments, engineering notes, and ideas from the lab.
             </p>
           </div>
           <a
             href={ROUTES.RESEARCH}
-            className="group inline-flex items-center gap-1.5 self-start font-mono text-xs uppercase tracking-[0.18em] text-[var(--lab-ink-soft)] no-underline transition-colors hover:text-[var(--lab-orange)] sm:self-auto"
+            className="group inline-flex shrink-0 items-center gap-1.5 self-start font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--lab-ink-soft)] no-underline transition-colors hover:text-[var(--lab-orange)] sm:self-auto"
           >
-            View all
+            View all research
             <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" aria-hidden />
           </a>
         </motion.div>
@@ -60,14 +63,22 @@ export function LatestResearch() {
           )}
 
           {!isPending && articles.length === 0 && (
-            <p className="text-sm text-[var(--lab-ink-soft)]">No articles published yet.</p>
+            <div className="rounded-xl border border-dashed border-[var(--lab-line)] bg-[var(--lab-card)]/30 p-10 text-center">
+              <p className="text-sm font-medium text-[var(--lab-ink)]">No articles published yet.</p>
+              <p className="mt-1 text-xs text-[var(--lab-ink-soft)]">
+                Drafts from the admin dashboard will appear here once published.
+              </p>
+            </div>
           )}
 
           {articles.length > 0 && (
             <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {articles.map((article) => (
+              {articles.map((article, index) => (
                 <li key={article.id} className="h-full">
-                  <ResearchCard article={toCardItem(article)} />
+                  <ResearchCard
+                    article={toCardItem(article)}
+                    variant={index === 0 ? "featured" : "default"}
+                  />
                 </li>
               ))}
             </ul>
@@ -224,5 +235,7 @@ function toCardItem(article: ArticleListItem): ResearchCardItem {
     category: article.category,
     publishedAt: article.publishedAt,
     readingTime: article.readingTime,
+    author: article.author ? { name: article.author.name } : null,
+    tags: article.tags?.map((t) => t.tag) ?? [],
   }
 }

@@ -70,13 +70,6 @@ export function ArchitectureShowcase() {
           className="grid gap-10 lg:grid-cols-[1fr_0.82fr] lg:items-end"
         >
           <div>
-            <div className="mb-5 flex items-center gap-3">
-              <span className="font-mono text-[9px] uppercase tracking-[0.28em] text-[var(--lab-orange)]">
-                System architecture
-              </span>
-
-              <span className="h-px w-12 bg-[var(--lab-orange)]/35" />
-            </div>
 
             <h2 className="max-w-3xl text-3xl font-semibold tracking-[-0.035em] text-[var(--lab-ink)] sm:text-4xl lg:text-[48px] lg:leading-[1.04]">
               Production systems,

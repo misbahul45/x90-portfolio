@@ -1,7 +1,14 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import type { AskLabsSource } from "#/lib/ask-labs"
 
-export type AskLabsStage = "idle" | "analyzing" | "retrieving" | "reasoning" | "responding" | "completed" | "error"
+export type AskLabsPhase =
+  | "idle"
+  | "submitting"
+  | "retrieving"
+  | "generating"
+  | "complete"
+  | "error"
+  | "stopped"
 
 export type AskLabsMessage = {
   id: string
@@ -80,7 +87,7 @@ const QUICK_ACTIONS: Record<AskLabsContextKind, AskLabsQuickAction[]> = {
   ],
   "research-index": [
     { id: "latest", label: "Latest investigations", prompt: "What are the latest investigations in the lab?" },
-    { id: "methods", label: "How does research get evaluated?", prompt: "How does research at XNINETZY get evaluated?" },
+    { id: "methods", label: "How is research evaluated?", prompt: "How does research at XNINETZY get evaluated?" },
     { id: "themes", label: "Active research themes", prompt: "What research themes is XNINETZY currently exploring?" },
     { id: "apply", label: "Apply research to a system", prompt: "How would I apply this research to a real system?" },
   ],
@@ -106,15 +113,33 @@ const QUICK_ACTIONS: Record<AskLabsContextKind, AskLabsQuickAction[]> = {
   ],
 }
 
-const LANDING_QUESTION = "Ask about what we build, what we research, or how a system works."
+const LANDING_QUESTION =
+  "Ask about what XNINETZY builds, what it investigates, and how its systems are engineered."
 
 type StreamChunk =
-  | { type: "stage"; stage: AskLabsStage }
+  | { type: "stage"; stage: "analyzing" | "retrieving" | "reasoning" | "responding" }
   | { type: "sources"; sources: AskLabsSource[] }
   | { type: "intent"; intent: string; routeKind: string }
   | { type: "token"; text: string }
   | { type: "done"; ok: true }
   | { type: "error"; message: string }
+
+const STAGE_TO_PHASE: Record<"analyzing" | "retrieving" | "reasoning" | "responding", AskLabsPhase> = {
+  analyzing: "submitting",
+  retrieving: "retrieving",
+  reasoning: "generating",
+  responding: "generating",
+}
+
+const PHASE_LABEL: Record<AskLabsPhase, string> = {
+  idle: "",
+  submitting: "Submitting…",
+  retrieving: "Finding sources…",
+  generating: "Generating answer…",
+  complete: "Done",
+  error: "Something went wrong.",
+  stopped: "Stopped.",
+}
 
 async function consumeSSE(
   body: ReadableStream<Uint8Array> | null,
@@ -152,9 +177,12 @@ async function consumeSSE(
 export function useAskLabs(currentPath: string) {
   const [context, setContext] = useState<AskLabsContext>(() => detectContextFromPath(currentPath))
   const [messages, setMessages] = useState<AskLabsMessage[]>([])
-  const [stage, setStage] = useState<AskLabsStage>("idle")
+  const [phase, setPhase] = useState<AskLabsPhase>("idle")
   const [isOpen, setIsOpen] = useState(false)
+  const [showTrace, setShowTrace] = useState(false)
   const abortRef = useRef<AbortController | null>(null)
+  const scrollerRef = useRef<HTMLDivElement | null>(null)
+  const stuckAtBottomRef = useRef(true)
 
   useEffect(() => {
     setContext(detectContextFromPath(currentPath))
@@ -172,13 +200,14 @@ export function useAskLabs(currentPath: string) {
     abortRef.current?.abort()
     abortRef.current = null
     setMessages([])
-    setStage("idle")
+    setPhase("idle")
+    setShowTrace(false)
   }, [])
 
   const stop = useCallback(() => {
     abortRef.current?.abort()
     abortRef.current = null
-    setStage("idle")
+    setPhase("stopped")
   }, [])
 
   const submit = useCallback(
@@ -208,6 +237,8 @@ export function useAskLabs(currentPath: string) {
         content: entry.content,
       }))
 
+      setPhase("submitting")
+
       try {
         const response = await fetch("/api/ask-labs/chat", {
           method: "POST",
@@ -231,7 +262,7 @@ export function useAskLabs(currentPath: string) {
           response.body,
           (chunk) => {
             if (chunk.type === "stage") {
-              setStage(chunk.stage)
+              setPhase(STAGE_TO_PHASE[chunk.stage] ?? "generating")
             } else if (chunk.type === "intent") {
               setMessages((prev) =>
                 prev.map((m) => (m.id === assistantId ? { ...m, intent: chunk.intent } : m)),
@@ -239,36 +270,40 @@ export function useAskLabs(currentPath: string) {
             } else if (chunk.type === "sources") {
               setMessages((prev) =>
                 prev.map((m) =>
-                  m.id === assistantId ? { ...m, sources: [...(m.sources ?? []), ...chunk.sources] } : m,
+                  m.id === assistantId
+                    ? { ...m, sources: [...(m.sources ?? []), ...chunk.sources] }
+                    : m,
                 ),
               )
             } else if (chunk.type === "token") {
+              setPhase("generating")
               setMessages((prev) =>
-                prev.map((m) => (m.id === assistantId ? { ...m, content: `${m.content}${chunk.text}` } : m)),
+                prev.map((m) =>
+                  m.id === assistantId ? { ...m, content: `${m.content}${chunk.text}` } : m,
+                ),
               )
             } else if (chunk.type === "done") {
-              setStage("completed")
+              setPhase("complete")
             } else if (chunk.type === "error") {
               setMessages((prev) =>
                 prev.map((m) =>
                   m.id === assistantId && m.content === ""
                     ? {
                         ...m,
-                        content:
-                          "Sorry — Ask Labs could not complete this answer. You can still browse the projects and research pages directly.",
+                        content: "Ask Labs could not complete this answer. Browse the projects and research pages directly.",
                         error: true,
                       }
                     : m,
                 ),
               )
-              setStage("idle")
+              setPhase("error")
             }
           },
           controller.signal,
         )
       } catch (error) {
         if (controller.signal.aborted) {
-          setStage("idle")
+          setPhase("stopped")
           return
         }
         setMessages((prev) =>
@@ -278,36 +313,50 @@ export function useAskLabs(currentPath: string) {
                   ...m,
                   content:
                     error instanceof Error
-                      ? `Sorry — Ask Labs could not reach the server. (${error.message})`
-                      : "Sorry — Ask Labs could not reach the server.",
+                      ? `Ask Labs could not reach the server. (${error.message})`
+                      : "Ask Labs could not reach the server.",
                   error: true,
                 }
               : m,
           ),
         )
-        setStage("idle")
+        setPhase("error")
       } finally {
         if (abortRef.current === controller) {
           abortRef.current = null
-          if (stage === "completed") {
-            setStage("idle")
-          }
         }
       }
     },
-    [context, messages, stage],
+    [context, messages],
   )
+
+  const onScrollerScroll = useCallback(() => {
+    const el = scrollerRef.current
+    if (!el) return
+    const distance = el.scrollHeight - el.scrollTop - el.clientHeight
+    stuckAtBottomRef.current = distance < 80
+  }, [])
+
+  const phaseLabel = PHASE_LABEL[phase]
+  const isStreaming = phase === "submitting" || phase === "retrieving" || phase === "generating"
 
   return {
     context,
     messages,
-    stage,
+    phase,
+    isStreaming,
+    phaseLabel,
     isOpen,
     setIsOpen,
+    showTrace,
+    setShowTrace,
     quickActions,
     submit,
     reset,
     stop,
     landingQuestion: LANDING_QUESTION,
+    scrollerRef,
+    onScrollerScroll,
+    stuckAtBottomRef,
   }
 }

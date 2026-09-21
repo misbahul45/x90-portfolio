@@ -57,7 +57,7 @@ function AdminLoginPage() {
           initial="hidden"
           animate="visible"
           variants={staggerContainer}
-          className="hidden flex-col justify-between border-r border-[var(--lab-line)] p-12 lg:flex"
+          className="hidden flex-col justify-between border-r border-[var(--lab-line)] p-8 sm:p-10 lg:flex lg:p-12"
         >
           <motion.div variants={staggerItem}>
             <a
@@ -79,11 +79,21 @@ function AdminLoginPage() {
               Manage articles, projects, team members, and incoming feedback.
               Public sign-up is disabled — credentials are seeded by the lab.
             </p>
-            <div className="rounded-md border border-[var(--lab-line)] bg-[var(--lab-card)] p-4 font-mono text-[11px] text-[var(--lab-ink-soft)]">
-              <p className="font-semibold text-[var(--lab-ink)]">Seeded credentials</p>
-              <p className="mt-2">email: <span className="text-[var(--lab-ink)]">admin@xninetzy.local</span></p>
-              <p>password: <span className="text-[var(--lab-ink)]">XninetzyDev2026!</span></p>
-              <p className="mt-2 text-[var(--lab-orange)]">Rotate this in production.</p>
+            <div className="space-y-2 rounded-md border border-[var(--lab-line)] bg-[var(--lab-card)] p-4 font-mono text-[11px] text-[var(--lab-ink-soft)]">
+              <p className="font-semibold uppercase tracking-[0.16em] text-[var(--lab-ink)]">
+                Seeded credentials
+              </p>
+              <div className="space-y-1">
+                <p>
+                  email:{" "}
+                  <span className="text-[var(--lab-ink)]">xninetzy@gmail.com</span>
+                </p>
+                <p>
+                  password:{" "}
+                  <span className="text-[var(--lab-ink)]">xninetzy123</span>
+                </p>
+              </div>
+              <p className="text-[var(--lab-orange)]">Rotate these in production.</p>
             </div>
           </motion.div>
           <motion.div variants={staggerItem} className="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--lab-ink-soft)]">
@@ -96,11 +106,11 @@ function AdminLoginPage() {
           initial="hidden"
           animate="visible"
           variants={fadeInUp}
-          className="flex items-center justify-center px-6 py-16 sm:px-10"
+          className="flex items-center justify-center px-4 py-14 sm:px-8 sm:py-20 lg:px-10"
         >
           <form
             onSubmit={onSubmit}
-            className="research-card-surface w-full max-w-sm space-y-6 p-8 sm:p-10"
+            className="research-card-surface w-full max-w-sm space-y-6 p-7 sm:p-10"
           >
             <header className="space-y-2">
               <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--lab-orange)] lg:hidden">
@@ -120,6 +130,7 @@ function AdminLoginPage() {
                   type="email"
                   autoComplete="email"
                   required
+                  placeholder="xninetzy@gmail.com"
                   value={email}
                   onChange={(event) => setEmail(event.target.value)}
                   className="border-[var(--lab-line)] bg-[var(--lab-card)] text-[var(--lab-ink)] placeholder:text-[var(--lab-ink-soft)]"
@@ -132,6 +143,7 @@ function AdminLoginPage() {
                   type="password"
                   autoComplete="current-password"
                   required
+                  placeholder="••••••••"
                   value={password}
                   onChange={(event) => setPassword(event.target.value)}
                   className="border-[var(--lab-line)] bg-[var(--lab-card)] text-[var(--lab-ink)] placeholder:text-[var(--lab-ink-soft)]"
@@ -140,7 +152,7 @@ function AdminLoginPage() {
             </div>
 
             {error && (
-              <div className="flex items-start gap-2 rounded-md border border-destructive/40 bg-destructive/10 p-3 text-xs text-destructive">
+              <div role="alert" className="flex items-start gap-2 rounded-md border border-destructive/40 bg-destructive/10 p-3 text-xs text-destructive">
                 <AlertCircle className="size-3.5 shrink-0 translate-y-0.5" aria-hidden />
                 <p>{error}</p>
               </div>

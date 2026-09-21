@@ -253,15 +253,28 @@ a {
   gap: 6px;
   border: 1px solid var(--lab-line);
   background: var(--lab-card);
-  padding: 6px 12px;
+  padding: 0 12px;
+  min-height: 36px;
+  border-radius: 8px;
   font-family: var(--font-mono);
   font-size: 11px;
   font-weight: 500;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--lab-ink-soft);
   cursor: pointer;
+  white-space: nowrap;
   transition: border-color 180ms ease, color 180ms ease, background-color 180ms ease;
+}
+
+@media (max-width: 640px) {
+  .lab-filter-pill {
+    /* Comfortable touch target on mobile. Tracking narrows so 6+ pills
+       fit horizontally with native overflow scroll. */
+    min-height: 40px;
+    letter-spacing: 0.08em;
+    padding: 0 10px;
+  }
 }
 
 .lab-filter-pill:hover {
@@ -466,6 +479,93 @@ a {
   50% {
     opacity: .9;
     filter: blur(28px);
+  }
+}
+
+/* =========================================================================
+   RESPONSIVE FOUNDATION
+   ========================================================================= */
+
+/* Prevent horizontal overflow at the document root without hiding
+   legitimate horizontal filter rails (those use `overflow-x: auto`
+   on their own scroll container). */
+html,
+body {
+  overflow-x: clip;
+}
+
+/* Respect safe-area insets for iOS / Android edge-to-edge layouts. */
+:root {
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+}
+
+.safe-bottom {
+  padding-bottom: max(1rem, var(--safe-bottom));
+}
+.safe-top {
+  padding-top: max(1rem, var(--safe-top));
+}
+
+/* Fluid display scale for hero headings. Uses clamp() so the value
+   scales smoothly between the smallest and largest viewport without
+   step changes. Each class maps to a fluid range. */
+.text-display-xl {
+  font-size: clamp(1.875rem, 1.4rem + 2.4vw, 3.25rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+.text-display-lg {
+  font-size: clamp(1.5rem, 1.2rem + 1.5vw, 2.25rem);
+  line-height: 1.1;
+  letter-spacing: -0.018em;
+}
+.text-display-md {
+  font-size: clamp(1.25rem, 1.05rem + 1vw, 1.75rem);
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+}
+
+/* Tabular numerals + label-grade monospace stack — keeps metadata
+   aligned regardless of value width. */
+.font-tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Touch-friendly minimum target. Applied to filter pills, sort buttons,
+   search input, action buttons in lists, etc. */
+.touch-target {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Subtle right-edge fade on horizontal filter rails so users notice
+   they can scroll. Pure CSS, no extra DOM. */
+.rail-fade-right {
+  mask-image: linear-gradient(to right, black 88%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, black 88%, transparent 100%);
+}
+
+/* Reduce decorative animation on small screens + users who prefer it. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media (max-width: 640px) {
+  /* Reduce shimmer + nav glow intensity on mobile to save battery
+     and reduce visual noise. */
+  .xn-nav-animated {
+    animation: none !important;
+    opacity: 0.6 !important;
   }
 }
 }

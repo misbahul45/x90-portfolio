@@ -1,5 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router"
+import { prisma } from "#/db"
 import { z } from "zod"
+
+// Force eager init on the first request. The `import { prisma } from "#/db"`
+// proxy throws if accessed before init; calling ensurePrisma resolves the
+// connection and populates the global before any handler touches prisma.
+import { ensurePrisma as _ensurePrisma } from "#/db"
+void _ensurePrisma()
 import { auth } from "#/lib/auth"
 import { articleService } from "#/lib/services/article-service"
 import { projectService } from "#/lib/services/project-service"
@@ -83,33 +90,67 @@ async function requireAdmin(request: Request): Promise<SessionUser | Response> {
 export const Route = createFileRoute("/api/handlers/$")({
   server: {
     handlers: {
-      POST: async ({ request }) => {
-        const url = new URL(request.url)
-        const path = url.pathname.replace(/^\/api\/handlers\/?/, "")
-        const segments = path.split("/").filter(Boolean)
-        return routePost(segments, request)
-      },
       GET: async ({ request }) => {
         const url = new URL(request.url)
         const path = url.pathname.replace(/^\/api\/handlers\/?/, "")
         const segments = path.split("/").filter(Boolean)
-        return routeGet(segments, request, url)
+        return safe(() => routeGet(segments, request, url))
       },
       PATCH: async ({ request }) => {
         const url = new URL(request.url)
         const path = url.pathname.replace(/^\/api\/handlers\/?/, "")
         const segments = path.split("/").filter(Boolean)
-        return routePatch(segments, request)
+        return safe(() => routePatch(segments, request))
       },
       DELETE: async ({ request }) => {
         const url = new URL(request.url)
         const path = url.pathname.replace(/^\/api\/handlers\/?/, "")
         const segments = path.split("/").filter(Boolean)
-        return routeDelete(segments, request)
+        return safe(() => routeDelete(segments, request))
+      },
+      POST: async ({ request }) => {
+        const url = new URL(request.url)
+        const path = url.pathname.replace(/^\/api\/handlers\/?/, "")
+        const segments = path.split("/").filter(Boolean)
+        return safe(() => routePost(segments, request))
       },
     },
   },
 })
+
+async function safe(handler: () => Promise<Response>): Promise<Response> {
+  try {
+    return await handler()
+  } catch (error) {
+    // Surface the real error cause instead of letting Nitro return
+    // "[object ErrorEvent]" or a swallowed proxy. Never expose credentials:
+    // only emit the constructor name, public message, and Prisma's
+    // clientVersion. DATABASE_URL and connection strings stay out of logs.
+    const e = error as {
+      name?: unknown
+      constructor?: { name?: string }
+      message?: unknown
+      code?: unknown
+      clientVersion?: unknown
+    }
+    const errorName = String(e?.constructor?.name ?? e?.name ?? "UnknownError")
+    const publicMessage = String(e?.message ?? "Unknown error")
+    const code = e?.code ? String(e.code) : ""
+    const clientVersion = e?.clientVersion ? String(e.clientVersion) : ""
+    console.error("[api/handlers] error", JSON.stringify({
+      name: errorName,
+      code: code || undefined,
+      clientVersion: clientVersion || undefined,
+      // `message` may include hostnames or error codes that are safe to
+      // log but NEVER include credentials. Truncate to a sane bound.
+      message: publicMessage.slice(0, 500),
+    }))
+    const detail = code
+      ? `${errorName}(${code})`
+      : errorName
+    return fail(detail, 500)
+  }
+}
 
 async function routeGet(segments: string[], request: Request, url: URL): Promise<Response> {
   const [resource, id] = segments

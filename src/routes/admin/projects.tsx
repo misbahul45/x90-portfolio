@@ -224,56 +224,66 @@ function AdminProjectsPage() {
             {projects.map((project) => (
               <li
                 key={project.id}
-                className="grid grid-cols-1 gap-2 px-4 py-3 sm:grid-cols-[2fr_1fr_160px] sm:items-center sm:gap-4"
+                className="grid grid-cols-1 gap-3 px-4 py-4 sm:grid-cols-[minmax(0,2fr)_minmax(0,1fr)_auto] sm:items-center sm:gap-4 sm:py-3"
               >
-                <div className="flex items-center gap-3 min-w-0">
+                <div className="flex items-start gap-3 min-w-0 sm:items-center">
                   <span className="lab-tech-tag w-fit shrink-0">
                     {project.category?.name ?? "—"}
                   </span>
-                  <div className="min-w-0">
+                  <div className="min-w-0 flex-1">
                     <p className="truncate text-sm font-medium text-[var(--lab-ink)]">
                       {project.title}
                     </p>
-                    <p className="line-clamp-1 text-xs text-[var(--lab-ink-soft)]">
+                    <p className="line-clamp-2 text-xs text-[var(--lab-ink-soft)] sm:line-clamp-1">
                       {project.description}
                     </p>
                   </div>
                 </div>
-                <div className="flex flex-wrap gap-1.5">
+                <div className="flex flex-wrap gap-1.5 sm:justify-start">
                   {project.technologies.slice(0, 4).map((techItem) => (
                     <span key={techItem} className="lab-tech-tag">
                       {techItem}
                     </span>
                   ))}
+                  {project.technologies.length > 4 ? (
+                    <span className="lab-tech-tag border-dashed">+{project.technologies.length - 4}</span>
+                  ) : null}
                 </div>
-                <div className="flex items-center justify-end gap-1">
-                  {project.githubUrl && (
-                    <Button asChild size="icon" variant="ghost" aria-label="Source">
+                <div className="-mr-2 flex items-center justify-end gap-0.5 sm:shrink-0">
+                  {project.githubUrl ? (
+                    <Button asChild size="icon" variant="ghost" aria-label="Source" className="size-9 sm:size-8">
                       <a href={project.githubUrl} target="_blank" rel="noreferrer">
-                        <Github className="size-3.5" />
+                        <Github className="size-4" />
                       </a>
                     </Button>
-                  )}
-                  {project.demoUrl && (
-                    <Button asChild size="icon" variant="ghost" aria-label="Demo">
+                  ) : null}
+                  {project.demoUrl ? (
+                    <Button asChild size="icon" variant="ghost" aria-label="Demo" className="size-9 sm:size-8">
                       <a href={project.demoUrl} target="_blank" rel="noreferrer">
-                        <ExternalLink className="size-3.5" />
+                        <ExternalLink className="size-4" />
                       </a>
                     </Button>
-                  )}
-                  <Button asChild size="icon" variant="ghost" aria-label={`Edit ${project.title}`}>
+                  ) : null}
+                  <Button
+                    asChild
+                    size="icon"
+                    variant="ghost"
+                    aria-label={`Edit ${project.title}`}
+                    className="size-9 sm:size-8"
+                  >
                     <Link to="/admin/projects/$id" params={{ id: project.id }}>
-                      <Pencil className="size-3.5 text-[var(--lab-ink-soft)]" />
+                      <Pencil className="size-4 text-[var(--lab-ink-soft)]" />
                     </Link>
                   </Button>
                   <Button
                     size="icon"
                     variant="ghost"
                     aria-label={`Delete ${project.title}`}
+                    className="size-9 sm:size-8"
                     onClick={() => void onDelete(project.id, project.title)}
                     disabled={deleteProject.isPending}
                   >
-                    <Trash2 className="size-3.5 text-[var(--lab-ink-soft)] hover:text-destructive" />
+                    <Trash2 className="size-4 text-[var(--lab-ink-soft)] hover:text-destructive" />
                   </Button>
                 </div>
               </li>

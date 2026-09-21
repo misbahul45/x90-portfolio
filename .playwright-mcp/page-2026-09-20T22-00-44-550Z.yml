@@ -1,0 +1,90 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e4]:
+      - link "XNINETZY Labs home" [ref=e5] [cursor=pointer]:
+        - /url: /
+        - img "XNINETZY Labs" [ref=e9]
+        - generic [ref=e10]:
+          - generic [ref=e11]: XNINETZY
+          - generic [ref=e12]: Labs
+      - navigation "Main" [ref=e14]:
+        - list [ref=e16]:
+          - listitem [ref=e17]:
+            - link "Projects" [ref=e18] [cursor=pointer]:
+              - /url: /projects
+          - listitem [ref=e20]:
+            - link "Research" [ref=e21] [cursor=pointer]:
+              - /url: /research
+          - listitem [ref=e23]:
+            - link "Services" [ref=e24] [cursor=pointer]:
+              - /url: /#services
+          - listitem [ref=e26]:
+            - link "Process" [ref=e27] [cursor=pointer]:
+              - /url: /#how-we-build
+          - listitem [ref=e29]:
+            - link "Contact" [ref=e30] [cursor=pointer]:
+              - /url: /#contact
+      - link "Open XNINETZY Labs GitHub" [ref=e33] [cursor=pointer]:
+        - /url: https://github.com/X90-labs
+  - main [ref=e34]:
+    - generic [ref=e35]:
+      - generic [ref=e36]:
+        - paragraph [ref=e37]: Project registry
+        - heading "Systems we've engineered" [level=1] [ref=e38]
+        - paragraph [ref=e39]: Production-grade platforms and research systems built from the lab — agents, retrieval pipelines, and intelligent software engineered to survive contact with real users.
+        - generic [ref=e40]:
+          - generic [ref=e41]: Loading systems
+          - generic [aria-hidden] [ref=e42]: ·
+          - generic [ref=e43]: 6 domains
+          - generic [aria-hidden] [ref=e44]: ·
+          - generic [ref=e45]: Production-grade only
+      - group "Filter projects by domain" [ref=e48]:
+        - generic [ref=e49]:
+          - button "All 0" [pressed] [ref=e50] [cursor=pointer]:
+            - generic [ref=e51]: All
+            - generic [ref=e52]: "0"
+          - button "LLM" [ref=e53] [cursor=pointer]
+          - button "RAG" [ref=e55] [cursor=pointer]
+          - button "Agents" [ref=e57] [cursor=pointer]
+          - button "Machine Learning" [ref=e59] [cursor=pointer]
+          - button "Deep Learning" [ref=e61] [cursor=pointer]
+          - button "Data Intelligence" [ref=e63] [cursor=pointer]
+      - generic [ref=e65]:
+        - button "Featured" [ref=e67]
+        - searchbox "Search projects" [ref=e75]
+  - contentinfo [ref=e86]:
+    - generic [ref=e87]:
+      - generic [ref=e88]:
+        - link "XNINETZY Labs home" [ref=e89] [cursor=pointer]:
+          - /url: /
+          - img "XNINETZY Labs" [ref=e91]
+          - generic [ref=e92]:
+            - generic [ref=e93]: XNINETZY
+            - generic [ref=e94]: Labs
+        - paragraph [ref=e95]: A technical AI lab that turns experiments, research, and engineering into useful systems.
+      - generic [ref=e96]:
+        - paragraph [ref=e97]: Research
+        - list [ref=e98]:
+          - listitem [ref=e99]:
+            - link "Articles" [ref=e100] [cursor=pointer]:
+              - /url: /research
+      - generic [ref=e101]:
+        - paragraph [ref=e102]: Build
+        - list [ref=e103]:
+          - listitem [ref=e104]:
+            - link "Projects" [ref=e105] [cursor=pointer]:
+              - /url: /projects
+      - generic [ref=e106]:
+        - paragraph [ref=e107]: Lab
+        - list [ref=e108]:
+          - listitem [ref=e109]:
+            - link "About" [ref=e110] [cursor=pointer]:
+              - /url: /about
+    - generic [ref=e112]:
+      - paragraph [ref=e113]: © 2026 XNINETZY Labs. Research · Experiment · Build.
+      - generic [ref=e114]:
+        - link "Follow XNINETZY Labs on X" [ref=e115] [cursor=pointer]:
+          - /url: https://x.com
+        - link "View XNINETZY Labs on GitHub" [ref=e118] [cursor=pointer]:
+          - /url: https://github.com
+  - button "Open Ask Labs" [ref=e122]: Ask Labs

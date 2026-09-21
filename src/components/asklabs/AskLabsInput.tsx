@@ -9,15 +9,16 @@ export function AskLabsInput({
   onStop,
   disabled,
   isStreaming,
+  phaseLabel,
 }: {
   onSubmit: (value: string) => void
   onClear: () => void
   onStop?: () => void
   disabled: boolean
   isStreaming: boolean
+  phaseLabel: string
 }) {
   const [value, setValue] = useState("")
-  const [focused, setFocused] = useState(false)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   useEffect(() => {
@@ -32,53 +33,51 @@ export function AskLabsInput({
   }
 
   return (
-    <form
-      className="relative border-t border-[var(--lab-line)] bg-[var(--lab-card)] px-3 py-2.5"
-      onSubmit={(event) => {
-        event.preventDefault()
-        submit()
-      }}
-    >
-      <div
-        aria-hidden
-        className={`pointer-events-none absolute inset-x-3 top-0 h-px transition-opacity duration-300 ${
-          focused ? "opacity-100" : "opacity-0"
-        }`}
-        style={{
-          background:
-            "linear-gradient(90deg, transparent 0%, rgba(246,90,11,0.6) 50%, transparent 100%)",
+    <div className="border-t border-[var(--lab-line)] bg-[var(--lab-bg-soft)] px-4 py-3 sm:px-6">
+      {(isStreaming || phaseLabel) && (
+        <div className="mx-auto mb-2 flex max-w-[760px] items-center gap-2 font-mono text-[10.5px] uppercase tracking-[0.18em] text-[var(--lab-ink-soft)]">
+          <span
+            aria-hidden
+            className={`size-1.5 rounded-full ${
+              isStreaming ? "bg-[var(--lab-orange)]" : "bg-[var(--lab-line-strong)]"
+            } ${isStreaming ? "motion-safe:animate-pulse" : ""}`}
+          />
+          <span className={isStreaming ? "text-[var(--lab-orange)]" : ""}>{phaseLabel || "Ready"}</span>
+        </div>
+      )}
+      <form
+        className="mx-auto flex w-full max-w-[760px] items-end gap-2"
+        onSubmit={(event) => {
+          event.preventDefault()
+          submit()
         }}
-      />
-      <div className="flex items-end gap-1.5">
+      >
         <div className="flex-1">
           <Textarea
             ref={textareaRef}
             value={value}
             onChange={(event) => setValue(event.target.value)}
-            onFocus={() => setFocused(true)}
-            onBlur={() => setFocused(false)}
             onKeyDown={(event) => {
               if (event.key === "Enter" && !event.shiftKey) {
                 event.preventDefault()
                 submit()
               }
             }}
-            placeholder={isStreaming ? "Streaming response…" : "Ask about a project, research, or what we build…"}
+            placeholder={isStreaming ? "Streaming…" : "Ask about a project, research, or what we build…"}
             rows={1}
             disabled={isStreaming}
             aria-label="Ask Labs question"
-            className="min-h-9 resize-none border-[var(--lab-line)] bg-[var(--lab-bg)] text-[13.5px] leading-relaxed text-[var(--lab-ink)] placeholder:text-[var(--lab-ink-soft)] focus-visible:border-[var(--lab-orange)] focus-visible:ring-[var(--lab-orange)]/30"
+            className="min-h-[44px] resize-none border-[var(--lab-line)] bg-[var(--lab-card)] px-3.5 py-2.5 text-[14px] leading-relaxed text-[var(--lab-ink)] placeholder:text-[var(--lab-ink-soft)] focus-visible:border-[var(--lab-orange)] focus-visible:ring-[var(--lab-orange)]/30"
           />
         </div>
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-1">
           {isStreaming && onStop ? (
             <Button
               type="button"
               size="icon"
               variant="destructive"
               onClick={onStop}
-              aria-label="Stop streaming"
-              className="shadow-[0_0_18px_-6px_rgba(246,90,11,0.6)]"
+              aria-label="Stop generation"
             >
               <Square className="size-3.5" aria-hidden />
             </Button>
@@ -88,7 +87,6 @@ export function AskLabsInput({
               size="icon"
               disabled={!value.trim() || disabled}
               aria-label="Send message"
-              className="shadow-[0_0_18px_-6px_rgba(246,90,11,0.7)]"
             >
               <ArrowUp className="size-4" aria-hidden />
             </Button>
@@ -105,21 +103,7 @@ export function AskLabsInput({
             <RotateCcw className="size-3.5" aria-hidden />
           </Button>
         </div>
-      </div>
-      {isStreaming && (
-        <p className="mt-1 flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--lab-orange)]">
-          <span className="relative flex size-1.5">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--lab-orange)] opacity-75" />
-            <span className="relative inline-flex size-1.5 rounded-full bg-[var(--lab-orange)]" />
-          </span>
-          streaming
-        </p>
-      )}
-      {!isStreaming && (
-        <p className="mt-1 font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--lab-ink-soft)]/60">
-          Public knowledge only · cite sources when you can
-        </p>
-      )}
-    </form>
+      </form>
+    </div>
   )
 }

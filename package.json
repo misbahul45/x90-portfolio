@@ -13,7 +13,7 @@
     "sharp"
   ],
   "scripts": {
-    "dev": "vite dev --port 3000",
+    "dev": "bunx dotenv-cli -e .env.local -- vite dev --port 3000",
     "build": "vite build",
     "preview": "vite preview",
     "test": "vitest run",
@@ -27,7 +27,7 @@
     "db:push": "bunx dotenv-cli -e .env.local -- prisma db push",
     "db:migrate": "bunx dotenv-cli -e .env.local -- prisma migrate dev",
     "db:studio": "bunx dotenv-cli -e .env.local -- prisma studio",
-    "db:seed": "bunx dotenv-cli -e .env.local -- prisma db seed",
+    "db:seed": "bunx dotenv-cli -e .env.local -- bun prisma/seed.ts",
     "secret:generate": "bunx @better-auth/cli secret",
     "db:reset": "bunx dotenv-cli -e .env.local -- prisma migrate reset"
   },
@@ -35,6 +35,8 @@
     "@hookform/resolvers": "^5.9.1",
     "@huggingface/inference": "^4.13.28",
     "@langchain/openai": "^1.5.12",
+    "@neondatabase/serverless": "^1.1.0",
+    "@prisma/adapter-neon": "^7.10.0",
     "@prisma/adapter-pg": "^7.4.2",
     "@prisma/client": "^7.4.2",
     "@t3-oss/env-core": "^0.13.10",
@@ -92,6 +94,7 @@
     "@types/node": "^22.10.2",
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
+    "@types/ws": "^8.18.1",
     "@vitejs/plugin-react": "^5.1.4",
     "babel-plugin-react-compiler": "^1.0.0",
     "dotenv-cli": "^11.0.0",
@@ -100,6 +103,7 @@
     "typescript": "^5.7.2",
     "vite": "^7.3.1",
     "vite-tsconfig-paths": "^5.1.4",
-    "vitest": "^3.0.5"
+    "vitest": "^3.0.5",
+    "ws": "^8.21.3"
   }
 }

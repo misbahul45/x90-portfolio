@@ -80,13 +80,6 @@ export function FinalCTA() {
               />
 
               <div className="relative z-10">
-                <div className="mb-6 flex items-center gap-3">
-                  <span className="font-mono text-[9px] uppercase tracking-[0.28em] text-[var(--lab-orange)]">
-                    Start a project
-                  </span>
-
-                  <span className="h-px w-12 bg-[var(--lab-orange)]/35" />
-                </div>
 
                 <h2 className="max-w-3xl text-3xl font-semibold leading-[1.02] tracking-[-0.04em] text-[var(--lab-ink)] sm:text-4xl lg:text-[52px]">
                   Have a problem

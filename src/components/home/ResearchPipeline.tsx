@@ -436,14 +436,6 @@ export function ResearchPipeline() {
           className="grid gap-6 lg:grid-cols-[1fr_0.8fr] lg:items-end"
         >
           <div>
-            <div className="mb-4 flex items-center gap-3">
-              <span className="font-mono text-[8px] uppercase tracking-[0.26em] text-[var(--lab-orange)]">
-                Research system
-              </span>
-
-              <span className="h-px w-10 bg-[var(--lab-orange)]/30" />
-            </div>
-
             <h2 className="text-3xl font-semibold tracking-[-0.035em] text-[var(--lab-ink)] sm:text-4xl lg:text-[44px] lg:leading-[1.05]">
               Research is a loop,
               <span className="block text-[var(--lab-ink-soft)]">
