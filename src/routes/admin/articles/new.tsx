@@ -1,11 +1,15 @@
-import { useMemo, useState } from "react"
+import { Suspense, lazy, useMemo, useState } from "react"
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router"
 import { motion } from "motion/react"
 import { ArrowLeft, Loader2, Save, Send } from "lucide-react"
 import { useAdminCreateArticle } from "#/hooks/useAdminArticles"
 import { useCategories, type CategoryItem } from "#/hooks/useCategories"
-import { RichEditor } from "#/components/admin/RichEditor"
 import { TagMultiSelect } from "#/components/admin/TagMultiSelect"
+import { Skeleton } from "#/components/ui/skeleton"
+
+const RichEditor = lazy(() =>
+  import("#/components/admin/RichEditor").then((m) => ({ default: m.RichEditor })),
+)
 import { Button } from "#/components/ui/button"
 import { Input } from "#/components/ui/input"
 import { Textarea } from "#/components/ui/textarea"
@@ -151,7 +155,9 @@ function AdminArticleNew() {
           </div>
           <div className="space-y-1.5">
             <Label className="text-[var(--lab-ink)]">Content</Label>
-            <RichEditor value={content} onChange={setContent} />
+            <Suspense fallback={<Skeleton className="h-72 w-full" />}>
+              <RichEditor value={content} onChange={setContent} />
+            </Suspense>
             {errors.content && <p className="text-xs text-destructive">{errors.content}</p>}
           </div>
         </motion.div>

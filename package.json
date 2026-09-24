@@ -14,7 +14,7 @@
   ],
   "scripts": {
     "dev": "bunx dotenv-cli -e .env.local -- vite dev --port 3000",
-    "build": "vite build",
+    "build": "bunx dotenv-cli -e .env.local -- prisma generate && vite build",
     "preview": "vite preview",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
