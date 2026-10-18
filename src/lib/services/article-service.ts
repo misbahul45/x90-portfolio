@@ -15,6 +15,7 @@ export type Page<T> = {
 type ListOptions = {
   status?: ArticleStatus
   categorySlug?: string
+  query?: string
   page?: number
   pageSize?: number
 }
@@ -78,6 +79,13 @@ export const articleService = {
     }
     if (options.categorySlug) {
       where.category = { slug: options.categorySlug }
+    }
+    const query = options.query?.trim()
+    if (query) {
+      where.OR = [
+        { title: { contains: query, mode: "insensitive" } },
+        { excerpt: { contains: query, mode: "insensitive" } },
+      ]
     }
     const pageSize = options.pageSize ?? DEFAULT_PAGE_SIZE
     const page = Math.max(1, options.page ?? 1)

@@ -34,7 +34,6 @@ export function AskLabsDialog({ currentPath }: { currentPath: string }) {
     return () => document.removeEventListener("ask-labs:open", handler)
   }, [setIsOpen])
 
-  // Auto-scroll only when user is at bottom (preserve reading position).
   const sentinelRef = useRef<HTMLDivElement | null>(null)
   useEffect(() => {
     if (!stuckAtBottomRef.current) return
@@ -47,7 +46,7 @@ export function AskLabsDialog({ currentPath }: { currentPath: string }) {
         showCloseButton
         className="flex h-[min(820px,calc(100dvh-2rem))] w-[min(1080px,calc(100vw-2rem))] max-w-[1080px] flex-col gap-0 overflow-hidden border border-[var(--lab-line)] bg-[var(--lab-bg)] p-0 shadow-[0_40px_120px_-24px_rgba(0,0,0,0.7)] sm:!max-w-[1080px]"
       >
-        <DialogTitle className="sr-only">Ask Labs — XNINETZY Labs</DialogTitle>
+        <DialogTitle className="sr-only">Ask Labs — X90 Labs</DialogTitle>
         <AskLabsHeader context={context} showTrace={showTrace} onToggleTrace={() => setShowTrace((v) => !v)} />
         <div className="flex min-h-0 flex-1 overflow-hidden">
           <div className="flex min-w-0 flex-1 flex-col">
@@ -68,7 +67,7 @@ export function AskLabsDialog({ currentPath }: { currentPath: string }) {
                     onSelect={(action) => void submit(action.prompt)}
                   />
                 ) : (
-                  <AskLabsMessageList messages={messages} />
+                  <AskLabsMessageList messages={messages} phase={phase} />
                 )}
                 <div ref={sentinelRef} aria-hidden className="h-px w-full" />
               </div>

@@ -25,7 +25,7 @@ export function AskLabsHeader({
 }) {
   const ctx = describeContext(context)
   return (
-    <header className="flex h-[60px] shrink-0 items-center justify-between gap-3 border-b border-[var(--lab-line)] bg-[var(--lab-bg-soft)] px-4 sm:px-6">
+    <header className="flex h-[60px] shrink-0 items-center justify-between gap-3 border-b border-[var(--lab-line)] bg-[var(--lab-bg-soft)] pl-4 pr-14 sm:pl-6 sm:pr-16">
       <div className="flex min-w-0 items-center gap-3">
         <span className="flex size-7 shrink-0 items-center justify-center rounded-md border border-[var(--lab-line)] bg-[var(--lab-card)]">
           <XninetzyLogo size={18} variant="mark" />
@@ -33,7 +33,7 @@ export function AskLabsHeader({
         <div className="flex min-w-0 flex-col leading-tight">
           <span className="text-[14px] font-semibold tracking-tight text-[var(--lab-ink)]">Ask Labs</span>
           <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--lab-ink-soft)]">
-            XNINETZY Research Navigator
+            X90 Research Navigator
           </span>
         </div>
         {ctx ? (

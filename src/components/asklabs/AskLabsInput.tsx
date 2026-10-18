@@ -35,7 +35,7 @@ export function AskLabsInput({
   return (
     <div className="border-t border-[var(--lab-line)] bg-[var(--lab-bg-soft)] px-4 py-3 sm:px-6">
       {(isStreaming || phaseLabel) && (
-        <div className="mx-auto mb-2 flex max-w-[760px] items-center gap-2 font-mono text-[10.5px] uppercase tracking-[0.18em] text-[var(--lab-ink-soft)]">
+        <div className="mx-auto mb-2 flex max-w-[760px] items-center gap-2 text-[13px] text-[var(--lab-ink-soft)]">
           <span
             aria-hidden
             className={`size-1.5 rounded-full ${

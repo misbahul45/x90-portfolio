@@ -1,20 +1,22 @@
-import { useState } from "react"
-import { createFileRoute, useNavigate } from "@tanstack/react-router"
-import { motion } from "motion/react"
-import { Loader2, Lock, ArrowRight, AlertCircle } from "lucide-react"
-import { authClient } from "#/lib/auth-client"
+import { useState, type FormEvent } from "react"
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router"
+import { AlertCircle, ArrowLeft, Loader2 } from "lucide-react"
+import { primaryPillClass } from "#/components/deepmind/styles"
 import { Button } from "#/components/ui/button"
 import { Input } from "#/components/ui/input"
 import { Label } from "#/components/ui/label"
+import { authClient } from "#/lib/auth-client"
 import { ROUTES } from "#/lib/domain/routes"
-import { fadeInUp, staggerContainer, staggerItem } from "#/lib/motion-variants"
 
 export const Route = createFileRoute("/admin/login")({
   head: () => ({
-    meta: [{ title: "Sign in — XNINETZY Labs Admin" }],
+    meta: [{ title: "Sign in — X90 Labs Admin" }],
   }),
   component: AdminLoginPage,
 })
+
+const fieldClass =
+  "h-12 rounded-xl border-[var(--lab-line-strong)] bg-transparent px-4 text-[var(--lab-ink)] shadow-none placeholder:text-[var(--lab-ink-soft)]/60 focus-visible:border-[var(--lab-orange)] focus-visible:ring-[var(--lab-orange)]/20"
 
 function AdminLoginPage() {
   const navigate = useNavigate()
@@ -23,7 +25,7 @@ function AdminLoginPage() {
   const [error, setError] = useState<string | null>(null)
   const [submitting, setSubmitting] = useState(false)
 
-  async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function onSubmit(event: FormEvent<HTMLFormElement>): Promise<void> {
     event.preventDefault()
     setError(null)
     setSubmitting(true)
@@ -42,7 +44,7 @@ function AdminLoginPage() {
         await authClient.signOut()
         return
       }
-      navigate({ to: ROUTES.ADMIN })
+      await navigate({ to: ROUTES.ADMIN })
     } catch (err) {
       setError(err instanceof Error ? err.message : "Unable to sign in.")
     } finally {
@@ -51,135 +53,64 @@ function AdminLoginPage() {
   }
 
   return (
-    <main className="lab-page-bg relative min-h-screen overflow-hidden text-[var(--lab-ink)]">
-      <div className="grid min-h-screen lg:grid-cols-[1fr_420px]">
-        <motion.section
-          initial="hidden"
-          animate="visible"
-          variants={staggerContainer}
-          className="hidden flex-col justify-between border-r border-[var(--lab-line)] p-8 sm:p-10 lg:flex lg:p-12"
+    <main className="flex min-h-screen items-center justify-center px-4 py-16 text-[var(--lab-ink)]">
+      <div className="w-full max-w-md">
+        <Link
+          to="/"
+          className="inline-flex items-center gap-2 text-[15px] text-[var(--lab-ink-soft)] no-underline hover:text-[var(--lab-orange)]"
         >
-          <motion.div variants={staggerItem}>
-            <a
-              href={ROUTES.HOME}
-              className="inline-flex items-center gap-2 text-sm font-semibold tracking-tight text-[var(--lab-ink)] no-underline"
+          <ArrowLeft className="size-4" aria-hidden />
+          X90 Labs
+        </Link>
+        <h1 className="dm-title mt-10">Sign in</h1>
+        <p className="dm-subtitle mt-1">Admin workspace. Accounts are created by the lab.</p>
+
+        <form onSubmit={onSubmit} className="mt-10 space-y-6">
+          <div className="space-y-2">
+            <Label htmlFor="email" className="text-[15px] font-medium text-[var(--lab-ink)]">
+              Email
+            </Label>
+            <Input
+              id="email"
+              type="email"
+              autoComplete="email"
+              required
+              placeholder="you@example.com"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              className={fieldClass}
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="password" className="text-[15px] font-medium text-[var(--lab-ink)]">
+              Password
+            </Label>
+            <Input
+              id="password"
+              type="password"
+              autoComplete="current-password"
+              required
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              className={fieldClass}
+            />
+          </div>
+
+          {error ? (
+            <div
+              role="alert"
+              className="flex items-start gap-2 rounded-xl border border-destructive/40 bg-destructive/10 p-3 text-sm text-destructive"
             >
-              <span aria-hidden className="h-2.5 w-2.5 rounded-full bg-[var(--lab-orange)]" />
-              XNINETZY LABS
-            </a>
-          </motion.div>
-          <motion.div variants={staggerItem} className="max-w-md space-y-5">
-            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--lab-orange)]">
-              Admin · Internal
-            </p>
-            <h1 className="text-4xl font-semibold leading-[1.05] tracking-tight text-[var(--lab-ink)] sm:text-5xl">
-              Sign in to the workspace.
-            </h1>
-            <p className="text-base leading-relaxed text-[var(--lab-ink-soft)]">
-              Manage articles, projects, team members, and incoming feedback.
-              Public sign-up is disabled — credentials are seeded by the lab.
-            </p>
-            <div className="space-y-2 rounded-md border border-[var(--lab-line)] bg-[var(--lab-card)] p-4 font-mono text-[11px] text-[var(--lab-ink-soft)]">
-              <p className="font-semibold uppercase tracking-[0.16em] text-[var(--lab-ink)]">
-                Seeded credentials
-              </p>
-              <div className="space-y-1">
-                <p>
-                  email:{" "}
-                  <span className="text-[var(--lab-ink)]">xninetzy@gmail.com</span>
-                </p>
-                <p>
-                  password:{" "}
-                  <span className="text-[var(--lab-ink)]">xninetzy123</span>
-                </p>
-              </div>
-              <p className="text-[var(--lab-orange)]">Rotate these in production.</p>
+              <AlertCircle className="mt-0.5 size-4 shrink-0" aria-hidden />
+              <p>{error}</p>
             </div>
-          </motion.div>
-          <motion.div variants={staggerItem} className="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--lab-ink-soft)]">
-            <Lock className="size-3.5 text-[var(--lab-orange)]" aria-hidden />
-            protected by Better Auth · session cookie
-          </motion.div>
-        </motion.section>
+          ) : null}
 
-        <motion.section
-          initial="hidden"
-          animate="visible"
-          variants={fadeInUp}
-          className="flex items-center justify-center px-4 py-14 sm:px-8 sm:py-20 lg:px-10"
-        >
-          <form
-            onSubmit={onSubmit}
-            className="research-card-surface w-full max-w-sm space-y-6 p-7 sm:p-10"
-          >
-            <header className="space-y-2">
-              <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--lab-orange)] lg:hidden">
-                Admin · Internal
-              </p>
-              <h2 className="text-2xl font-semibold tracking-tight text-[var(--lab-ink)]">Sign in</h2>
-              <p className="text-sm text-[var(--lab-ink-soft)]">
-                Use your seeded admin credentials.
-              </p>
-            </header>
-
-            <div className="space-y-4">
-              <div className="space-y-1.5">
-                <Label htmlFor="email" className="text-[var(--lab-ink)]">Email</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                  placeholder="xninetzy@gmail.com"
-                  value={email}
-                  onChange={(event) => setEmail(event.target.value)}
-                  className="border-[var(--lab-line)] bg-[var(--lab-card)] text-[var(--lab-ink)] placeholder:text-[var(--lab-ink-soft)]"
-                />
-              </div>
-              <div className="space-y-1.5">
-                <Label htmlFor="password" className="text-[var(--lab-ink)]">Password</Label>
-                <Input
-                  id="password"
-                  type="password"
-                  autoComplete="current-password"
-                  required
-                  placeholder="••••••••"
-                  value={password}
-                  onChange={(event) => setPassword(event.target.value)}
-                  className="border-[var(--lab-line)] bg-[var(--lab-card)] text-[var(--lab-ink)] placeholder:text-[var(--lab-ink-soft)]"
-                />
-              </div>
-            </div>
-
-            {error && (
-              <div role="alert" className="flex items-start gap-2 rounded-md border border-destructive/40 bg-destructive/10 p-3 text-xs text-destructive">
-                <AlertCircle className="size-3.5 shrink-0 translate-y-0.5" aria-hidden />
-                <p>{error}</p>
-              </div>
-            )}
-
-            <Button type="submit" className="w-full font-mono" disabled={submitting}>
-              {submitting ? (
-                <>
-                  <Loader2 className="size-4 animate-spin" />
-                  Signing in…
-                </>
-              ) : (
-                <>
-                  Continue
-                  <ArrowRight className="size-4" aria-hidden />
-                </>
-              )}
-            </Button>
-
-            <a
-              href={ROUTES.HOME}
-              className="block text-center font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--lab-ink-soft)] no-underline transition-colors hover:text-[var(--lab-orange)]"
-            >
-              ← Back to public site
-            </a>
-          </form>
-        </motion.section>
+          <Button type="submit" disabled={submitting} className={`${primaryPillClass} w-full`}>
+            {submitting ? <Loader2 className="animate-spin" aria-hidden /> : null}
+            {submitting ? "Signing in…" : "Continue"}
+          </Button>
+        </form>
       </div>
     </main>
   )

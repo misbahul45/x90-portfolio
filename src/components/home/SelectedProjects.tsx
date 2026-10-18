@@ -74,9 +74,9 @@ export function SelectedProjects() {
             variants={staggerContainer}
             className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4"
           >
-            {projects.map((project, index) => (
+            {projects.map((project) => (
               <li key={project.id} className="h-full">
-                <ProjectCard project={toCardItem(project)} variant={index === 0 ? "featured" : "default"} />
+                <ProjectCard project={toCardItem(project)} />
               </li>
             ))}
           </motion.ul>

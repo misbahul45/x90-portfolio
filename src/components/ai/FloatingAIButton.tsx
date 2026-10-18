@@ -27,11 +27,11 @@ export function FloatingAIButton({ onOpen }: { onOpen: () => void }) {
         onMouseLeave={() => setHover(false)}
         size="lg"
         className="h-12 gap-2 rounded-full px-5 shadow-[0_8px_32px_-8px_rgba(246,90,11,0.55)] ring-1 ring-[var(--lab-orange)]/40"
-        aria-label="Open Ask XNINETZY Labs"
+        aria-label="Open Ask X90 Labs"
       >
         <Sparkles className="size-4" />
         <span className="font-mono text-sm font-semibold tracking-wider">
-          {hover ? "Ask XNINETZY Labs" : "Ask Labs"}
+          {hover ? "Ask X90 Labs" : "Ask Labs"}
         </span>
       </Button>
     </motion.div>

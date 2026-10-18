@@ -68,27 +68,27 @@ function detectKind(path: string): AskLabsContextKind {
 
 const QUICK_ACTIONS: Record<AskLabsContextKind, AskLabsQuickAction[]> = {
   home: [
-    { id: "what-builds", label: "What does XNINETZY build?", prompt: "What does XNINETZY Labs actually build?" },
-    { id: "research", label: "What research is here?", prompt: "What research has XNINETZY published?" },
-    { id: "ai", label: "What AI systems can you build?", prompt: "What kinds of AI systems can XNINETZY build?" },
+    { id: "what-builds", label: "What does X90 Labs build?", prompt: "What does X90 Labs actually build?" },
+    { id: "research", label: "What research is here?", prompt: "What research has X90 Labs published?" },
+    { id: "ai", label: "What AI systems can you build?", prompt: "What kinds of AI systems can X90 Labs build?" },
     { id: "start", label: "Where should I start?", prompt: "If I'm new here, where should I start?" },
   ],
   "projects-index": [
     { id: "find-project", label: "Find a relevant project", prompt: "Help me find a project relevant to what I'm exploring." },
     { id: "ai-projects", label: "Which projects use AI?", prompt: "Which projects use AI agents or RAG?" },
-    { id: "explain-stack", label: "How is the stack chosen?", prompt: "How does XNINETZY choose the stack for a project?" },
+    { id: "explain-stack", label: "How is the stack chosen?", prompt: "How does X90 Labs choose the stack for a project?" },
     { id: "start", label: "Where should I start?", prompt: "Which project should I look at first?" },
   ],
   project: [
     { id: "what-problem", label: "What problem does this solve?", prompt: "What problem does this project solve?" },
     { id: "arch", label: "Architecture & stack", prompt: "What architecture and stack does this project use?" },
     { id: "research", label: "Related research", prompt: "What research is related to this project?" },
-    { id: "similar", label: "Can you build something similar?", prompt: "Could XNINETZY build something similar for our team?" },
+    { id: "similar", label: "Can you build something similar?", prompt: "Could X90 Labs build something similar for our team?" },
   ],
   "research-index": [
     { id: "latest", label: "Latest investigations", prompt: "What are the latest investigations in the lab?" },
-    { id: "methods", label: "How is research evaluated?", prompt: "How does research at XNINETZY get evaluated?" },
-    { id: "themes", label: "Active research themes", prompt: "What research themes is XNINETZY currently exploring?" },
+    { id: "methods", label: "How is research evaluated?", prompt: "How does research at X90 Labs get evaluated?" },
+    { id: "themes", label: "Active research themes", prompt: "What research themes is X90 Labs currently exploring?" },
     { id: "apply", label: "Apply research to a system", prompt: "How would I apply this research to a real system?" },
   ],
   research: [
@@ -98,23 +98,23 @@ const QUICK_ACTIONS: Record<AskLabsContextKind, AskLabsQuickAction[]> = {
     { id: "projects", label: "Which projects apply this?", prompt: "Which projects apply the findings from this research?" },
   ],
   about: [
-    { id: "who", label: "Who is behind this?", prompt: "Who is behind XNINETZY Labs?" },
-    { id: "stack", label: "Public stack", prompt: "What public stack does XNINETZY work with?" },
-    { id: "approach", label: "How do engagements work?", prompt: "How does XNINETZY run an engagement?" },
+    { id: "who", label: "Who is behind this?", prompt: "Who is behind X90 Labs?" },
+    { id: "stack", label: "Public stack", prompt: "What public stack does X90 Labs work with?" },
+    { id: "approach", label: "How do engagements work?", prompt: "How does X90 Labs run an engagement?" },
   ],
   contact: [
-    { id: "brief", label: "How do I write a brief?", prompt: "How should I structure a brief before contacting XNINETZY?" },
+    { id: "brief", label: "How do I write a brief?", prompt: "How should I structure a brief before contacting X90 Labs?" },
     { id: "services", label: "Which service fits?", prompt: "Which service should I pick for my situation?" },
   ],
   none: [
-    { id: "what-builds", label: "What does XNINETZY build?", prompt: "What does XNINETZY Labs actually build?" },
-    { id: "research", label: "What research is here?", prompt: "What research has XNINETZY published?" },
-    { id: "ai", label: "What AI systems can you build?", prompt: "What kinds of AI systems can XNINETZY build?" },
+    { id: "what-builds", label: "What does X90 Labs build?", prompt: "What does X90 Labs actually build?" },
+    { id: "research", label: "What research is here?", prompt: "What research has X90 Labs published?" },
+    { id: "ai", label: "What AI systems can you build?", prompt: "What kinds of AI systems can X90 Labs build?" },
   ],
 }
 
 const LANDING_QUESTION =
-  "Ask about what XNINETZY builds, what it investigates, and how its systems are engineered."
+  "Ask about what X90 Labs builds, what it investigates, and how its systems are engineered."
 
 type StreamChunk =
   | { type: "stage"; stage: "analyzing" | "retrieving" | "reasoning" | "responding" }

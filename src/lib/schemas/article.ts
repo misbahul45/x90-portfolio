@@ -24,6 +24,12 @@ export const tiptapDocSchema = z.object({
   content: z.array(tiptapNodeSchema).optional(),
 })
 
+const articleStatusSchema = z.enum([
+  ARTICLE_STATUS.DRAFT,
+  ARTICLE_STATUS.PUBLISHED,
+  ARTICLE_STATUS.ARCHIVED,
+])
+
 export const articleCreateSchema = z.object({
   title: z.string().min(3).max(200),
   slug: z
@@ -35,13 +41,7 @@ export const articleCreateSchema = z.object({
   excerpt: z.string().min(10).max(500),
   content: z.union([z.string(), tiptapDocSchema]),
   coverImage: z.string().url().nullable().optional(),
-  status: z
-    .enum([
-      ARTICLE_STATUS.DRAFT,
-      ARTICLE_STATUS.PUBLISHED,
-      ARTICLE_STATUS.ARCHIVED,
-    ])
-    .default(ARTICLE_STATUS.DRAFT),
+  status: articleStatusSchema.default(ARTICLE_STATUS.DRAFT),
   publishedAt: z.coerce.date().nullable().optional(),
   categoryId: z.string().nullable().optional(),
   tagIds: z.array(z.string()).default([]),
@@ -49,6 +49,8 @@ export const articleCreateSchema = z.object({
 
 export const articleUpdateSchema = articleCreateSchema.partial().extend({
   id: z.string().min(1),
+  status: articleStatusSchema.optional(),
+  tagIds: z.array(z.string()).optional(),
 })
 
 export type ArticleCreateInput = z.infer<typeof articleCreateSchema>

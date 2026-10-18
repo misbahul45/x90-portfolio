@@ -25,7 +25,7 @@ export function XninetzyLogo({ size = 32, variant = "mark", className, style }: 
     >
       <img
         src={ASSET}
-        alt="XNINETZY Labs"
+        alt="X90 Labs"
         width={dims.width}
         height={dims.height}
         decoding="async"

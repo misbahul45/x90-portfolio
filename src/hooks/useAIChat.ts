@@ -60,7 +60,7 @@ export type AIMessage = {
 
 const DEFAULT_QUICK_ACTIONS: Record<AIContext["pageType"], AIQuickAction[]> = {
   home: [
-    { id: "what", label: "What does XNINETZY Labs build?", prompt: "What does XNINETZY Labs build?" },
+    { id: "what", label: "What does X90 Labs build?", prompt: "What does X90 Labs build?" },
     { id: "research", label: "Show me your research", prompt: "Show me your latest research." },
     { id: "collab", label: "How can we work together?", prompt: "How can we collaborate?" },
     { id: "systems", label: "What AI systems do you build?", prompt: "What kinds of AI systems do you build?" },
@@ -179,7 +179,6 @@ export function useAIChat(currentPath: string) {
         })
       })
       .catch(() => {
-        // IndexedDB unavailable — operate without persistence.
       })
     return () => {
       cancelled = true
@@ -255,14 +254,11 @@ export function useAIChat(currentPath: string) {
           ),
         )
       } catch {
-        // Related articles are best-effort; silent failure on transient errors.
       }
     },
     [],
   )
 
-  // Note: document upload via UploadThing is handled inside the AI dialog component
-  // (useUploadThing must be called inside the React tree that has the uploadthing context).
 
   const submit = useCallback(
     async (content: string) => {

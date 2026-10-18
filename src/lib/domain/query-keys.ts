@@ -1,5 +1,6 @@
 type ArticleListFilters = {
   categorySlug?: string
+  query?: string
   status?: "DRAFT" | "PUBLISHED" | "ARCHIVED"
   limit?: number
   page?: number
@@ -9,6 +10,7 @@ type ArticleListFilters = {
 type ProjectListFilters = {
   featuredOnly?: boolean
   categorySlug?: string
+  query?: string
   page?: number
   pageSize?: number
 }
@@ -81,4 +83,12 @@ export const tagKeys = {
   all: ["tags"] as const,
   lists: () => [...tagKeys.all, "list"] as const,
   list: () => [...tagKeys.lists()] as const,
+}
+
+export const experimentKeys = {
+  all: ["experiments"] as const,
+  lists: () => [...experimentKeys.all, "list"] as const,
+  list: (filters: { status?: string }) => [...experimentKeys.lists(), filters] as const,
+  details: () => [...experimentKeys.all, "detail"] as const,
+  detail: (id: string) => [...experimentKeys.details(), id] as const,
 }

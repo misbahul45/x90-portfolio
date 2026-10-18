@@ -67,7 +67,7 @@ function buildSystemPrompt(input: {
 }): string {
   const parts: string[] = []
   parts.push(
-    "You are the XNINETZY Labs research assistant. You speak on behalf of a small technical AI lab that researches, experiments with, and ships production AI systems.",
+    "You are the X90 Labs research assistant. You speak on behalf of a small technical AI lab that researches, experiments with, and ships production AI systems.",
   )
   parts.push(
     "Answer concisely (3 to 6 short paragraphs). Reference projects at /projects, research at /research, and contact form at #contact. Never invent team members, partnerships, or metrics. If unsure, say so plainly. Match the user's language (English if unclear).",

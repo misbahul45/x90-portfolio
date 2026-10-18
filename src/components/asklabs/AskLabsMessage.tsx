@@ -1,11 +1,18 @@
 import { motion } from "motion/react"
 import { Bot, User } from "lucide-react"
-import type { AskLabsMessage as AskLabsMessageType } from "#/hooks/useAskLabs"
+import type { AskLabsMessage as AskLabsMessageType, AskLabsPhase } from "#/hooks/useAskLabs"
 import { MarkdownLite } from "#/components/ai/MarkdownLite"
+import { AskLabsPending } from "#/components/asklabs/AskLabsPending"
 import { AskLabsSources } from "#/components/asklabs/AskLabsSources"
 import { cn } from "#/lib/utils"
 
-export function AskLabsMessage({ message }: { message: AskLabsMessageType }) {
+export function AskLabsMessage({
+  message,
+  phase,
+}: {
+  message: AskLabsMessageType
+  phase?: AskLabsPhase
+}) {
   const isUser = message.role === "user"
   const sources = isUser ? null : message.sources
 
@@ -39,12 +46,7 @@ export function AskLabsMessage({ message }: { message: AskLabsMessageType }) {
           {message.content ? (
             <MarkdownLite source={message.content} />
           ) : (
-            !isUser && (
-              <span className="inline-flex items-center gap-1 font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--lab-orange)]">
-                <span className="size-1 animate-pulse rounded-full bg-[var(--lab-orange)]" />
-                composing
-              </span>
-            )
+            !isUser && <AskLabsPending phase={phase} />
           )}
         </div>
         {sources && sources.length > 0 ? <AskLabsSources sources={sources} /> : null}

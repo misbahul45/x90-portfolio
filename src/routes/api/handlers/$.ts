@@ -1,12 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router"
-import { prisma } from "#/db"
 import { z } from "zod"
 
-// Force eager init on the first request. The `import { prisma } from "#/db"`
-// proxy throws if accessed before init; calling ensurePrisma resolves the
-// connection and populates the global before any handler touches prisma.
-import { ensurePrisma as _ensurePrisma } from "#/db"
-void _ensurePrisma()
+import { ensurePrisma } from "#/db"
 import { auth } from "#/lib/auth"
 import { articleService } from "#/lib/services/article-service"
 import { projectService } from "#/lib/services/project-service"
@@ -15,6 +10,7 @@ import { feedbackService } from "#/lib/services/feedback-service"
 import { briefService } from "#/lib/services/brief-service"
 import { categoryService } from "#/lib/services/category-service"
 import { tagService } from "#/lib/services/tag-service"
+import { experimentService } from "#/lib/services/experiment-service"
 import { dispatchBriefNotifications } from "#/lib/notify"
 import { ARTICLE_STATUS } from "#/lib/domain/article-status"
 import { FEEDBACK_STATUS, FEEDBACK_TYPE } from "#/lib/domain/feedback"
@@ -37,6 +33,13 @@ import {
   categoryUpdateSchema,
 } from "#/lib/schemas/category"
 import { tagCreateSchema, tagUpdateSchema } from "#/lib/schemas/tag"
+import {
+  experimentCreateSchema,
+  experimentUpdateSchema,
+} from "#/lib/schemas/experiment"
+import { EXPERIMENT_STATUSES } from "#/lib/domain/experiments"
+
+void ensurePrisma()
 
 type SessionUser = { id: string; role?: string | null }
 type ApiResponse<T> =
@@ -122,10 +125,6 @@ async function safe(handler: () => Promise<Response>): Promise<Response> {
   try {
     return await handler()
   } catch (error) {
-    // Surface the real error cause instead of letting Nitro return
-    // "[object ErrorEvent]" or a swallowed proxy. Never expose credentials:
-    // only emit the constructor name, public message, and Prisma's
-    // clientVersion. DATABASE_URL and connection strings stay out of logs.
     const e = error as {
       name?: unknown
       constructor?: { name?: string }
@@ -141,8 +140,6 @@ async function safe(handler: () => Promise<Response>): Promise<Response> {
       name: errorName,
       code: code || undefined,
       clientVersion: clientVersion || undefined,
-      // `message` may include hostnames or error codes that are safe to
-      // log but NEVER include credentials. Truncate to a sane bound.
       message: publicMessage.slice(0, 500),
     }))
     const detail = code
@@ -163,6 +160,7 @@ async function routeGet(segments: string[], request: Request, url: URL): Promise
     }
     const page = await articleService.listPublished({
       categorySlug: params.categorySlug,
+      query: params.q,
       page: params.page ? Number(params.page) : undefined,
       pageSize: params.pageSize ? Number(params.pageSize) : undefined,
     })
@@ -177,6 +175,7 @@ async function routeGet(segments: string[], request: Request, url: URL): Promise
     const projects = await projectService.list({
       featuredOnly: params.featuredOnly === "true",
       categorySlug: params.categorySlug,
+      query: params.q,
       page: params.page ? Number(params.page) : undefined,
       pageSize: params.pageSize ? Number(params.pageSize) : undefined,
     })
@@ -257,6 +256,14 @@ async function routeGet(segments: string[], request: Request, url: URL): Promise
       }
       return json(await tagService.list())
     }
+    if (sub === "experiments") {
+      if (subId) {
+        const experiment = await experimentService.byId(subId)
+        return experiment ? json(experiment) : fail("Not found", 404)
+      }
+      const status = EXPERIMENT_STATUSES.find((value) => value === params.status)
+      return json(await experimentService.list({ status }))
+    }
     return fail("Unknown admin resource", 404)
   }
 
@@ -265,7 +272,7 @@ async function routeGet(segments: string[], request: Request, url: URL): Promise
 
 async function routePost(segments: string[], request: Request): Promise<Response> {
   const text = await request.text()
-  const [resource, sub] = segments
+  const [resource, sub, subId, action] = segments
 
   if (resource === "feedback") {
     const parsed = parseBody(feedbackSchema, text)
@@ -328,6 +335,16 @@ async function routePost(segments: string[], request: Request): Promise<Response
       const created = await tagService.create(parsed.data!)
       return json(created, 201)
     }
+    if (sub === "experiments") {
+      if (subId && action === "draft-article") {
+        const drafted = await experimentService.draftArticle(subId, admin.id)
+        return json(drafted)
+      }
+      const parsed = parseBody(experimentCreateSchema, text)
+      if (parsed.response) return parsed.response
+      const created = await experimentService.create(parsed.data!)
+      return json(created, 201)
+    }
     return fail("Unknown admin resource", 404)
   }
 
@@ -383,6 +400,12 @@ async function routePatch(segments: string[], request: Request): Promise<Respons
       const updated = await tagService.update(parsed.data!)
       return json(updated)
     }
+    if (sub === "experiments") {
+      const parsed = parseBody(experimentUpdateSchema, text)
+      if (parsed.response) return parsed.response
+      const updated = await experimentService.update({ ...parsed.data!, id: subId })
+      return json(updated)
+    }
     return fail("Unknown admin resource", 404)
   }
 
@@ -420,6 +443,10 @@ async function routeDelete(segments: string[], request: Request): Promise<Respon
     }
     if (sub === "tags") {
       await tagService.delete(subId)
+      return new Response(null, { status: 204 })
+    }
+    if (sub === "experiments") {
+      await experimentService.remove(subId)
       return new Response(null, { status: 204 })
     }
     return fail("Unknown admin resource", 404)

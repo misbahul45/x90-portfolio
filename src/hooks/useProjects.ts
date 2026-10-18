@@ -54,17 +54,24 @@ export function useProjects(
 export type InfiniteProjectFilters = {
   featuredOnly?: boolean
   categorySlug?: string
+  query?: string
   pageSize?: number
 }
 
 export function useInfiniteProjects(filters: InfiniteProjectFilters = {}) {
   const pageSize = filters.pageSize ?? 9
   return useInfiniteQuery({
-    queryKey: projectKeys.infinite({ featuredOnly: filters.featuredOnly, categorySlug: filters.categorySlug }),
+    queryKey: projectKeys.infinite({
+      featuredOnly: filters.featuredOnly,
+      categorySlug: filters.categorySlug,
+      query: filters.query,
+      pageSize,
+    }),
     queryFn: ({ pageParam }) =>
       apiGet<ProjectPage>("/api/handlers/projects", {
         ...(filters.featuredOnly ? { featuredOnly: true } : {}),
         ...(filters.categorySlug ? { categorySlug: filters.categorySlug } : {}),
+        ...(filters.query ? { q: filters.query } : {}),
         page: pageParam,
         pageSize,
       }),

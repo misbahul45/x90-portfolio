@@ -1,26 +1,18 @@
-import { createFileRoute } from "@tanstack/react-router"
-import { motion } from "motion/react"
-import {
-  FileText,
-  FolderGit2,
-  Users,
-  Inbox,
-  Plus,
-  ArrowUpRight,
-  type LucideIcon,
-} from "lucide-react"
+import { createFileRoute, Link } from "@tanstack/react-router"
+import { ArrowUpRight, ChevronRight, Plus } from "lucide-react"
+import { adminOutlineClass } from "#/components/admin/styles"
+import { Button } from "#/components/ui/button"
+import { Skeleton } from "#/components/ui/skeleton"
 import { useAdminArticles } from "#/hooks/useAdminArticles"
+import { useAdminExperiments } from "#/hooks/useAdminExperiments"
+import { useAdminFeedback } from "#/hooks/useAdminFeedback"
 import { useAdminProjects } from "#/hooks/useAdminProjects"
 import { useAdminTeam } from "#/hooks/useAdminTeam"
-import { useAdminFeedback } from "#/hooks/useAdminFeedback"
-import { Skeleton } from "#/components/ui/skeleton"
-import { fadeInUp, staggerContainer, staggerItem, VIEWPORT_OPTIONS } from "#/lib/motion-variants"
-import { Link } from "@tanstack/react-router"
 import { ARTICLE_STATUS, type ArticleStatus } from "#/lib/domain/article-status"
 import { FEEDBACK_STATUS } from "#/lib/domain/feedback"
 
 export const Route = createFileRoute("/admin/")({
-  head: () => ({ meta: [{ title: "Admin — XNINETZY Labs" }] }),
+  head: () => ({ meta: [{ title: "Admin — X90 Labs" }] }),
   component: AdminDashboard,
 })
 
@@ -36,218 +28,130 @@ type FeedbackItem = {
   name: string
 }
 
-type MetricCard = {
+type Metric = {
   label: string
-  value: number | string
+  value: number
   hint: string
-  icon: LucideIcon
   to: string
-  meta?: { label: string; value: number | string }
+  pending: boolean
 }
 
 function AdminDashboard() {
   const { data: articles, isPending: articlesPending } = useAdminArticles()
   const { data: projects, isPending: projectsPending } = useAdminProjects()
   const { data: team, isPending: teamPending } = useAdminTeam()
+  const { data: experiments, isPending: experimentsPending } = useAdminExperiments()
   const { data: feedback, isPending: feedbackPending } = useAdminFeedback({
     status: FEEDBACK_STATUS.NEW,
   })
 
-  const published =
-    articles?.filter((article: ArticleListItem) => article.status === ARTICLE_STATUS.PUBLISHED).length ?? 0
-  const drafts =
-    articles?.filter((article: ArticleListItem) => article.status === ARTICLE_STATUS.DRAFT).length ?? 0
+  const articleList = (articles ?? []) as ArticleListItem[]
+  const feedbackList = (feedback ?? []) as FeedbackItem[]
+  const published = articleList.filter((article) => article.status === ARTICLE_STATUS.PUBLISHED).length
+  const drafts = articleList.filter((article) => article.status === ARTICLE_STATUS.DRAFT).length
+  const running = (experiments ?? []).filter(
+    (experiment) => experiment.status === "RUNNING" || experiment.status === "EVALUATING",
+  ).length
 
-  const metrics: MetricCard[] = [
+  const metrics: Metric[] = [
+    { label: "Research", value: published, hint: `${drafts} drafts`, to: "/admin/articles", pending: articlesPending },
+    { label: "Projects", value: projects?.length ?? 0, hint: "total", to: "/admin/projects", pending: projectsPending },
     {
-      label: "Articles",
-      value: published,
-      hint: "published",
-      icon: FileText,
-      to: "/admin/articles",
-      meta: { label: "drafts", value: drafts },
+      label: "Lab runs",
+      value: experiments?.length ?? 0,
+      hint: `${running} in progress`,
+      to: "/admin/lab",
+      pending: experimentsPending,
     },
-    {
-      label: "Projects",
-      value: projects?.length ?? 0,
-      hint: "total",
-      icon: FolderGit2,
-      to: "/admin/projects",
-    },
-    {
-      label: "Team",
-      value: team?.length ?? 0,
-      hint: "members",
-      icon: Users,
-      to: "/admin/team",
-    },
-    {
-      label: "Feedback",
-      value: feedback?.length ?? 0,
-      hint: "new",
-      icon: Inbox,
-      to: "/admin/feedback",
-    },
+    { label: "Team", value: team?.length ?? 0, hint: "members", to: "/admin/team", pending: teamPending },
+    { label: "Feedback", value: feedbackList.length, hint: "new", to: "/admin/feedback", pending: feedbackPending },
   ]
 
-  const articlesTyped: ArticleListItem[] = (articles ?? []) as ArticleListItem[]
-  const feedbackTyped: FeedbackItem[] = (feedback ?? []) as FeedbackItem[]
-
   const recent = [
-    ...articlesTyped.slice(0, 4).map((article) => ({
-      kind: "article" as const,
-      id: article.id,
+    ...articleList.slice(0, 4).map((article) => ({
+      key: `article-${article.id}`,
       title: article.title,
-      meta: article.status === ARTICLE_STATUS.DRAFT ? "Draft" : "Published",
+      meta: article.status === ARTICLE_STATUS.DRAFT ? "Research draft" : "Research",
       href: `/admin/articles/${article.id}`,
     })),
-    ...feedbackTyped.slice(0, 3).map((item) => ({
-      kind: "feedback" as const,
-      id: item.id,
+    ...feedbackList.slice(0, 3).map((item) => ({
+      key: `feedback-${item.id}`,
       title: item.message,
-      meta: item.name,
+      meta: `Feedback from ${item.name}`,
       href: "/admin/feedback",
     })),
   ].slice(0, 6)
 
   return (
-    <div className="space-y-10">
-      <motion.div initial="hidden" animate="visible" variants={fadeInUp}>
-        <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--lab-orange)]">
-          Overview
-        </p>
-        <h1 className="mt-2 text-3xl font-semibold tracking-tight text-[var(--lab-ink)]">
-          Workspace snapshot
-        </h1>
-        <p className="mt-2 max-w-2xl text-sm text-[var(--lab-ink-soft)]">
-          Quick view of published content, projects, team, and incoming signals.
-        </p>
-      </motion.div>
+    <div className="space-y-14">
+      <header className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+        <div className="max-w-2xl">
+          <h1 className="dm-title">Overview</h1>
+          <p className="dm-subtitle mt-1">Published research, lab runs, projects and incoming signals.</p>
+        </div>
+        <div className="flex flex-wrap gap-3">
+          <Button asChild>
+            <Link to="/admin/articles/new">
+              <Plus aria-hidden />
+              New research
+            </Link>
+          </Button>
+          <Button asChild variant="outline" className={adminOutlineClass}>
+            <Link to="/admin/lab/new">New experiment</Link>
+          </Button>
+        </div>
+      </header>
 
-      <motion.div
-        initial="hidden"
-        animate="visible"
-        variants={staggerContainer}
-        className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
-      >
-        {metrics.map((metric) => {
-          const Icon = metric.icon
-          const isPending =
-            (metric.label === "Articles" && articlesPending) ||
-            (metric.label === "Projects" && projectsPending) ||
-            (metric.label === "Team" && teamPending) ||
-            (metric.label === "Feedback" && feedbackPending)
-          return (
-            <motion.div key={metric.label} variants={staggerItem}>
-              <Link
-                to={metric.to}
-                className="research-card-surface group block p-5 no-underline transition-transform hover:-translate-y-1"
-              >
-                <div className="flex items-start justify-between gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-md bg-[var(--lab-orange-soft)] text-[var(--lab-orange)]">
-                    <Icon className="size-5" aria-hidden />
-                  </div>
-                  <ArrowUpRight
-                    className="size-4 text-[var(--lab-ink-soft)] transition-colors group-hover:text-[var(--lab-orange)]"
-                    aria-hidden
-                  />
-                </div>
-                <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--lab-ink-soft)]">
-                  {metric.label}
-                </p>
-                {isPending ? (
-                  <Skeleton className="mt-2 h-9 w-20" />
-                ) : (
-                  <p className="mt-1 font-mono text-3xl font-semibold tracking-tight text-[var(--lab-ink)]">
-                    {metric.value}
-                  </p>
-                )}
-                <div className="mt-3 flex items-center gap-3 font-mono text-[11px] text-[var(--lab-ink-soft)]">
-                  <span>{metric.hint}</span>
-                  {metric.meta ? (
-                    <>
-                      <span aria-hidden className="text-[var(--lab-line-strong)]">·</span>
-                      <span>
-                        {metric.meta.value} {metric.meta.label}
-                      </span>
-                    </>
-                  ) : null}
-                </div>
-              </Link>
-            </motion.div>
-          )
-        })}
-      </motion.div>
-
-      <motion.section
-        initial="hidden"
-        whileInView="visible"
-        viewport={VIEWPORT_OPTIONS}
-        variants={fadeInUp}
-      >
-        <header className="flex items-center justify-between">
-          <h2 className="text-lg font-semibold tracking-tight text-[var(--lab-ink)]">
-            Recent activity
-          </h2>
+      <dl className="grid gap-px overflow-hidden rounded-3xl border border-[var(--lab-line)] bg-[var(--lab-line)] sm:grid-cols-2 lg:grid-cols-5">
+        {metrics.map((metric) => (
           <Link
-            to="/admin/articles"
-            className="inline-flex items-center gap-1 font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--lab-ink-soft)] no-underline transition-colors hover:text-[var(--lab-orange)]"
+            key={metric.label}
+            to={metric.to}
+            className="group flex flex-col justify-between gap-8 bg-[var(--lab-bg)] p-6 no-underline transition-colors hover:bg-[var(--lab-card)]"
           >
-            Open Research
-            <ArrowUpRight className="size-3.5" aria-hidden />
+            <dt className="flex items-center justify-between text-[15px] text-[var(--lab-ink-soft)]">
+              {metric.label}
+              <ArrowUpRight
+                className="size-4 transition-colors group-hover:text-[var(--lab-orange)]"
+                aria-hidden
+              />
+            </dt>
+            <dd>
+              {metric.pending ? (
+                <Skeleton className="h-10 w-16" />
+              ) : (
+                <span className="block text-4xl font-medium tracking-tight text-[var(--lab-ink)]">
+                  {metric.value}
+                </span>
+              )}
+              <span className="mt-1 block text-sm text-[var(--lab-ink-soft)]">{metric.hint}</span>
+            </dd>
           </Link>
-        </header>
-        <ul className="mt-4 divide-y divide-[var(--lab-line)] rounded-xl border border-[var(--lab-line)] bg-[var(--lab-card)]">
-          {recent.length === 0 ? (
-            <li className="p-6 text-center text-sm text-[var(--lab-ink-soft)]">
-              No activity yet.
-            </li>
-          ) : (
-            recent.map((item) => (
-              <li key={`${item.kind}-${item.id}`}>
-                <Link
-                  to={item.href}
-                  className="flex items-center justify-between gap-3 px-4 py-3 no-underline transition-colors hover:bg-[var(--lab-card-elevated)]"
-                >
-                  <div className="flex items-center gap-3 min-w-0">
-                    <span className="lab-tech-tag shrink-0">
-                      {item.kind}
-                    </span>
-                    <span className="truncate text-sm text-[var(--lab-ink)]">{item.title}</span>
-                  </div>
-                  <span className="font-mono text-[11px] text-[var(--lab-ink-soft)]">{item.meta}</span>
+        ))}
+      </dl>
+
+      <section aria-labelledby="recent-heading">
+        <h2 id="recent-heading" className="text-xl font-medium text-[var(--lab-ink)]">
+          Recent activity
+        </h2>
+        {recent.length === 0 ? (
+          <p className="dm-body mt-4">No activity yet.</p>
+        ) : (
+          <ul className="mt-4 border-b border-[var(--lab-line)]">
+            {recent.map((item) => (
+              <li key={item.key}>
+                <Link to={item.href} className="dm-row dm-link">
+                  <span className="min-w-0">
+                    <span className="block truncate text-[17px] font-medium">{item.title}</span>
+                    <span className="dm-body mt-0.5 block">{item.meta}</span>
+                  </span>
+                  <ChevronRight className="size-5 shrink-0" aria-hidden />
                 </Link>
               </li>
-            ))
-          )}
-        </ul>
-      </motion.section>
-
-      <motion.section
-        initial="hidden"
-        whileInView="visible"
-        viewport={VIEWPORT_OPTIONS}
-        variants={fadeInUp}
-        className="rounded-xl border border-[var(--lab-line)] bg-[var(--lab-card)] p-6"
-      >
-        <div className="flex items-center justify-between gap-4">
-          <div>
-            <h2 className="text-lg font-semibold tracking-tight text-[var(--lab-ink)]">
-              Start a new article
-            </h2>
-            <p className="mt-1 text-sm text-[var(--lab-ink-soft)]">
-              Compose a Tiptap document and publish when ready.
-            </p>
-          </div>
-          <Link
-            to="/admin/articles/new"
-            className="inline-flex items-center gap-2 rounded-md bg-[var(--lab-orange)] px-4 py-2 font-mono text-sm font-semibold text-[var(--lab-bg)] no-underline transition-opacity hover:opacity-90"
-          >
-            <Plus className="size-4" aria-hidden />
-            New article
-          </Link>
-        </div>
-      </motion.section>
+            ))}
+          </ul>
+        )}
+      </section>
     </div>
   )
 }

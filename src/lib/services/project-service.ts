@@ -17,6 +17,7 @@ const DEFAULT_PAGE_SIZE = 9
 type ListOptions = {
   featuredOnly?: boolean
   categorySlug?: string
+  query?: string
   page?: number
   pageSize?: number
   status?: typeof PROJECT_STATUS[keyof typeof PROJECT_STATUS]
@@ -84,6 +85,14 @@ export const projectService = {
     const where: Record<string, unknown> = { status: resolveStatusFilter(options) }
     if (options.featuredOnly) where.featured = true
     if (options.categorySlug) where.category = { slug: options.categorySlug }
+    const query = options.query?.trim()
+    if (query) {
+      where.OR = [
+        { title: { contains: query, mode: "insensitive" } },
+        { description: { contains: query, mode: "insensitive" } },
+        { technologies: { has: query } },
+      ]
+    }
     const pageSize = options.pageSize ?? DEFAULT_PAGE_SIZE
     const page = Math.max(1, options.page ?? 1)
     const [items, total] = await Promise.all([

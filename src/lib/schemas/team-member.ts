@@ -14,6 +14,8 @@ export const teamMemberSchema = z.object({
 
 export const teamMemberUpdateSchema = teamMemberSchema.partial().extend({
   id: z.string().min(1),
+  featured: z.boolean().optional(),
+  order: z.number().int().min(0).optional(),
 })
 
 export type TeamMemberInput = z.infer<typeof teamMemberSchema>

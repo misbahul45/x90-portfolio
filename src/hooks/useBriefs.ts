@@ -40,6 +40,34 @@ export function useSubmitBrief() {
   })
 }
 
+export type BriefAttachmentUpload = {
+  url: string
+  name: string
+  mimeType: string
+}
+
+type UploadResponse =
+  | { ok: true; data: { url: string } }
+  | { ok: false; error: { message: string } }
+
+export function useUploadBriefAttachment() {
+  return useMutation({
+    mutationFn: async (file: File): Promise<BriefAttachmentUpload> => {
+      const form = new FormData()
+      form.append("file", file, file.name)
+      form.append("purpose", "brief-attachment")
+      const response = await fetch("/api/upload", {
+        method: "POST",
+        body: form,
+        credentials: "include",
+      })
+      const payload = (await response.json()) as UploadResponse
+      if (!payload.ok) throw new Error(payload.error.message)
+      return { url: payload.data.url, name: file.name, mimeType: file.type }
+    },
+  })
+}
+
 export function useAdminBriefs(filters: { status?: BriefStatus; service?: BriefService } = {}) {
   return useQuery({
     queryKey: briefKeys.adminListFiltered(filters),

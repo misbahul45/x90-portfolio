@@ -129,7 +129,7 @@ async function run() {
   // ---- Admin user + account ----
   const adminEmail = "xninetzy@gmail.com";
   const adminPassword = "xninetzy123";
-  const adminName = "Xninetzy Admin";
+  const adminName = "X90 Admin";
   const userId = cuid();
   await sql.query(
     `INSERT INTO "user" (id, name, email, "emailVerified", role, "image", "createdAt", "updatedAt")
@@ -424,7 +424,7 @@ async function run() {
         p.title,
         p.slug,
         p.description,
-        tiptapDoc([p.description, "Built and maintained by the XNINETZY Labs team."]),
+        tiptapDoc([p.description, "Built and maintained by the X90 Labs team."]),
         p.coverImage,
         p.technologies,
         categoryIdBySlug[p.categorySlug],
@@ -647,7 +647,7 @@ async function run() {
       slug: "senior-ai-engineer",
       title: "Senior AI Engineer",
       role: "Senior AI Engineer",
-      company: "XNINETZY Labs",
+      company: "X90 Labs",
       type: "FULL_TIME",
       location: "Remote · APAC timezone overlap",
       description:
@@ -661,7 +661,7 @@ async function run() {
       slug: "research-engineer-eval",
       title: "Research Engineer · Evaluation",
       role: "Research Engineer",
-      company: "XNINETZY Labs",
+      company: "X90 Labs",
       type: "CONTRACT",
       location: "Remote",
       description:
@@ -675,7 +675,7 @@ async function run() {
       slug: "design-intern",
       title: "Design Intern · Agent Surfaces",
       role: "Design Intern",
-      company: "XNINETZY Labs",
+      company: "X90 Labs",
       type: "INTERNSHIP",
       location: "Hybrid · Jakarta",
       description:

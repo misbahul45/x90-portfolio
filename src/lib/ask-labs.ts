@@ -349,7 +349,7 @@ export const ASK_LABS_BRAND = {
   name: "Ask Labs",
   shortName: "Ask Labs",
   fallbackIdentity:
-    "Ask Labs is a contextual research navigator for XNINETZY Labs. Use it to explore projects, research, and engineering capabilities documented on this site.",
+    "Ask Labs is a contextual research navigator for X90 Labs. Use it to explore projects, research, and engineering capabilities documented on this site.",
 } as const
 
 export function buildAskLabsSystemPrompt(input: {
@@ -359,7 +359,7 @@ export function buildAskLabsSystemPrompt(input: {
 }): string {
   const lines: string[] = []
   lines.push(
-    "You are Ask Labs, a contextual research navigator for XNINETZY Labs — a small engineering and research lab that ships real systems, investigates how those systems behave, and turns what it learns into better systems.",
+    "You are Ask Labs, a contextual research navigator for X90 Labs — a small engineering and research lab that ships real systems, investigates how those systems behave, and turns what it learns into better systems.",
   )
   lines.push(
     "Voice: technical, concise, evidence-based. Speak like a researcher explaining work to a peer, not a salesperson.",
@@ -488,5 +488,4 @@ export function evaluatePublicGuard(input: {
   return { allowed: true }
 }
 
-// Re-export Tiptap helpers for the chat endpoint.
 export { parseTiptapContent, getTiptapText, type TiptapNode }

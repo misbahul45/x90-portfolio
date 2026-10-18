@@ -84,7 +84,7 @@ export function buildBriefEmailHtml(payload: BriefPayload): string {
 <body style="background:#0a1628;margin:0;padding:32px;font-family:Manrope,system-ui,sans-serif">
   <table cellpadding="0" cellspacing="0" border="0" width="100%" style="max-width:640px;margin:0 auto;background:#102a43;border:1px solid #1f3349;border-radius:12px;padding:24px">
     <tr><td>
-      <p style="margin:0 0 4px 0;font-family:ui-monospace,monospace;font-size:11px;color:#f2762a;letter-spacing:0.18em;text-transform:uppercase">XNINETZY Labs — New brief</p>
+      <p style="margin:0 0 4px 0;font-family:ui-monospace,monospace;font-size:11px;color:#f2762a;letter-spacing:0.18em;text-transform:uppercase">X90 Labs — New brief</p>
       <h1 style="margin:0 0 16px 0;color:#f0ece4;font-size:22px;font-weight:600">${escapeHtml(payload.name)}</h1>
       <table cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse:collapse;background:#0d1f37;border:1px solid #1f3349;border-radius:8px">
         ${row("Email", payload.email)}
@@ -135,7 +135,7 @@ export async function dispatchBriefNotifications(payload: BriefPayload): Promise
 async function sendBrevoEmail(payload: BriefPayload): Promise<boolean> {
   const apiKey = env.BREVO_API_KEY
   const fromEmail = env.BREVO_FROM_EMAIL ?? env.CONTACT_EMAIL
-  const fromName = env.BREVO_FROM_NAME ?? "XNINETZY Labs"
+  const fromName = env.BREVO_FROM_NAME ?? "X90 Labs"
   const toEmail = env.CONTACT_EMAIL ?? CONTACT_INFO.email
 
   if (!apiKey || !fromEmail || !toEmail) return false
@@ -168,7 +168,7 @@ async function sendBrevoEmail(payload: BriefPayload): Promise<boolean> {
     },
     body: JSON.stringify({
       sender: { name: fromName, email: fromEmail },
-      to: [{ email: toEmail, name: "XNINETZY Labs" }],
+      to: [{ email: toEmail, name: "X90 Labs" }],
       replyTo: { email: payload.email, name: payload.name },
       subject: `[Brief] ${payload.service} — ${payload.name}`,
       htmlContent: buildBriefEmailHtml(payload),

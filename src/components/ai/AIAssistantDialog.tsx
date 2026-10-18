@@ -39,7 +39,7 @@ export function AIAssistantDialog({ currentPath }: { currentPath: string }) {
         showCloseButton
         className="flex h-[min(820px,calc(100vh-2rem))] w-[min(1240px,calc(100vw-2rem))] max-w-[1240px] flex-col gap-0 overflow-hidden border border-[var(--lab-line)] bg-[var(--lab-bg)] p-0 shadow-[0_40px_120px_-24px_rgba(0,0,0,0.75)] sm:!max-w-[1240px]"
       >
-        <DialogTitle className="sr-only">XNINETZY Labs Research Assistant</DialogTitle>
+        <DialogTitle className="sr-only">X90 Labs Research Assistant</DialogTitle>
         <AIAssistantHeader />
         <div className="flex min-h-0 flex-1 overflow-hidden">
           <div className="flex min-w-0 flex-1 flex-col">

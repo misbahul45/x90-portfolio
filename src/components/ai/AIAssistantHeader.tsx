@@ -30,7 +30,7 @@ export function AIAssistantHeader() {
         </span>
         <div className="flex min-w-0 flex-col leading-tight">
           <span className="flex items-center gap-2 font-mono text-[12px] font-bold uppercase tracking-[0.2em] text-[var(--lab-ink)]">
-            XNINETZY Labs
+            X90 Labs
             <Sparkles className="size-3.5 text-[var(--lab-orange)]" aria-hidden />
           </span>
           <span className="font-mono text-[10.5px] uppercase tracking-[0.22em] text-[var(--lab-orange)]">

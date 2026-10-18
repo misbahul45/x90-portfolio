@@ -22,9 +22,9 @@ export function AskLabsFab() {
         aria-label="Open Ask Labs"
         aria-haspopup="dialog"
         aria-expanded={open}
-        className="fixed bottom-6 right-6 z-40 inline-flex items-center gap-2 border border-[var(--lab-line)] bg-[var(--lab-bg-soft)] px-4 py-2.5 font-mono text-xs uppercase tracking-[0.18em] text-[var(--lab-ink)] shadow-[0_18px_40px_-12px_rgba(0,0,0,0.6)] transition-all hover:border-[var(--lab-orange)] hover:text-[var(--lab-orange)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--lab-orange)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--lab-bg)]"
+        className="fixed bottom-6 right-6 z-40 inline-flex h-12 items-center gap-2 rounded-full border border-[var(--lab-line-strong)] bg-[var(--lab-card)] px-5 text-[15px] font-medium text-[var(--lab-ink)] shadow-lg transition-colors hover:border-[var(--lab-orange)] hover:text-[var(--lab-orange)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--lab-orange)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--lab-bg)]"
       >
-        <Sparkles className="size-3.5 text-[var(--lab-orange)]" aria-hidden />
+        <Sparkles className="size-4 text-[var(--lab-orange)]" aria-hidden />
         Ask Labs
       </button>
       <span aria-live="polite" className="sr-only">

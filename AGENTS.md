@@ -1,12 +1,12 @@
-# AGENTS.md — XNINETZY Labs
+# AGENTS.md — X90 Labs
 
 Operating rules untuk semua agent dan kontributor yang bekerja di repository ini.
 
 ## Project Snapshot
 
 - **Nama**: `x90-labs-portfolio` (private, TanStack Start)
-- **Tujuan**: Landing page software house XNINETZY Labs — jual jasa Automation (n8n), AI Assistant, Agentic System, Web End-to-End, Mobile End-to-End. AI Labs diposisikan sebagai value-add (research + portfolio) di samping delivery.
-- **Brand**: XNINETZY Labs · "Software House" · positioning "saya + tim"
+- **Tujuan**: Landing page software house X90 Labs — jual jasa Automation (n8n), AI Assistant, Agentic System, Web End-to-End, Mobile End-to-End. AI Labs diposisikan sebagai value-add (research + portfolio) di samping delivery.
+- **Brand**: X90 Labs · "Software House" · positioning "saya + tim"
 - **Stack**: TanStack Start + Router (file-based) + React 19 + TypeScript strict + Vite 7 + Tailwind CSS 4 + Prisma 7 + PostgreSQL 16 + pgvector + Better Auth + T3Env + TanStack Query/Form/Table + Motion + @xyflow/react + Tiptap
 - **Branching**: `main` (deploy), fitur di branch terpisah, PR review wajib
 - **Package manager**: bun (`bun install`, `bun run`, `bunx`)

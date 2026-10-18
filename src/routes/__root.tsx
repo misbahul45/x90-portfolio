@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react"
 import {
   HeadContent,
   Scripts,
   createRootRouteWithContext,
+  useRouterState,
 } from "@tanstack/react-router"
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools"
 import { TanStackDevtools } from "@tanstack/react-devtools"
@@ -30,20 +30,20 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       {
         title:
-          "XNINETZY Labs — Software House · AI, Automation, Web, Mobile",
+          "X90 Labs — Software House · AI, Automation, Web, Mobile",
       },
       {
         name: "description",
         content:
-          "XNINETZY Labs is an AI engineering studio that designs, builds, and ships production software — websites, mobile apps, internal tools, AI agents, and workflow automation.",
+          "X90 Labs is an AI engineering studio that designs, builds, and ships production software — websites, mobile apps, internal tools, AI agents, and workflow automation.",
       },
       { name: "theme-color", content: "#071426" },
       { name: "color-scheme", content: "dark" },
       { property: "og:type", content: "website" },
-      { property: "og:site_name", content: "XNINETZY Labs" },
+      { property: "og:site_name", content: "X90 Labs" },
       {
         property: "og:title",
-        content: "XNINETZY Labs — Software House · AI, Automation, Web, Mobile",
+        content: "X90 Labs — Software House · AI, Automation, Web, Mobile",
       },
       {
         property: "og:description",
@@ -54,7 +54,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
       { name: "twitter:card", content: "summary_large_image" },
       {
         name: "twitter:title",
-        content: "XNINETZY Labs — Software House · AI, Automation, Web, Mobile",
+        content: "X90 Labs — Software House · AI, Automation, Web, Mobile",
       },
       {
         name: "twitter:description",
@@ -75,41 +75,23 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 })
 
 function RootDocument({ children }: { children: React.ReactNode }) {
-  const [currentPath, setCurrentPath] = useState(() =>
-    typeof window === "undefined" ? "/" : window.location.pathname,
-  )
-  useEffect(() => {
-    if (typeof window === "undefined") return
-    const handler = () => setCurrentPath(window.location.pathname)
-    window.addEventListener("popstate", handler)
-    const orig = window.history.pushState
-    window.history.pushState = function (...args: Parameters<typeof orig>) {
-      const result = orig.apply(this, args)
-      window.dispatchEvent(new Event("locationchange"))
-      return result
-    }
-    window.addEventListener("locationchange", handler)
-    return () => {
-      window.removeEventListener("popstate", handler)
-      window.removeEventListener("locationchange", handler)
-      window.history.pushState = orig
-    }
-  }, [])
+  const currentPath = useRouterState({ select: (state) => state.location.pathname })
+  const isAdminRoute = currentPath.startsWith("/admin")
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
       <head>
         <HeadContent />
       </head>
-      <body className="font-sans antialiased [overflow-wrap:anywhere] selection:bg-[rgba(216,91,24,0.24)]">
+      <body className="font-sans antialiased [overflow-wrap:anywhere]">
         <TanStackQueryProvider>
-          <Header />
+          {isAdminRoute ? null : <Header />}
           {children}
-          <Footer />
-          <AskLabsFab />
-          <AskLabsDialog currentPath={currentPath} />
+          {isAdminRoute ? null : <Footer />}
+          {isAdminRoute ? null : <AskLabsFab />}
+          {isAdminRoute ? null : <AskLabsDialog currentPath={currentPath} />}
           <TanStackDevtools
             config={{
-              position: "bottom-right",
+              position: "middle-right",
             }}
             plugins={[
               {

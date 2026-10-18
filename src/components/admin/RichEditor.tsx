@@ -167,7 +167,7 @@ type RichEditorProps = {
 export function RichEditor({ value, onChange, className }: RichEditorProps) {
   const editor = useEditor({
     extensions: [
-      StarterKit.configure({ codeBlock: false }),
+      StarterKit.configure({ codeBlock: false, link: false }),
       Link.configure({ openOnClick: false }),
       Image,
       CodeBlock,

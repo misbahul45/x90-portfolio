@@ -1,9 +1,6 @@
 import { hashPassword } from "better-auth/crypto"
-import { ensurePrisma, prisma } from "../src/db"
+import { ensurePrisma, isLocalConnection, prisma } from "../src/db"
 
-// PrismaNeon uses WebSocket under the hood. Node (used by `tsx` when running
-// prisma db seed) lacks a global WebSocket. Register `ws` before any Prisma
-// query so the adapter can negotiate the Neon tunnel.
 import ws from "ws"
 if (typeof globalThis.WebSocket === "undefined") {
   // @ts-expect-error assign Node polyfill
@@ -73,7 +70,6 @@ const callout = (text: string): TiptapNode => ({
   content: [{ type: "paragraph", content: [{ type: "text", text }] }],
 })
 
-// Cover image is hosted on Unsplash. We don't download — only the URL is stored.
 const COVER = (seed: string) =>
   `https://images.unsplash.com/${seed}?auto=format&fit=crop&w=1600&q=70`
 
@@ -190,12 +186,29 @@ const articleLocalInferenceContent = tiptapDoc(
   ),
 )
 
-const articleShrtContent = tiptapDoc(paragraph("Short note placeholder."))
+function assertSafeSeedTarget(): void {
+  const url = process.env.DATABASE_URL ?? ""
+  if (isLocalConnection(url) || process.env.ALLOW_REMOTE_SEED === "1") return
+  let host = "unknown"
+  try {
+    host = new URL(url).hostname
+  } catch {
+    host = "unparseable"
+  }
+  console.error(`❌ Refusing to seed: DATABASE_URL host "${host}" is not local.`)
+  console.error("   This script deletes users, articles, projects, team, tags and categories.")
+  console.error("   Point DATABASE_URL at the local Docker database, or set ALLOW_REMOTE_SEED=1 to override.")
+  process.exit(1)
+}
 
 async function main() {
-  console.log("🌱 Seeding xninetzy labs database...")
+  assertSafeSeedTarget()
+  console.log("🌱 Seeding x90 labs database...")
   await ensurePrisma()
 
+  await prisma.experiment.deleteMany()
+  await prisma.backgroundJob.deleteMany()
+  await prisma.brief.deleteMany()
   await prisma.projectResearch.deleteMany()
   await prisma.feedback.deleteMany()
   await prisma.tagOnArticle.deleteMany()
@@ -244,7 +257,7 @@ async function main() {
     "ADMIN_PASSWORD",
     "xninetzy123",
   )
-  const adminName = asString(process.env.ADMIN_NAME, "Xninetzy Admin")
+  const adminName = asString(process.env.ADMIN_NAME, "X90 Admin")
 
   if (adminPassword.length < 8) {
     console.error("❌ ADMIN_PASSWORD must be at least 8 characters.")
@@ -591,7 +604,6 @@ async function main() {
     console.log(`  🚀 ${project.title}`)
   }
 
-  // Link each project to a related research article.
   const articleSlugToId = new Map<string, string>()
   for (const article of await prisma.article.findMany({ select: { id: true, slug: true } })) {
     articleSlugToId.set(article.slug, article.id)
@@ -766,7 +778,7 @@ async function main() {
       slug: "senior-ai-engineer",
       title: "Senior AI Engineer",
       role: "Senior AI Engineer",
-      company: "XNINETZY Labs",
+      company: "X90 Labs",
       type: "FULL_TIME" as const,
       location: "Remote · APAC timezone overlap",
       description:
@@ -780,7 +792,7 @@ async function main() {
       slug: "research-engineer-eval",
       title: "Research Engineer · Evaluation",
       role: "Research Engineer",
-      company: "XNINETZY Labs",
+      company: "X90 Labs",
       type: "CONTRACT" as const,
       location: "Remote",
       description:
@@ -794,7 +806,7 @@ async function main() {
       slug: "design-intern",
       title: "Design Intern · Agent Surfaces",
       role: "Design Intern",
-      company: "XNINETZY Labs",
+      company: "X90 Labs",
       type: "INTERNSHIP" as const,
       location: "Hybrid · Jakarta",
       description:
@@ -810,6 +822,41 @@ async function main() {
     await prisma.backgroundJob.create({ data: job })
   }
   console.log(`✅ Created ${jobData.length} open positions`)
+
+  const experimentData = [
+    {
+      title: "LoRA adapter for support ticket triage",
+      slug: "lora-support-triage",
+      summary: "Does a small LoRA adapter beat few-shot prompting for routing support tickets to the right queue?",
+      baseModel: "Qwen2.5-7B-Instruct",
+      method: "LORA" as const,
+      datasetName: "tickets-v3",
+      datasetSize: 12000,
+      hyperparams: { learning_rate: 0.0002, epochs: 3, batch_size: 8, lora_rank: 16, lora_alpha: 32, lora_dropout: 0.05 },
+      metrics: { accuracy: 0.91, macro_f1: 0.88 },
+      status: "COMPLETED" as const,
+      stage: 4,
+      notes: "Adapter wins on rare queues. Prompting is still cheaper for the top three queues.",
+    },
+    {
+      title: "DPO on refusal behaviour for the Ask Labs assistant",
+      slug: "dpo-ask-labs-refusals",
+      summary: "Can preference tuning reduce unnecessary refusals without hurting grounded answers?",
+      baseModel: "Llama-3.1-8B-Instruct",
+      method: "DPO" as const,
+      datasetName: "ask-labs-prefs-v1",
+      datasetSize: 4200,
+      hyperparams: { learning_rate: 0.000005, epochs: 1, batch_size: 4, beta: 0.1 },
+      metrics: {},
+      status: "RUNNING" as const,
+      stage: 2,
+      notes: "",
+    },
+  ]
+  for (const experiment of experimentData) {
+    await prisma.experiment.create({ data: experiment })
+  }
+  console.log(`✅ Created ${experimentData.length} experiments`)
 
   console.log("🎉 Seed complete.")
 }

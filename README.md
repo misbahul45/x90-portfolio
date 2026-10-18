@@ -1,4 +1,4 @@
-# XNINETZY Labs — Software House
+# X90 Labs — Software House
 
 AI engineering studio. We design, build, and ship production software: websites, mobile apps, internal tools, AI agents, and workflow automation.
 

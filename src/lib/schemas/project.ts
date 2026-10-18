@@ -3,6 +3,12 @@ import { tiptapDocSchema } from "#/lib/schemas/article"
 import { SLUG_REGEX } from "#/lib/slug"
 import { PROJECT_STATUS } from "#/lib/domain/project-status"
 
+const projectStatusSchema = z.enum([
+  PROJECT_STATUS.DRAFT,
+  PROJECT_STATUS.PUBLISHED,
+  PROJECT_STATUS.ARCHIVED,
+])
+
 export const projectCreateSchema = z.object({
   title: z.string().min(3).max(200),
   slug: z
@@ -20,15 +26,18 @@ export const projectCreateSchema = z.object({
   demoUrl: z.string().url().nullable().optional(),
   featured: z.boolean().default(false),
   order: z.number().int().min(0).default(0),
-  status: z
-    .enum([PROJECT_STATUS.DRAFT, PROJECT_STATUS.PUBLISHED, PROJECT_STATUS.ARCHIVED])
-    .default(PROJECT_STATUS.DRAFT),
+  status: projectStatusSchema.default(PROJECT_STATUS.DRAFT),
   publishedAt: z.coerce.date().nullable().optional(),
   researchArticleIds: z.array(z.string()).default([]),
 })
 
 export const projectUpdateSchema = projectCreateSchema.partial().extend({
   id: z.string().min(1),
+  technologies: z.array(z.string().min(1).max(50)).optional(),
+  featured: z.boolean().optional(),
+  order: z.number().int().min(0).optional(),
+  status: projectStatusSchema.optional(),
+  researchArticleIds: z.array(z.string()).optional(),
 })
 
 export type ProjectCreateInput = z.infer<typeof projectCreateSchema>

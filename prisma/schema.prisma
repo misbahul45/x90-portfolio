@@ -119,6 +119,7 @@ model Article {
   category    Category?              @relation(fields: [categoryId], references: [id])
   tags        TagOnArticle[]
   projects    ProjectResearch[]
+  experiments Experiment[]
 
   @@index([status, publishedAt])
   @@index([slug])
@@ -145,6 +146,7 @@ model Project {
   updatedAt    DateTime         @updatedAt
   category     Category?        @relation(fields: [categoryId], references: [id])
   research     ProjectResearch[]
+  experiments  Experiment[]
 
   @@index([featured, order])
   @@index([slug])
@@ -316,4 +318,47 @@ model ProjectResearch {
   @@id([projectId, articleId])
   @@index([articleId])
   @@map("project_research")
+}
+
+enum ExperimentMethod {
+  SFT
+  LORA
+  QLORA
+  DPO
+  OTHER
+}
+
+enum ExperimentStatus {
+  PLANNED
+  RUNNING
+  EVALUATING
+  COMPLETED
+  FAILED
+}
+
+model Experiment {
+  id          String           @id @default(cuid())
+  title       String
+  slug        String           @unique
+  summary     String
+  baseModel   String
+  method      ExperimentMethod @default(LORA)
+  datasetName String?
+  datasetSize Int?
+  hyperparams Json             @default("{}")
+  metrics     Json             @default("{}")
+  status      ExperimentStatus @default(PLANNED)
+  stage       Int              @default(0)
+  notes       String           @default("")
+  articleId   String?
+  projectId   String?
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  article     Article?         @relation(fields: [articleId], references: [id], onDelete: SetNull)
+  project     Project?         @relation(fields: [projectId], references: [id], onDelete: SetNull)
+
+  @@index([status, updatedAt])
+  @@index([articleId])
+  @@index([projectId])
+  @@map("experiment")
 }

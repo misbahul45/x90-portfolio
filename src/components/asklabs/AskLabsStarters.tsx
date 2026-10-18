@@ -52,7 +52,7 @@ function ContextLine({ context }: { context: AskLabsContext }) {
     research: `Reading ${context.slug ?? "research"}.`,
     about: "On the about page.",
     contact: "On the contact page.",
-    none: "Browsing XNINETZY Labs.",
+    none: "Browsing X90 Labs.",
   }
   return (
     <p className="text-sm leading-relaxed text-[var(--lab-ink-soft)]">{map[context.kind]}</p>

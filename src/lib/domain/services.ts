@@ -175,7 +175,7 @@ export const TECH_STACK: ReadonlyArray<{
 export const LAB_VISION = {
   headline: "Build products today. Build the lab tomorrow.",
   description:
-    "XNINETZY starts by building useful software, AI systems, and automation for real problems. The long-term goal is bigger: grow into an independent engineering and research lab where products, experiments, and original AI research continuously inform each other.",
+    "X90 Labs starts by building useful software, AI systems, and automation for real problems. The long-term goal is bigger: grow into an independent engineering and research lab where products, experiments, and original AI research continuously inform each other.",
   trajectory: [
     "Build useful systems",
     "Study what works",
@@ -186,7 +186,7 @@ export const LAB_VISION = {
 } as const
 
 export const LAB_POSITIONING = {
-  label: "XNINETZY Labs",
+  label: "X90 Labs",
   statement: "Software engineering with a research mindset.",
   supporting:
     "We build production systems today while developing the engineering, AI, and research capabilities needed for the lab we want to become.",
@@ -219,7 +219,7 @@ export type BriefMessagePayload = {
 
 export function buildBriefMessage(payload: BriefMessagePayload): string {
   const lines: string[] = [
-    `Hi XNINETZY Labs, I'm ${payload.name}.`,
+    `Hi X90 Labs, I'm ${payload.name}.`,
     "",
     `Service: ${payload.service}`,
   ]

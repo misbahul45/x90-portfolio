@@ -47,16 +47,22 @@ export function useArticles(
 
 export type InfiniteArticleFilters = {
   categorySlug?: string
+  query?: string
   pageSize?: number
 }
 
 export function useInfiniteArticles(filters: InfiniteArticleFilters = {}) {
   const pageSize = filters.pageSize ?? 9
   return useInfiniteQuery({
-    queryKey: articleKeys.infinite({ categorySlug: filters.categorySlug }),
+    queryKey: articleKeys.infinite({
+      categorySlug: filters.categorySlug,
+      query: filters.query,
+      pageSize,
+    }),
     queryFn: ({ pageParam }) =>
       apiGet<ArticlePage>("/api/handlers/articles", {
         ...(filters.categorySlug ? { categorySlug: filters.categorySlug } : {}),
+        ...(filters.query ? { q: filters.query } : {}),
         page: pageParam,
         pageSize,
       }),

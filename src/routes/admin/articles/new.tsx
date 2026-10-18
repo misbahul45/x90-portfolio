@@ -10,6 +10,7 @@ import { Skeleton } from "#/components/ui/skeleton"
 const RichEditor = lazy(() =>
   import("#/components/admin/RichEditor").then((m) => ({ default: m.RichEditor })),
 )
+import { adminOutlineClass } from "#/components/admin/styles"
 import { Button } from "#/components/ui/button"
 import { Input } from "#/components/ui/input"
 import { Textarea } from "#/components/ui/textarea"
@@ -93,7 +94,7 @@ function AdminArticleNew() {
           </h1>
         </div>
         <div className="flex items-center gap-2">
-          <Button asChild variant="outline" className="font-mono">
+          <Button asChild variant="outline" className={adminOutlineClass}>
             <Link to="/admin/articles">Cancel</Link>
           </Button>
           <Button type="submit" className="font-mono" disabled={create.isPending}>

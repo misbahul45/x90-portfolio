@@ -102,7 +102,7 @@ function RenderNode({ node }: { node: TiptapNode }): ReactNode {
   }
   if (node.type === "bulletList") {
     return (
-      <ul className="my-4 space-y-1.5 pl-6 text-[var(--lab-ink)] marker:text-[var(--lab-orange)]" style={{ listStyle: "disc" }}>
+      <ul className="my-4 list-disc space-y-1.5 pl-6 text-[var(--lab-ink)] marker:text-[var(--lab-orange)]">
         {children}
       </ul>
     )

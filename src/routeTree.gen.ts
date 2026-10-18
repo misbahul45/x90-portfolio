@@ -26,6 +26,7 @@ import { Route as AdminLoginRouteImport } from './routes/admin/login'
 import { Route as AdminFeedbackRouteImport } from './routes/admin/feedback'
 import { Route as AdminBriefsRouteImport } from './routes/admin/briefs'
 import { Route as AdminTagsIndexRouteImport } from './routes/admin/tags/index'
+import { Route as AdminLabIndexRouteImport } from './routes/admin/lab/index'
 import { Route as AdminCategoriesIndexRouteImport } from './routes/admin/categories/index'
 import { Route as AdminArticlesIndexRouteImport } from './routes/admin/articles/index'
 import { Route as ApiHandlersSplatRouteImport } from './routes/api/handlers/$'
@@ -37,6 +38,8 @@ import { Route as ApiAskLabsBriefRouteImport } from './routes/api/ask-labs/brief
 import { Route as ApiAiRelatedRouteImport } from './routes/api/ai/related'
 import { Route as ApiAiChatRouteImport } from './routes/api/ai/chat'
 import { Route as AdminProjectsIdRouteImport } from './routes/admin/projects/$id'
+import { Route as AdminLabNewRouteImport } from './routes/admin/lab/new'
+import { Route as AdminLabIdRouteImport } from './routes/admin/lab/$id'
 import { Route as AdminArticlesNewRouteImport } from './routes/admin/articles/new'
 import { Route as AdminArticlesIdRouteImport } from './routes/admin/articles/$id'
 
@@ -125,6 +128,11 @@ const AdminTagsIndexRoute = AdminTagsIndexRouteImport.update({
   path: '/tags/',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminLabIndexRoute = AdminLabIndexRouteImport.update({
+  id: '/lab/',
+  path: '/lab/',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminCategoriesIndexRoute = AdminCategoriesIndexRouteImport.update({
   id: '/categories/',
   path: '/categories/',
@@ -180,6 +188,16 @@ const AdminProjectsIdRoute = AdminProjectsIdRouteImport.update({
   path: '/$id',
   getParentRoute: () => AdminProjectsRoute,
 } as any)
+const AdminLabNewRoute = AdminLabNewRouteImport.update({
+  id: '/lab/new',
+  path: '/lab/new',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminLabIdRoute = AdminLabIdRouteImport.update({
+  id: '/lab/$id',
+  path: '/lab/$id',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminArticlesNewRoute = AdminArticlesNewRouteImport.update({
   id: '/articles/new',
   path: '/articles/new',
@@ -210,6 +228,8 @@ export interface FileRoutesByFullPath {
   '/research/': typeof ResearchIndexRoute
   '/admin/articles/$id': typeof AdminArticlesIdRoute
   '/admin/articles/new': typeof AdminArticlesNewRoute
+  '/admin/lab/$id': typeof AdminLabIdRoute
+  '/admin/lab/new': typeof AdminLabNewRoute
   '/admin/projects/$id': typeof AdminProjectsIdRoute
   '/api/ai/chat': typeof ApiAiChatRoute
   '/api/ai/related': typeof ApiAiRelatedRoute
@@ -221,6 +241,7 @@ export interface FileRoutesByFullPath {
   '/api/handlers/$': typeof ApiHandlersSplatRoute
   '/admin/articles/': typeof AdminArticlesIndexRoute
   '/admin/categories/': typeof AdminCategoriesIndexRoute
+  '/admin/lab/': typeof AdminLabIndexRoute
   '/admin/tags/': typeof AdminTagsIndexRoute
 }
 export interface FileRoutesByTo {
@@ -239,6 +260,8 @@ export interface FileRoutesByTo {
   '/research': typeof ResearchIndexRoute
   '/admin/articles/$id': typeof AdminArticlesIdRoute
   '/admin/articles/new': typeof AdminArticlesNewRoute
+  '/admin/lab/$id': typeof AdminLabIdRoute
+  '/admin/lab/new': typeof AdminLabNewRoute
   '/admin/projects/$id': typeof AdminProjectsIdRoute
   '/api/ai/chat': typeof ApiAiChatRoute
   '/api/ai/related': typeof ApiAiRelatedRoute
@@ -250,6 +273,7 @@ export interface FileRoutesByTo {
   '/api/handlers/$': typeof ApiHandlersSplatRoute
   '/admin/articles': typeof AdminArticlesIndexRoute
   '/admin/categories': typeof AdminCategoriesIndexRoute
+  '/admin/lab': typeof AdminLabIndexRoute
   '/admin/tags': typeof AdminTagsIndexRoute
 }
 export interface FileRoutesById {
@@ -272,6 +296,8 @@ export interface FileRoutesById {
   '/research/': typeof ResearchIndexRoute
   '/admin/articles/$id': typeof AdminArticlesIdRoute
   '/admin/articles/new': typeof AdminArticlesNewRoute
+  '/admin/lab/$id': typeof AdminLabIdRoute
+  '/admin/lab/new': typeof AdminLabNewRoute
   '/admin/projects/$id': typeof AdminProjectsIdRoute
   '/api/ai/chat': typeof ApiAiChatRoute
   '/api/ai/related': typeof ApiAiRelatedRoute
@@ -283,6 +309,7 @@ export interface FileRoutesById {
   '/api/handlers/$': typeof ApiHandlersSplatRoute
   '/admin/articles/': typeof AdminArticlesIndexRoute
   '/admin/categories/': typeof AdminCategoriesIndexRoute
+  '/admin/lab/': typeof AdminLabIndexRoute
   '/admin/tags/': typeof AdminTagsIndexRoute
 }
 export interface FileRouteTypes {
@@ -306,6 +333,8 @@ export interface FileRouteTypes {
     | '/research/'
     | '/admin/articles/$id'
     | '/admin/articles/new'
+    | '/admin/lab/$id'
+    | '/admin/lab/new'
     | '/admin/projects/$id'
     | '/api/ai/chat'
     | '/api/ai/related'
@@ -317,6 +346,7 @@ export interface FileRouteTypes {
     | '/api/handlers/$'
     | '/admin/articles/'
     | '/admin/categories/'
+    | '/admin/lab/'
     | '/admin/tags/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -335,6 +365,8 @@ export interface FileRouteTypes {
     | '/research'
     | '/admin/articles/$id'
     | '/admin/articles/new'
+    | '/admin/lab/$id'
+    | '/admin/lab/new'
     | '/admin/projects/$id'
     | '/api/ai/chat'
     | '/api/ai/related'
@@ -346,6 +378,7 @@ export interface FileRouteTypes {
     | '/api/handlers/$'
     | '/admin/articles'
     | '/admin/categories'
+    | '/admin/lab'
     | '/admin/tags'
   id:
     | '__root__'
@@ -367,6 +400,8 @@ export interface FileRouteTypes {
     | '/research/'
     | '/admin/articles/$id'
     | '/admin/articles/new'
+    | '/admin/lab/$id'
+    | '/admin/lab/new'
     | '/admin/projects/$id'
     | '/api/ai/chat'
     | '/api/ai/related'
@@ -378,6 +413,7 @@ export interface FileRouteTypes {
     | '/api/handlers/$'
     | '/admin/articles/'
     | '/admin/categories/'
+    | '/admin/lab/'
     | '/admin/tags/'
   fileRoutesById: FileRoutesById
 }
@@ -519,6 +555,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminTagsIndexRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/lab/': {
+      id: '/admin/lab/'
+      path: '/lab'
+      fullPath: '/admin/lab/'
+      preLoaderRoute: typeof AdminLabIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/categories/': {
       id: '/admin/categories/'
       path: '/categories'
@@ -596,6 +639,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminProjectsIdRouteImport
       parentRoute: typeof AdminProjectsRoute
     }
+    '/admin/lab/new': {
+      id: '/admin/lab/new'
+      path: '/lab/new'
+      fullPath: '/admin/lab/new'
+      preLoaderRoute: typeof AdminLabNewRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/lab/$id': {
+      id: '/admin/lab/$id'
+      path: '/lab/$id'
+      fullPath: '/admin/lab/$id'
+      preLoaderRoute: typeof AdminLabIdRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/articles/new': {
       id: '/admin/articles/new'
       path: '/articles/new'
@@ -634,8 +691,11 @@ interface AdminRouteChildren {
   AdminIndexRoute: typeof AdminIndexRoute
   AdminArticlesIdRoute: typeof AdminArticlesIdRoute
   AdminArticlesNewRoute: typeof AdminArticlesNewRoute
+  AdminLabIdRoute: typeof AdminLabIdRoute
+  AdminLabNewRoute: typeof AdminLabNewRoute
   AdminArticlesIndexRoute: typeof AdminArticlesIndexRoute
   AdminCategoriesIndexRoute: typeof AdminCategoriesIndexRoute
+  AdminLabIndexRoute: typeof AdminLabIndexRoute
   AdminTagsIndexRoute: typeof AdminTagsIndexRoute
 }
 
@@ -648,8 +708,11 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminIndexRoute: AdminIndexRoute,
   AdminArticlesIdRoute: AdminArticlesIdRoute,
   AdminArticlesNewRoute: AdminArticlesNewRoute,
+  AdminLabIdRoute: AdminLabIdRoute,
+  AdminLabNewRoute: AdminLabNewRoute,
   AdminArticlesIndexRoute: AdminArticlesIndexRoute,
   AdminCategoriesIndexRoute: AdminCategoriesIndexRoute,
+  AdminLabIndexRoute: AdminLabIndexRoute,
   AdminTagsIndexRoute: AdminTagsIndexRoute,
 }
 

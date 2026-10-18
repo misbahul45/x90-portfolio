@@ -94,7 +94,7 @@ function LabNode() {
 
       <div>
         <p className="text-lg font-semibold tracking-[-0.03em] text-[var(--lab-ink)]">
-          XNINETZY Labs
+          X90 Labs
         </p>
 
         <p className="mt-1 font-mono text-[9px] uppercase tracking-[0.16em] text-[var(--lab-ink-soft)]">
