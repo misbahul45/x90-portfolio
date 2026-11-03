@@ -98,8 +98,7 @@ function ArticleDetailView({ article }: { article: ArticleListItem }) {
         <div className="dm-shell">
           <div className="mx-auto max-w-4xl">
             <BackLink />
-            <p className="dm-eyebrow mt-10">{article.category?.name ?? "Research"}</p>
-            <h1 className="dm-display mt-4 text-balance">{article.title}</h1>
+            <h1 className="dm-display mt-10 text-balance">{article.title}</h1>
             {article.excerpt ? <p className="dm-lede mt-8 max-w-3xl">{article.excerpt}</p> : null}
             {meta.length > 0 ? (
               <p className="mt-8 text-[15px] text-[var(--lab-ink-soft)]">{meta.join("  ·  ")}</p>

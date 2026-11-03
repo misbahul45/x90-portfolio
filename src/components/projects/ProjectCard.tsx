@@ -23,10 +23,6 @@ type ProjectCardProps = {
 }
 
 export function ProjectCard({ project, className }: ProjectCardProps) {
-  const meta = [project.category?.name, project.technologies.slice(0, 3).join(", ")]
-    .filter(Boolean)
-    .join("  ·  ")
-
   return (
     <Link
       to="/projects/$slug"
@@ -52,9 +48,8 @@ export function ProjectCard({ project, className }: ProjectCardProps) {
         <h3 className="dm-card-title">{project.title}</h3>
         <p className="dm-body mt-2 line-clamp-3">{project.description}</p>
       </div>
-      <p className="mt-4 flex items-center justify-between gap-4 text-sm text-[var(--lab-ink-soft)]">
-        <span className="truncate">{meta}</span>
-        <span className="inline-flex shrink-0 items-center gap-1 font-medium text-[var(--lab-ink)] transition-colors group-hover:text-[var(--lab-orange)]">
+      <p className="mt-4 flex items-center text-sm text-[var(--lab-ink-soft)]">
+        <span className="inline-flex items-center gap-1 font-medium text-[var(--lab-ink)] transition-colors group-hover:text-[var(--lab-orange)]">
           Learn more
           <ArrowUpRight className="size-4" aria-hidden />
         </span>

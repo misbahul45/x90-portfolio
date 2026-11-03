@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
 import { createFileRoute } from "@tanstack/react-router"
-import { motion } from "motion/react"
 import { Plus, Trash2, ExternalLink, Github, Linkedin, Globe, Loader2 } from "lucide-react"
 import {
   useAdminCreateTeamMember,
@@ -8,13 +7,15 @@ import {
   useAdminTeam,
   useAdminUpdateTeamMember,
 } from "#/hooks/useAdminTeam"
+import { AdminPageHeader } from "#/components/admin/AdminPageHeader"
+import { adminIconButtonClass, adminInputClass, adminPanelClass } from "#/components/admin/styles"
 import { Button } from "#/components/ui/button"
 import { Input } from "#/components/ui/input"
 import { Textarea } from "#/components/ui/textarea"
 import { Label } from "#/components/ui/label"
 import { Switch } from "#/components/ui/switch"
 import { Skeleton } from "#/components/ui/skeleton"
-import { fadeInUp } from "#/lib/motion-variants"
+import { cn } from "#/lib/utils"
 
 type TeamMember = {
   id: string
@@ -130,53 +131,36 @@ function AdminTeamPage() {
 
   return (
     <div className="space-y-8">
-      <motion.header
-        initial="hidden"
-        animate="visible"
-        variants={fadeInUp}
-        className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between"
-      >
-        <div>
-          <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--lab-orange)]">
-            Team
-          </p>
-          <h1 className="mt-2 text-3xl font-semibold tracking-tight text-[var(--lab-ink)]">
-            Lab members
-          </h1>
-          <p className="mt-2 text-sm text-[var(--lab-ink-soft)]">
-            Profiles shown on the public About and Homepage.
-          </p>
-        </div>
-        {!showForm && (
-          <Button type="button" onClick={startCreate} className="font-mono">
-            <Plus className="size-4" />
-            Add member
-          </Button>
-        )}
-      </motion.header>
+      <AdminPageHeader
+        title="Team"
+        description="Profiles shown on the public About page and homepage."
+        action={
+          showForm ? undefined : (
+            <Button type="button" onClick={startCreate}>
+              <Plus aria-hidden />
+              Add member
+            </Button>
+          )
+        }
+      />
 
       {showForm && (
-        <motion.form
-          initial="hidden"
-          animate="visible"
-          variants={fadeInUp}
-          onSubmit={onSubmit}
-          className="research-card-surface space-y-4 p-6"
-        >
+        <form onSubmit={onSubmit} className={cn(adminPanelClass, "space-y-5 p-6")}>
           <div className="flex items-center justify-between">
-            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--lab-orange)]">
+            <h2 className="text-xl font-medium text-[var(--lab-ink)]">
               {editing ? "Edit member" : "New member"}
-            </p>
-            <button
+            </h2>
+            <Button
               type="button"
+              variant="ghost"
+              className="text-[var(--lab-ink-soft)]"
               onClick={() => {
                 setShowForm(false)
                 setEditing(null)
               }}
-              className="font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--lab-ink-soft)] transition-colors hover:text-[var(--lab-ink)]"
             >
               Cancel
-            </button>
+            </Button>
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="space-y-1.5">
@@ -186,7 +170,7 @@ function AdminTeamPage() {
                 required
                 value={form.name}
                 onChange={(event) => setForm((prev) => ({ ...prev, name: event.target.value }))}
-                className="border-[var(--lab-line)] bg-[var(--lab-card)] text-[var(--lab-ink)]"
+                className={adminInputClass}
               />
             </div>
             <div className="space-y-1.5">
@@ -197,7 +181,7 @@ function AdminTeamPage() {
                 value={form.role}
                 onChange={(event) => setForm((prev) => ({ ...prev, role: event.target.value }))}
                 placeholder="Founder · AI Engineer"
-                className="border-[var(--lab-line)] bg-[var(--lab-card)] text-[var(--lab-ink)] placeholder:text-[var(--lab-ink-soft)]"
+                className={adminInputClass}
               />
             </div>
           </div>
@@ -208,7 +192,7 @@ function AdminTeamPage() {
               rows={3}
               value={form.bio}
               onChange={(event) => setForm((prev) => ({ ...prev, bio: event.target.value }))}
-              className="border-[var(--lab-line)] bg-[var(--lab-card)] text-[var(--lab-ink)]"
+              className={cn(adminInputClass, "h-auto min-h-24 py-2.5")}
             />
           </div>
           <div className="space-y-1.5">
@@ -217,7 +201,7 @@ function AdminTeamPage() {
               id="team-avatar"
               value={form.avatar}
               onChange={(event) => setForm((prev) => ({ ...prev, avatar: event.target.value }))}
-              className="border-[var(--lab-line)] bg-[var(--lab-card)] text-[var(--lab-ink)]"
+              className={adminInputClass}
             />
           </div>
           <div className="grid gap-4 sm:grid-cols-3">
@@ -228,7 +212,7 @@ function AdminTeamPage() {
                 type="url"
                 value={form.github}
                 onChange={(event) => setForm((prev) => ({ ...prev, github: event.target.value }))}
-                className="border-[var(--lab-line)] bg-[var(--lab-card)] text-[var(--lab-ink)]"
+                className={adminInputClass}
               />
             </div>
             <div className="space-y-1.5">
@@ -238,7 +222,7 @@ function AdminTeamPage() {
                 type="url"
                 value={form.linkedin}
                 onChange={(event) => setForm((prev) => ({ ...prev, linkedin: event.target.value }))}
-                className="border-[var(--lab-line)] bg-[var(--lab-card)] text-[var(--lab-ink)]"
+                className={adminInputClass}
               />
             </div>
             <div className="space-y-1.5">
@@ -248,12 +232,12 @@ function AdminTeamPage() {
                 type="url"
                 value={form.website}
                 onChange={(event) => setForm((prev) => ({ ...prev, website: event.target.value }))}
-                className="border-[var(--lab-line)] bg-[var(--lab-card)] text-[var(--lab-ink)]"
+                className={adminInputClass}
               />
             </div>
           </div>
-          <div className="flex items-center justify-between gap-3">
-            <label className="flex items-center gap-3 font-mono text-xs uppercase tracking-[0.18em] text-[var(--lab-ink-soft)]">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <label className="flex items-center gap-3 text-[15px] text-[var(--lab-ink)]">
               <Switch
                 checked={form.featured}
                 onCheckedChange={(value) => setForm((prev) => ({ ...prev, featured: value }))}
@@ -261,19 +245,19 @@ function AdminTeamPage() {
               />
               Feature on homepage
             </label>
-            {error && <p className="text-xs text-destructive">{error}</p>}
-            <Button type="submit" disabled={submitting} className="font-mono">
-              {submitting ? <Loader2 className="size-4 animate-spin" /> : <Plus className="size-4" />}
+            {error && <p className="text-sm text-destructive">{error}</p>}
+            <Button type="submit" disabled={submitting}>
+              {submitting ? <Loader2 className="animate-spin" aria-hidden /> : <Plus aria-hidden />}
               {editing ? "Save changes" : "Add member"}
             </Button>
           </div>
-        </motion.form>
+        </form>
       )}
 
       {isPending && (
-        <div className="space-y-2">
+        <div className="space-y-3">
           {[0, 1].map((index) => (
-            <Skeleton key={index} className="h-16 w-full" />
+            <Skeleton key={index} className="h-20 w-full rounded-2xl" />
           ))}
         </div>
       )}
@@ -281,53 +265,56 @@ function AdminTeamPage() {
       {isError && <p className="text-sm text-destructive">Unable to load team.</p>}
 
       {members && members.length === 0 && !isPending && (
-        <p className="text-sm text-[var(--lab-ink-soft)]">No team members yet.</p>
+        <div className={cn(adminPanelClass, "p-10")}>
+          <p className="text-xl font-medium text-[var(--lab-ink)]">No team members yet</p>
+          <p className="dm-body mt-2">Add a member to show them on the About page.</p>
+        </div>
       )}
 
       {members && members.length > 0 && (
-        <div className="overflow-hidden rounded-xl border border-[var(--lab-line)] bg-[var(--lab-card)]">
+        <div className={cn(adminPanelClass, "overflow-hidden")}>
           <ul className="divide-y divide-[var(--lab-line)]">
             {members.map((member) => (
               <li
                 key={member.id}
-                className="grid grid-cols-1 gap-3 px-4 py-3 sm:grid-cols-[2fr_1fr_140px] sm:items-center sm:gap-4"
+                className="grid grid-cols-1 gap-3 px-5 py-4 sm:grid-cols-[2fr_1fr_140px] sm:items-center sm:gap-4"
               >
                 <div className="flex items-center gap-3 min-w-0">
                   {member.avatar ? (
                     <img
                       src={member.avatar}
                       alt=""
-                      className="h-9 w-9 rounded-full object-cover"
+                      className="size-10 rounded-full object-cover"
                     />
                   ) : (
-                    <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--lab-card-elevated)] font-mono text-xs font-semibold text-[var(--lab-orange)]">
+                    <div className="flex size-10 items-center justify-center rounded-full bg-[var(--lab-card-elevated)] text-sm font-medium text-[var(--lab-orange)]">
                       {member.name.charAt(0).toUpperCase()}
                     </div>
                   )}
                   <div className="min-w-0">
-                    <p className="truncate text-sm font-medium text-[var(--lab-ink)]">
+                    <p className="truncate text-[15px] font-medium text-[var(--lab-ink)]">
                       {member.name}
-                      {member.featured && (
-                        <span className="lab-tech-tag ml-2 align-middle">Featured</span>
-                      )}
                     </p>
-                    <p className="truncate text-xs text-[var(--lab-ink-soft)]">{member.role}</p>
+                    <p className="truncate text-sm text-[var(--lab-ink-soft)]">
+                      {member.role}
+                      {member.featured ? " · Featured" : ""}
+                    </p>
                   </div>
                 </div>
-                <div className="flex items-center gap-3 text-[var(--lab-ink-soft)]">
+                <div className="flex items-center gap-3 text-[var(--lab-ink-soft)] [&_a]:no-underline [&_a:hover]:text-[var(--lab-orange)]">
                   {member.github && (
                     <a href={member.github} target="_blank" rel="noreferrer" aria-label="GitHub">
-                      <Github className="size-3.5" />
+                      <Github className="size-4" />
                     </a>
                   )}
                   {member.linkedin && (
                     <a href={member.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn">
-                      <Linkedin className="size-3.5" />
+                      <Linkedin className="size-4" />
                     </a>
                   )}
                   {member.website && (
                     <a href={member.website} target="_blank" rel="noreferrer" aria-label="Website">
-                      <Globe className="size-3.5" />
+                      <Globe className="size-4" />
                     </a>
                   )}
                 </div>
@@ -349,11 +336,11 @@ function AdminTeamPage() {
                     onClick={() => void onDelete(member.id, member.name)}
                     disabled={deleteMember.isPending}
                   >
-                    <Trash2 className="size-3.5 text-[var(--lab-ink-soft)] hover:text-destructive" />
+                    <Trash2 className="size-4 text-[var(--lab-ink-soft)] hover:text-destructive" />
                   </Button>
-                  <Button asChild size="icon" variant="ghost" aria-label="View public">
+                  <Button asChild size="icon" variant="ghost" aria-label="View public" className={adminIconButtonClass}>
                     <a href="/about" target="_blank" rel="noreferrer">
-                      <ExternalLink className="size-3.5" />
+                      <ExternalLink className="size-4" />
                     </a>
                   </Button>
                 </div>

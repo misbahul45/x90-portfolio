@@ -176,7 +176,7 @@ export function RichEditor({ value, onChange, className }: RichEditorProps) {
     editorProps: {
       attributes: {
         class: cn(
-          "tiptap min-h-[280px] px-4 py-4 font-mono text-[13px] leading-6 text-[var(--lab-ink)] focus:outline-none",
+          "tiptap min-h-[280px] px-5 py-4 text-[15px] leading-7 text-[var(--lab-ink)] focus:outline-none",
           className,
         ),
       },
@@ -196,13 +196,13 @@ export function RichEditor({ value, onChange, className }: RichEditorProps) {
 
   if (!editor) {
     return (
-      <div className="lab-skeleton h-72 w-full rounded-md" />
+      <div className="lab-skeleton h-72 w-full rounded-xl" />
     )
   }
 
   return (
-    <div className="overflow-hidden rounded-md border border-[var(--lab-line)] bg-[var(--lab-card)]">
-      <div className="flex flex-wrap items-center gap-1 border-b border-[var(--lab-line)] bg-[var(--lab-card-elevated)] px-2 py-2">
+    <div className="overflow-hidden rounded-xl border border-[var(--lab-line)]">
+      <div className="flex flex-wrap items-center gap-1 border-b border-[var(--lab-line)] bg-[var(--lab-card)] px-2 py-2">
         {ACTIONS.map((action) => {
           const Icon = action.icon
           const active = action.isActive?.(editor) ?? false
@@ -215,7 +215,7 @@ export function RichEditor({ value, onChange, className }: RichEditorProps) {
                 aria-pressed={active}
                 title={action.label}
                 className={cn(
-                  "flex h-7 w-7 items-center justify-center rounded text-[var(--lab-ink-soft)] transition-colors hover:bg-[var(--lab-line)]/40 hover:text-[var(--lab-ink)]",
+                  "flex size-8 items-center justify-center rounded-lg text-[var(--lab-ink-soft)] transition-colors hover:bg-[var(--lab-line)]/40 hover:text-[var(--lab-ink)]",
                   active && "bg-[var(--lab-orange-soft)] text-[var(--lab-orange)]",
                 )}
               >

@@ -60,10 +60,7 @@ export function HeroSection() {
       </div>
       <div className="dm-shell relative">
         <div className="mx-auto max-w-4xl text-center">
-          <p data-hero-fade className="dm-eyebrow">
-            X90 Labs
-          </p>
-          <h1 id="hero-heading" ref={headingRef} className="dm-display mt-6">
+          <h1 id="hero-heading" ref={headingRef} className="dm-display">
             We build the AI, automation and software that real teams run on
           </h1>
           <p data-hero-fade className="dm-lede mx-auto mt-8 max-w-2xl">

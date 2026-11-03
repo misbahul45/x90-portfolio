@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router"
 import { ArrowUpRight, ChevronRight, Plus } from "lucide-react"
+import { AdminPageHeader } from "#/components/admin/AdminPageHeader"
 import { adminOutlineClass } from "#/components/admin/styles"
 import { Button } from "#/components/ui/button"
 import { Skeleton } from "#/components/ui/skeleton"
@@ -84,23 +85,23 @@ function AdminDashboard() {
 
   return (
     <div className="space-y-14">
-      <header className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-        <div className="max-w-2xl">
-          <h1 className="dm-title">Overview</h1>
-          <p className="dm-subtitle mt-1">Published research, lab runs, projects and incoming signals.</p>
-        </div>
-        <div className="flex flex-wrap gap-3">
-          <Button asChild>
-            <Link to="/admin/articles/new">
-              <Plus aria-hidden />
-              New research
-            </Link>
-          </Button>
-          <Button asChild variant="outline" className={adminOutlineClass}>
-            <Link to="/admin/lab/new">New experiment</Link>
-          </Button>
-        </div>
-      </header>
+      <AdminPageHeader
+        title="Overview"
+        description="Published research, lab runs, projects and incoming signals."
+        action={
+          <div className="flex flex-wrap gap-3">
+            <Button asChild>
+              <Link to="/admin/articles/new">
+                <Plus aria-hidden />
+                New research
+              </Link>
+            </Button>
+            <Button asChild variant="outline" className={adminOutlineClass}>
+              <Link to="/admin/lab/new">New experiment</Link>
+            </Button>
+          </div>
+        }
+      />
 
       <dl className="grid gap-px overflow-hidden rounded-3xl border border-[var(--lab-line)] bg-[var(--lab-line)] sm:grid-cols-2 lg:grid-cols-5">
         {metrics.map((metric) => (

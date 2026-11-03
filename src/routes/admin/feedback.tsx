@@ -1,7 +1,12 @@
 import { useState } from "react"
 import { createFileRoute } from "@tanstack/react-router"
-import { motion } from "motion/react"
-import { Trash2, Mail, Loader2 } from "lucide-react"
+import { Loader2, Mail, Trash2 } from "lucide-react"
+import { AdminPageHeader } from "#/components/admin/AdminPageHeader"
+import { AdminStatus } from "#/components/admin/AdminStatus"
+import { adminOutlineClass, adminPanelClass } from "#/components/admin/styles"
+import { FilterTabs, type FilterOption } from "#/components/deepmind/FilterTabs"
+import { Button } from "#/components/ui/button"
+import { Skeleton } from "#/components/ui/skeleton"
 import {
   useAdminDeleteFeedback,
   useAdminFeedback,
@@ -9,24 +14,32 @@ import {
 } from "#/hooks/useAdminFeedback"
 import {
   FEEDBACK_STATUS,
+  FEEDBACK_STATUS_OPTIONS,
+  FEEDBACK_TYPE_OPTIONS,
   type FeedbackStatus,
   type FeedbackType,
 } from "#/lib/domain/feedback"
-import { Button } from "#/components/ui/button"
-import { Skeleton } from "#/components/ui/skeleton"
-import { FilterPill } from "#/components/projects/FilterPill"
-import { FEEDBACK_STATUS_OPTIONS, FEEDBACK_TYPE_OPTIONS } from "#/lib/domain/feedback"
-import { fadeInUp, VIEWPORT_OPTIONS } from "#/lib/motion-variants"
+import { cn } from "#/lib/utils"
 
-const STATUS_FILTERS: Array<{ value: FeedbackStatus | "ALL"; label: string }> = [
-  { value: "ALL", label: "All" },
+const ALL = "ALL"
+
+const STATUS_FILTERS: ReadonlyArray<FilterOption> = [
+  { value: ALL, label: "All" },
   ...FEEDBACK_STATUS_OPTIONS.map((option) => ({ value: option.value, label: option.label })),
 ]
 
-const TYPE_FILTERS: Array<{ value: FeedbackType | "ALL"; label: string }> = [
-  { value: "ALL", label: "All" },
+const TYPE_FILTERS: ReadonlyArray<FilterOption> = [
+  { value: ALL, label: "All" },
   ...FEEDBACK_TYPE_OPTIONS.map((option) => ({ value: option.value, label: option.label })),
 ]
+
+const STATUS_LABEL = Object.fromEntries(
+  FEEDBACK_STATUS_OPTIONS.map((option) => [option.value, option.label]),
+) as Record<FeedbackStatus, string>
+
+const TYPE_LABEL = Object.fromEntries(
+  FEEDBACK_TYPE_OPTIONS.map((option) => [option.value, option.label]),
+) as Record<FeedbackType, string>
 
 export const Route = createFileRoute("/admin/feedback")({
   head: () => ({ meta: [{ title: "Feedback — Admin" }] }),
@@ -34,12 +47,12 @@ export const Route = createFileRoute("/admin/feedback")({
 })
 
 function AdminFeedbackPage() {
-  const [statusFilter, setStatusFilter] = useState<FeedbackStatus | "ALL">("ALL")
-  const [typeFilter, setTypeFilter] = useState<FeedbackType | "ALL">("ALL")
+  const [statusFilter, setStatusFilter] = useState(ALL)
+  const [typeFilter, setTypeFilter] = useState(ALL)
 
   const filters = {
-    ...(statusFilter !== "ALL" ? { status: statusFilter } : {}),
-    ...(typeFilter !== "ALL" ? { type: typeFilter } : {}),
+    ...(statusFilter !== ALL ? { status: statusFilter as FeedbackStatus } : {}),
+    ...(typeFilter !== ALL ? { type: typeFilter as FeedbackType } : {}),
   }
   const { data: feedback, isPending, isError } = useAdminFeedback(filters)
   const updateStatus = useAdminUpdateFeedbackStatus()
@@ -52,57 +65,33 @@ function AdminFeedbackPage() {
 
   return (
     <div className="space-y-8">
-      <motion.header
-        initial="hidden"
-        animate="visible"
-        variants={fadeInUp}
-      >
-        <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--lab-orange)]">
-          Feedback
-        </p>
-        <h1 className="mt-2 text-3xl font-semibold tracking-tight text-[var(--lab-ink)]">
-          Inbox
-        </h1>
-        <p className="mt-2 text-sm text-[var(--lab-ink-soft)]">
-          Submissions from the public homepage form.
-        </p>
-      </motion.header>
+      <AdminPageHeader title="Inbox" description="Submissions from the public homepage form." />
 
-      <div className="space-y-3">
-        <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--lab-ink-soft)]">
-          Status
-        </p>
-        <div className="flex flex-wrap gap-2">
-          {STATUS_FILTERS.map((filter) => (
-            <FilterPill
-              key={filter.value}
-              active={statusFilter === filter.value}
-              onClick={() => setStatusFilter(filter.value)}
-            >
-              {filter.label}
-            </FilterPill>
-          ))}
+      <div className="space-y-5">
+        <div className="space-y-2">
+          <p className="text-sm text-[var(--lab-ink-soft)]">Status</p>
+          <FilterTabs
+            label="Filter feedback by status"
+            options={STATUS_FILTERS}
+            value={statusFilter}
+            onChange={setStatusFilter}
+          />
         </div>
-        <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--lab-ink-soft)]">
-          Type
-        </p>
-        <div className="flex flex-wrap gap-2">
-          {TYPE_FILTERS.map((filter) => (
-            <FilterPill
-              key={filter.value}
-              active={typeFilter === filter.value}
-              onClick={() => setTypeFilter(filter.value)}
-            >
-              {filter.label}
-            </FilterPill>
-          ))}
+        <div className="space-y-2">
+          <p className="text-sm text-[var(--lab-ink-soft)]">Type</p>
+          <FilterTabs
+            label="Filter feedback by type"
+            options={TYPE_FILTERS}
+            value={typeFilter}
+            onChange={setTypeFilter}
+          />
         </div>
       </div>
 
       {isPending && (
-        <div className="space-y-2">
+        <div className="space-y-3">
           {[0, 1, 2].map((index) => (
-            <Skeleton key={index} className="h-20 w-full" />
+            <Skeleton key={index} className="h-28 w-full rounded-2xl" />
           ))}
         </div>
       )}
@@ -110,46 +99,36 @@ function AdminFeedbackPage() {
       {isError && <p className="text-sm text-destructive">Unable to load feedback.</p>}
 
       {!isPending && !isError && (feedback?.length ?? 0) === 0 && (
-        <div className="rounded-xl border border-dashed border-[var(--lab-line)] bg-[var(--lab-card)] p-10 text-center">
-          <p className="text-sm font-medium text-[var(--lab-ink)]">No feedback here.</p>
-          <p className="mt-1 text-xs text-[var(--lab-ink-soft)]">
+        <div className={cn(adminPanelClass, "p-10")}>
+          <p className="text-xl font-medium text-[var(--lab-ink)]">No feedback here</p>
+          <p className="dm-body mt-2">
             Once visitors submit the homepage form, messages will appear here.
           </p>
         </div>
       )}
 
       {feedback && feedback.length > 0 && (
-        <ul className="space-y-3">
+        <ul className="space-y-4">
           {feedback.map((item) => (
-            <motion.li
-              key={item.id}
-              initial="hidden"
-              whileInView="visible"
-              viewport={VIEWPORT_OPTIONS}
-              variants={fadeInUp}
-              className="research-card-surface p-5"
-            >
+            <li key={item.id} className={cn(adminPanelClass, "p-6")}>
               <header className="flex flex-wrap items-center justify-between gap-3">
-                <div className="flex items-center gap-3">
-                  <span
-                    className="lab-tech-tag"
-                    data-active={item.status === FEEDBACK_STATUS.NEW ? "true" : "false"}
-                  >
-                    {item.status}
-                  </span>
-                  <span className="lab-tech-tag">{item.type}</span>
-                  <p className="font-mono text-xs text-[var(--lab-ink-soft)]">
+                <div className="flex flex-wrap items-center gap-x-5 gap-y-1">
+                  <AdminStatus
+                    label={STATUS_LABEL[item.status]}
+                    tone={item.status === FEEDBACK_STATUS.NEW ? "active" : "neutral"}
+                  />
+                  <span className="text-sm text-[var(--lab-ink-soft)]">{TYPE_LABEL[item.type]}</span>
+                  <span className="text-sm text-[var(--lab-ink-soft)]">
                     {new Date(item.createdAt).toLocaleString()}
-                  </p>
+                  </span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <a
-                    href={`mailto:${item.email}`}
-                    className="inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--lab-ink-soft)] no-underline transition-colors hover:text-[var(--lab-orange)]"
-                  >
-                    <Mail className="size-3.5" />
-                    Reply
-                  </a>
+                <div className="flex items-center gap-1">
+                  <Button asChild variant="ghost" size="sm" className="text-[var(--lab-ink-soft)]">
+                    <a href={`mailto:${item.email}`}>
+                      <Mail aria-hidden />
+                      Reply
+                    </a>
+                  </Button>
                   <Button
                     size="icon"
                     variant="ghost"
@@ -157,53 +136,48 @@ function AdminFeedbackPage() {
                     onClick={() => void onDelete(item.id, item.name)}
                     disabled={remove.isPending}
                   >
-                    <Trash2 className="size-3.5 text-[var(--lab-ink-soft)] hover:text-destructive" />
+                    <Trash2 className="size-4 text-[var(--lab-ink-soft)] hover:text-destructive" />
                   </Button>
                 </div>
               </header>
-              <div className="mt-3">
-                <p className="text-sm font-medium text-[var(--lab-ink)]">{item.name}</p>
-                <p className="text-xs text-[var(--lab-ink-soft)]">{item.email}</p>
+              <div className="mt-4">
+                <p className="text-lg font-medium text-[var(--lab-ink)]">{item.name}</p>
+                <p className="text-sm text-[var(--lab-ink-soft)]">{item.email}</p>
               </div>
-              <p className="mt-3 whitespace-pre-line text-sm leading-relaxed text-[var(--lab-ink-soft)]">
+              <p className="mt-3 whitespace-pre-line text-[15px] leading-relaxed text-[var(--lab-ink-soft)]">
                 {item.message}
               </p>
-              <footer className="mt-4 flex flex-wrap items-center gap-2">
-                <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--lab-ink-soft)]">
-                  Mark as
-                </span>
-                {FEEDBACK_STATUS_OPTIONS.map((option) => (
-                  <button
-                    key={option.value}
-                    type="button"
-                    onClick={() =>
-                      updateStatus.mutate({ id: item.id, status: option.value })
-                    }
-                    disabled={
-                      item.status === option.value || updateStatus.isPending
-                    }
-                    className={cn(
-                      "rounded-md border px-2 py-1 font-mono text-[10px] uppercase tracking-[0.18em] transition-colors",
-                      item.status === option.value
-                        ? "border-[var(--lab-orange)] bg-[var(--lab-orange-soft)] text-[var(--lab-orange)]"
-                        : "border-[var(--lab-line)] bg-transparent text-[var(--lab-ink-soft)] hover:border-[var(--lab-line-strong)] hover:text-[var(--lab-ink)]",
-                    )}
-                  >
-                    {option.label}
-                  </button>
-                ))}
+              <footer className="mt-5 flex flex-wrap items-center gap-2 border-t border-[var(--lab-line)] pt-4">
+                <span className="mr-1 text-sm text-[var(--lab-ink-soft)]">Mark as</span>
+                {FEEDBACK_STATUS_OPTIONS.map((option) => {
+                  const current = item.status === option.value
+                  return (
+                    <Button
+                      key={option.value}
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      aria-pressed={current}
+                      onClick={() => updateStatus.mutate({ id: item.id, status: option.value })}
+                      disabled={current || updateStatus.isPending}
+                      className={cn(
+                        "rounded-full",
+                        adminOutlineClass,
+                        current && "border-[var(--lab-orange)] text-[var(--lab-orange)]",
+                      )}
+                    >
+                      {option.label}
+                    </Button>
+                  )
+                })}
                 {updateStatus.isPending && (
-                  <Loader2 className="size-3 animate-spin text-[var(--lab-ink-soft)]" />
+                  <Loader2 className="size-4 animate-spin text-[var(--lab-ink-soft)]" aria-hidden />
                 )}
               </footer>
-            </motion.li>
+            </li>
           ))}
         </ul>
       )}
     </div>
   )
-}
-
-function cn(...inputs: Array<string | undefined | false>): string {
-  return inputs.filter(Boolean).join(" ")
 }

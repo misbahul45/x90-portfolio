@@ -52,8 +52,7 @@ function ResearchNode({ data }: NodeProps<FocusFlowNode>) {
         data.orientation === "horizontal" ? "w-[230px]" : "w-[156px]",
       )}
     >
-      <p className="text-xs text-[var(--lab-ink-soft)]">Research</p>
-      <p className="mt-1 line-clamp-3 text-[14px] font-medium leading-snug text-[var(--lab-ink)]">{data.label}</p>
+      <p className="line-clamp-3 text-[14px] font-medium leading-snug text-[var(--lab-ink)]">{data.label}</p>
       <Handle type="source" position={sourcePosition(data.orientation)} isConnectable={false} className={hiddenHandle} />
     </div>
   )
@@ -69,8 +68,7 @@ function ProjectNode({ data }: NodeProps<FocusFlowNode>) {
       )}
     >
       <Handle type="target" position={targetPosition(data.orientation)} isConnectable={false} className={hiddenHandle} />
-      <p className="text-xs text-[var(--lab-ink-soft)]">System</p>
-      <p className="mt-1 text-lg font-medium leading-snug text-[var(--lab-ink)]">{data.label}</p>
+      <p className="text-lg font-medium leading-snug text-[var(--lab-ink)]">{data.label}</p>
       <Handle type="source" position={sourcePosition(data.orientation)} isConnectable={false} className={hiddenHandle} />
     </div>
   )
@@ -87,11 +85,6 @@ function TechNode({ data }: NodeProps<FocusFlowNode>) {
     >
       <Handle type="target" position={targetPosition(data.orientation)} isConnectable={false} className={hiddenHandle} />
       <p className="truncate font-mono text-[13px] text-[var(--lab-ink)]">{data.label}</p>
-      {data.sharedWith > 0 ? (
-        <p className="mt-0.5 text-xs text-[var(--lab-ink-soft)]">
-          Also in {data.sharedWith} other {data.sharedWith === 1 ? "system" : "systems"}
-        </p>
-      ) : null}
     </div>
   )
 }

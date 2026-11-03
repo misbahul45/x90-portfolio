@@ -14,6 +14,7 @@ import {
   FlaskConical,
 } from "lucide-react"
 import { authClient } from "#/lib/auth-client"
+import { ThemeToggle } from "#/components/ThemeToggle"
 import { Button } from "#/components/ui/button"
 import { ROUTES } from "#/lib/domain/routes"
 import { cn } from "#/lib/utils"
@@ -212,14 +213,17 @@ function AdminTopbar({
         <Menu className="size-5" />
       </Button>
       <span className="hidden md:block" />
-      <Button
-        variant="outline"
-        className="rounded-full border-[var(--lab-line-strong)] bg-transparent text-[var(--lab-ink)] shadow-none hover:border-[var(--lab-orange)] hover:bg-[var(--lab-orange-soft)] hover:text-[var(--lab-orange)]"
-        onClick={onSignOut}
-      >
-        <LogOut aria-hidden />
-        Sign out
-      </Button>
+      <div className="flex items-center gap-2">
+        <ThemeToggle />
+        <Button
+          variant="outline"
+          className="rounded-full border-[var(--lab-line-strong)] bg-transparent text-[var(--lab-ink)] shadow-none hover:border-[var(--lab-orange)] hover:bg-[var(--lab-orange-soft)] hover:text-[var(--lab-orange)]"
+          onClick={onSignOut}
+        >
+          <LogOut aria-hidden />
+          Sign out
+        </Button>
+      </div>
     </header>
   )
 }

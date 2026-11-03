@@ -4,6 +4,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "#/components/ui/popover
 import { Button } from "#/components/ui/button"
 import { Input } from "#/components/ui/input"
 import { Skeleton } from "#/components/ui/skeleton"
+import { adminInputClass } from "#/components/admin/styles"
 import { useTags, type TagItem } from "#/hooks/useTags"
 import { cn } from "#/lib/utils"
 
@@ -45,15 +46,15 @@ export function TagMultiSelect({ value, onChange, emptyHint }: TagMultiSelectPro
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-full justify-between border-[var(--lab-line)] bg-[var(--lab-card)] font-mono text-xs uppercase tracking-[0.16em] text-[var(--lab-ink)] hover:bg-[var(--lab-card)] hover:text-[var(--lab-ink)]"
+          className="h-10 w-full justify-between rounded-xl border-[var(--lab-line)] bg-transparent text-[15px] font-normal text-[var(--lab-ink)] shadow-none hover:bg-[var(--lab-card)] hover:text-[var(--lab-ink)]"
         >
-          <span className="truncate normal-case">{triggerLabel}</span>
-          <ChevronsUpDown className="ml-2 size-3.5 shrink-0 opacity-60" />
+          <span className="truncate">{triggerLabel}</span>
+          <ChevronsUpDown className="ml-2 size-4 shrink-0 opacity-60" aria-hidden />
         </Button>
       </PopoverTrigger>
       <PopoverContent
         align="start"
-        className="w-[var(--radix-popover-trigger-width)] border-[var(--lab-line)] bg-[var(--lab-card)] p-0"
+        className="w-[var(--radix-popover-trigger-width)] rounded-xl border-[var(--lab-line)] p-0"
       >
         <div className="border-b border-[var(--lab-line)] p-2">
           <Input
@@ -61,7 +62,7 @@ export function TagMultiSelect({ value, onChange, emptyHint }: TagMultiSelectPro
             value={filter}
             onChange={(event) => setFilter(event.target.value)}
             placeholder="Filter tags…"
-            className="h-8 border-[var(--lab-line)] bg-[var(--lab-bg)] font-mono text-xs text-[var(--lab-ink)] placeholder:text-[var(--lab-ink-soft)]"
+            className={adminInputClass}
           />
         </div>
         <div className="max-h-64 overflow-y-auto p-1">
@@ -73,10 +74,10 @@ export function TagMultiSelect({ value, onChange, emptyHint }: TagMultiSelectPro
             </div>
           )}
           {isError && (
-            <p className="px-2 py-3 text-xs text-destructive">Unable to load tags.</p>
+            <p className="px-2 py-3 text-sm text-destructive">Unable to load tags.</p>
           )}
           {!isPending && !isError && filtered.length === 0 && (
-            <p className="px-2 py-3 text-xs text-[var(--lab-ink-soft)]">
+            <p className="px-2 py-3 text-sm text-[var(--lab-ink-soft)]">
               No tags match this filter.
             </p>
           )}
@@ -88,30 +89,26 @@ export function TagMultiSelect({ value, onChange, emptyHint }: TagMultiSelectPro
                 type="button"
                 onClick={() => toggle(tag)}
                 className={cn(
-                  "flex w-full items-center justify-between gap-2 rounded-md px-2 py-1.5 text-left text-sm transition-colors hover:bg-[var(--lab-bg)]",
+                  "flex w-full items-center justify-between gap-2 rounded-lg px-2.5 py-2 text-left text-[15px] transition-colors hover:bg-[var(--lab-card)]",
                   active ? "text-[var(--lab-orange)]" : "text-[var(--lab-ink)]"
                 )}
               >
                 <span className="min-w-0 truncate">{tag.name}</span>
                 <span className="flex items-center gap-2">
-                  <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--lab-ink-soft)]">
-                    {tag.slug}
-                  </span>
-                  {active && <Check className="size-3.5 text-[var(--lab-orange)]" />}
+                  <span className="text-sm text-[var(--lab-ink-soft)]">{tag.slug}</span>
+                  {active && <Check className="size-4 text-[var(--lab-orange)]" aria-hidden />}
                 </span>
               </button>
             )
           })}
         </div>
         <div className="flex items-center justify-between border-t border-[var(--lab-line)] px-2 py-1.5">
-          <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--lab-ink-soft)]">
-            {value.length} selected
-          </span>
+          <span className="text-sm text-[var(--lab-ink-soft)]">{value.length} selected</span>
           {value.length > 0 && (
             <button
               type="button"
               onClick={() => onChange([])}
-              className="font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--lab-ink-soft)] transition-colors hover:text-[var(--lab-orange)]"
+              className="text-sm text-[var(--lab-ink-soft)] transition-colors hover:text-[var(--lab-orange)]"
             >
               Clear
             </button>
@@ -123,5 +120,5 @@ export function TagMultiSelect({ value, onChange, emptyHint }: TagMultiSelectPro
 }
 
 export function TagMultiSelectSkeleton() {
-  return <Skeleton className="h-10 w-full" />
+  return <Skeleton className="h-10 w-full rounded-xl" />
 }

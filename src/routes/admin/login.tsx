@@ -2,6 +2,7 @@ import { useState, type FormEvent } from "react"
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router"
 import { AlertCircle, ArrowLeft, Loader2 } from "lucide-react"
 import { primaryPillClass } from "#/components/deepmind/styles"
+import { ThemeToggle } from "#/components/ThemeToggle"
 import { Button } from "#/components/ui/button"
 import { Input } from "#/components/ui/input"
 import { Label } from "#/components/ui/label"
@@ -54,6 +55,7 @@ function AdminLoginPage() {
 
   return (
     <main className="flex min-h-screen items-center justify-center px-4 py-16 text-[var(--lab-ink)]">
+      <ThemeToggle className="fixed right-4 top-4" />
       <div className="w-full max-w-md">
         <Link
           to="/"
@@ -90,6 +92,7 @@ function AdminLoginPage() {
               type="password"
               autoComplete="current-password"
               required
+              placeholder="Your password"
               value={password}
               onChange={(event) => setPassword(event.target.value)}
               className={fieldClass}

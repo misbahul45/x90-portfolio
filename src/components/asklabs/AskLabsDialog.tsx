@@ -44,7 +44,7 @@ export function AskLabsDialog({ currentPath }: { currentPath: string }) {
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent
         showCloseButton
-        className="flex h-[min(820px,calc(100dvh-2rem))] w-[min(1080px,calc(100vw-2rem))] max-w-[1080px] flex-col gap-0 overflow-hidden border border-[var(--lab-line)] bg-[var(--lab-bg)] p-0 shadow-[0_40px_120px_-24px_rgba(0,0,0,0.7)] sm:!max-w-[1080px]"
+        className="flex h-[min(820px,calc(100dvh-2rem))] w-[min(1080px,calc(100vw-2rem))] max-w-[1080px] flex-col gap-0 overflow-hidden border border-[var(--lab-line)] bg-[var(--lab-bg)] p-0 shadow-[0_40px_120px_-24px_var(--lab-shadow)] sm:!max-w-[1080px]"
       >
         <DialogTitle className="sr-only">Ask Labs — X90 Labs</DialogTitle>
         <AskLabsHeader context={context} showTrace={showTrace} onToggleTrace={() => setShowTrace((v) => !v)} />

@@ -80,7 +80,6 @@ function AboutPage() {
   return (
     <main>
       <PageIntro
-        label="About"
         title="Research. Experiment. Build."
         description="We are a technical AI lab that turns experiments, research and engineering into useful systems."
       />

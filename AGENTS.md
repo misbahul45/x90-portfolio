@@ -13,17 +13,30 @@ Operating rules untuk semua agent dan kontributor yang bekerja di repository ini
 
 ## Canonical Visual System
 
+The site ships two themes driven by the same tokens: **dark** (navy, class `dark` on `<html>`) and **light** (white, the `:root` default). The visitor chooses Light / Dark / System with `ThemeToggle`; System follows `prefers-color-scheme`.
+
+**Dark theme (navy)**
+
 - **Background**: `#071426` (`--lab-bg`)
 - **Navy family**: `#0A1628` / `#0B1A30` / `#0D2038` / `#112946`
 - **Card surface**: `#0B1A30` (`--lab-card`), elevated `#112946` (`--lab-card-elevated`)
 - **Borders**: `rgba(255,255,255,0.10)` default, `rgba(255,255,255,0.18)` strong
-- **Orange accent**: `#F65A0B` (`--lab-orange`) — single accent, 5–15% visual weight
-  - Light variant `#FF6A18`, dark variant `#D94D08`, soft fill `rgba(246,90,11,0.10)`
-- **Text**: `#F8FAFC` primary, `#8FA3BD` secondary, `#60758F` muted
-- Hero is the **only** place orange takes visual lead. Other sections: orange as accent (icons, hover, focus, single highlight).
-- All design tokens live in `src/styles.css` as CSS custom properties. Use `var(--lab-*)` in Tailwind via `[var(--lab-orange)]` syntax — never hardcode hex in components.
-- Light floating Brief Builder remains the one warm/light panel inside the dark surface.
-- Project detail and About pages use shadcn light theme tokens (`bg-card`, `text-foreground`, `border-border`). Do NOT migrate them to navy.
+- **Orange accent**: `#F65A0B` (`--lab-orange`), soft fill `rgba(246,90,11,0.10)`
+- **Text**: `#F8FAFC` primary, `#8FA3BD` secondary
+
+**Light theme (white)**
+
+- **Background**: `#FFFFFF` (`--lab-bg`), soft `#F6F8FB`
+- **Card surface**: `#F4F6FA` (`--lab-card`), elevated `#EAEFF6` (`--lab-card-elevated`)
+- **Borders**: `rgba(10,22,40,0.12)` default, `rgba(10,22,40,0.24)` strong
+- **Orange accent**: `#CC4A07` (`--lab-orange`, darker so it passes AA contrast on white), hover `#A53B05`
+- **Text**: `#0A1628` primary, `#52627A` secondary
+
+**Rules for both**
+
+- One orange accent, 5–15% visual weight. Hero is the **only** place orange takes visual lead. Other sections: orange as accent (icons, hover, focus, single highlight).
+- All design tokens live in `src/styles.css` as CSS custom properties (`:root` = light, `:root.dark` = navy). Use `var(--lab-*)` in Tailwind via `[var(--lab-orange)]` syntax — never hardcode hex in components, and never write a color that only works in one theme.
+- Every page (landing, research, projects, about, admin, Ask Labs) follows the active theme through the tokens. Code blocks keep their own dark panel in both themes.
 
 ## Hard UI Rules
 
@@ -55,9 +68,9 @@ Operating rules untuk semua agent dan kontributor yang bekerja di repository ini
 - Styling tokens (warna, radius, spacing) berasal dari CSS variables di `src/styles.css` (`--background`, `--foreground`, `--primary`, dll) atau shadcn theme tokens. JANGAN hardcode hex/rgb di component (kecuali untuk hal teknis seperti glassmorphism / animated gradients yang butuh alpha).
 - Untuk komponen custom di luar `src/components/ui/`, tempatkan di `src/components/<NamaPascalCase>.tsx`.
 
-### 3. Style Direction: Navy + Single Orange Accent
+### 3. Style Direction: Navy / White + Single Orange Accent
 
-See **Canonical Visual System** above for the locked palette and **Hard UI Rules** for the no-badge / no-decoration discipline.
+See **Canonical Visual System** above for the dual-theme palette and **Hard UI Rules** for the no-badge / no-decoration discipline.
 
 ### 4. Import & Path Convention
 
@@ -103,7 +116,7 @@ See **Canonical Visual System** above for the locked palette and **Hard UI Rules
 ### 10. Styling & Theming
 
 - Tailwind v4 via `@tailwindcss/vite`. CSS variables di `src/styles.css`.
-- Dark mode: class `dark` on `<html>`. Theme is locked dark for landing. Project detail and About pages render in shadcn light tokens.
+- Theme: `:root` is light, class `dark` on `<html>` is navy. The preference (`light` | `dark` | `system`, default `system`) lives in `localStorage` key `x90-theme`; `THEME_INIT_SCRIPT` (`src/lib/theme.ts`) applies it before first paint, `useTheme` (`src/hooks/useTheme.ts`) reads and sets it, `ThemeToggle` is the UI (public Header, admin topbar, login).
 - Brand tokens custom (`--lab-bg`, `--lab-card`, `--lab-card-elevated`, `--lab-orange`, `--lab-orange-soft`, `--lab-line`, `--lab-line-strong`, `--lab-ink`, `--lab-ink-soft`) drive the landing surface. For shadcn primitives and admin pages, fall back to standard shadcn tokens (`bg-background`, `text-foreground`, `bg-primary`, `text-accent`).
 - Animation: Motion (`motion/react`). Honor `prefers-reduced-motion`.
 
@@ -176,13 +189,8 @@ bunx shadcn@latest add <component>  # tambah shadcn component
 src/
 ├── components/
 │   ├── ui/                          # shadcn primitives (button, input, dialog, etc)
-│   ├── ai/                          # Floating AI assistant
-│   │   ├── FloatingAIButton.tsx
-│   │   ├── AIAssistantDialog.tsx
-│   │   ├── AIAssistantHeader.tsx
-│   │   ├── AIMessageList.tsx
-│   │   ├── AIMessage.tsx
-│   │   └── AIQuickActions.tsx
+│   ├── asklabs/                     # Ask Labs assistant (FAB, dialog, pending state)
+│   ├── ai/                          # MarkdownLite (shared markdown renderer)
 │   ├── hero/                        # Hero composition
 │   │   ├── HeroSection.tsx
 │   │   ├── HeroBackground.tsx
@@ -214,7 +222,8 @@ src/
 │   ├── useAdminProjects.ts
 │   ├── useAdminTeam.ts
 │   ├── useAdminFeedback.ts
-│   └── useAIChat.ts                 # Floating AI logic (local state)
+│   ├── useAskLabs.ts                # Ask Labs state + SSE stream
+│   └── useTheme.ts                  # Light / dark / system preference
 ├── lib/
 │   ├── api-client.ts                # fetch wrapper (apiGet, apiPost, apiPatch, apiDelete)
 │   ├── motion-variants.ts           # shared Motion variants (fadeInUp, stagger, etc)

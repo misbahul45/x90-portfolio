@@ -89,8 +89,7 @@ function ProjectDetailView({ project }: { project: ProjectListItem }) {
         <div className="dm-shell">
           <div className="mx-auto max-w-4xl">
             <BackLink />
-            <p className="dm-eyebrow mt-10">{project.category?.name ?? "System"}</p>
-            <h1 className="dm-display mt-4 text-balance">{project.title}</h1>
+            <h1 className="dm-display mt-10 text-balance">{project.title}</h1>
             <p className="dm-lede mt-8 max-w-3xl">{project.description}</p>
             {project.githubUrl || project.demoUrl ? (
               <div className="mt-10 flex flex-wrap items-center gap-3">

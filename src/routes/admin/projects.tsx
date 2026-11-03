@@ -1,20 +1,23 @@
-import { useState } from "react"
+import { useState, type FormEvent } from "react"
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router"
-import { motion } from "motion/react"
-import { Plus, Trash2, ExternalLink, Github, Loader2, Pencil } from "lucide-react"
-import { useAdminProjects, useAdminDeleteProject, useAdminCreateProject } from "#/hooks/useAdminProjects"
+import { ExternalLink, Github, Loader2, Pencil, Plus, Trash2 } from "lucide-react"
+import { AdminPageHeader } from "#/components/admin/AdminPageHeader"
+import { adminIconButtonClass, adminInputClass, adminPanelClass } from "#/components/admin/styles"
 import { Button } from "#/components/ui/button"
 import { Input } from "#/components/ui/input"
-import { Textarea } from "#/components/ui/textarea"
 import { Label } from "#/components/ui/label"
 import { Skeleton } from "#/components/ui/skeleton"
 import { Switch } from "#/components/ui/switch"
-import { fadeInUp } from "#/lib/motion-variants"
+import { Textarea } from "#/components/ui/textarea"
+import { useAdminCreateProject, useAdminDeleteProject, useAdminProjects } from "#/hooks/useAdminProjects"
+import { cn } from "#/lib/utils"
 
 export const Route = createFileRoute("/admin/projects")({
   head: () => ({ meta: [{ title: "Projects — Admin" }] }),
   component: AdminProjectsPage,
 })
+
+const STACK_PREVIEW = 4
 
 function AdminProjectsPage() {
   const navigate = useNavigate()
@@ -33,7 +36,7 @@ function AdminProjectsPage() {
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  async function onCreate(event: React.FormEvent<HTMLFormElement>) {
+  async function onCreate(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     setError(null)
     setSubmitting(true)
@@ -76,112 +79,104 @@ function AdminProjectsPage() {
 
   return (
     <div className="space-y-8">
-      <motion.header
-        initial="hidden"
-        animate="visible"
-        variants={fadeInUp}
-        className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between"
-      >
-        <div>
-          <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--lab-orange)]">
-            Projects
-          </p>
-          <h1 className="mt-2 text-3xl font-semibold tracking-tight text-[var(--lab-ink)]">
-            Engineering systems
-          </h1>
-          <p className="mt-2 text-sm text-[var(--lab-ink-soft)]">
-            Curate the systems we&apos;ve built.
-          </p>
-        </div>
-        <Button
-          type="button"
-          onClick={() => setShowForm((prev) => !prev)}
-          className="font-mono"
-        >
-          {showForm ? "Cancel" : (
-            <>
-              <Plus className="size-4" />
-              New project
-            </>
-          )}
-        </Button>
-      </motion.header>
+      <AdminPageHeader
+        title="Projects"
+        description="Curate the systems we have built."
+        action={
+          <Button type="button" onClick={() => setShowForm((prev) => !prev)}>
+            {showForm ? (
+              "Cancel"
+            ) : (
+              <>
+                <Plus aria-hidden />
+                New project
+              </>
+            )}
+          </Button>
+        }
+      />
 
       {showForm && (
-        <motion.form
-          initial="hidden"
-          animate="visible"
-          variants={fadeInUp}
-          onSubmit={onCreate}
-          className="research-card-surface space-y-4 p-6"
-        >
+        <form onSubmit={onCreate} className={cn(adminPanelClass, "space-y-5 p-6")}>
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="space-y-1.5">
-              <Label htmlFor="project-name" className="text-[var(--lab-ink)]">Name</Label>
+              <Label htmlFor="project-name" className="text-[var(--lab-ink)]">
+                Name
+              </Label>
               <Input
                 id="project-name"
                 required
                 value={name}
                 onChange={(event) => setName(event.target.value)}
-                className="border-[var(--lab-line)] bg-[var(--lab-card)] text-[var(--lab-ink)]"
+                className={adminInputClass}
               />
             </div>
             <div className="space-y-1.5">
-              <Label htmlFor="project-slug" className="text-[var(--lab-ink)]">Slug</Label>
+              <Label htmlFor="project-slug" className="text-[var(--lab-ink)]">
+                Slug
+              </Label>
               <Input
                 id="project-slug"
                 value={slug}
                 onChange={(event) => setSlug(event.target.value)}
-                placeholder="auto if blank"
-                className="border-[var(--lab-line)] bg-[var(--lab-card)] text-[var(--lab-ink)] placeholder:text-[var(--lab-ink-soft)]"
+                placeholder="Generated if blank"
+                className={adminInputClass}
               />
             </div>
           </div>
           <div className="space-y-1.5">
-            <Label htmlFor="project-description" className="text-[var(--lab-ink)]">Description</Label>
+            <Label htmlFor="project-description" className="text-[var(--lab-ink)]">
+              Description
+            </Label>
             <Textarea
               id="project-description"
               required
               rows={3}
               value={description}
               onChange={(event) => setDescription(event.target.value)}
-              className="border-[var(--lab-line)] bg-[var(--lab-card)] text-[var(--lab-ink)]"
+              className={cn(adminInputClass, "h-auto min-h-24 py-2.5")}
             />
           </div>
           <div className="space-y-1.5">
-            <Label htmlFor="project-tech" className="text-[var(--lab-ink)]">Stack (comma-separated)</Label>
+            <Label htmlFor="project-tech" className="text-[var(--lab-ink)]">
+              Stack (comma-separated)
+            </Label>
             <Input
               id="project-tech"
               value={tech}
               onChange={(event) => setTech(event.target.value)}
               placeholder="TypeScript, PostgreSQL, OpenAI"
-              className="border-[var(--lab-line)] bg-[var(--lab-card)] font-mono text-xs text-[var(--lab-ink)] placeholder:text-[var(--lab-ink-soft)]"
+              className={adminInputClass}
             />
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="space-y-1.5">
-              <Label htmlFor="project-github" className="text-[var(--lab-ink)]">GitHub URL</Label>
+              <Label htmlFor="project-github" className="text-[var(--lab-ink)]">
+                GitHub URL
+              </Label>
               <Input
                 id="project-github"
                 type="url"
                 value={githubUrl}
                 onChange={(event) => setGithubUrl(event.target.value)}
-                className="border-[var(--lab-line)] bg-[var(--lab-card)] text-[var(--lab-ink)]"
+                className={adminInputClass}
               />
             </div>
             <div className="space-y-1.5">
-              <Label htmlFor="project-demo" className="text-[var(--lab-ink)]">Demo URL</Label>
+              <Label htmlFor="project-demo" className="text-[var(--lab-ink)]">
+                Demo URL
+              </Label>
               <Input
                 id="project-demo"
                 type="url"
                 value={demoUrl}
                 onChange={(event) => setDemoUrl(event.target.value)}
-                className="border-[var(--lab-line)] bg-[var(--lab-card)] text-[var(--lab-ink)]"
+                className={adminInputClass}
               />
             </div>
           </div>
-          <div className="flex items-center justify-between gap-3">
-            <label className="flex items-center gap-3 font-mono text-xs uppercase tracking-[0.18em] text-[var(--lab-ink-soft)]">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <label className="flex items-center gap-3 text-[15px] text-[var(--lab-ink)]">
               <Switch
                 checked={featured}
                 onCheckedChange={(value) => setFeatured(value)}
@@ -189,107 +184,85 @@ function AdminProjectsPage() {
               />
               Feature on homepage
             </label>
-            {error && <p className="text-xs text-destructive">{error}</p>}
-            <Button type="submit" disabled={submitting} className="font-mono">
-              {submitting ? (
-                <Loader2 className="size-4 animate-spin" />
-              ) : (
-                <Plus className="size-4" />
-              )}
+            {error && <p className="text-sm text-destructive">{error}</p>}
+            <Button type="submit" disabled={submitting}>
+              {submitting ? <Loader2 className="animate-spin" aria-hidden /> : <Plus aria-hidden />}
               Create project
             </Button>
           </div>
-        </motion.form>
+        </form>
       )}
 
       {isPending && (
-        <div className="space-y-2">
+        <div className="space-y-3">
           {[0, 1].map((index) => (
-            <Skeleton key={index} className="h-16 w-full" />
+            <Skeleton key={index} className="h-20 w-full rounded-2xl" />
           ))}
         </div>
       )}
 
-      {isError && (
-        <p className="text-sm text-destructive">Unable to load projects.</p>
-      )}
+      {isError && <p className="text-sm text-destructive">Unable to load projects.</p>}
 
       {!isPending && !isError && (projects?.length ?? 0) === 0 && (
-        <p className="text-sm text-[var(--lab-ink-soft)]">No projects yet.</p>
+        <div className={cn(adminPanelClass, "p-10")}>
+          <p className="text-xl font-medium text-[var(--lab-ink)]">No projects yet</p>
+          <p className="dm-body mt-2">Create the first project to feature it on the site.</p>
+        </div>
       )}
 
       {projects && projects.length > 0 && (
-        <div className="overflow-hidden rounded-xl border border-[var(--lab-line)] bg-[var(--lab-card)]">
-          <ul className="divide-y divide-[var(--lab-line)]">
-            {projects.map((project) => (
-              <li
-                key={project.id}
-                className="grid grid-cols-1 gap-3 px-4 py-4 sm:grid-cols-[minmax(0,2fr)_minmax(0,1fr)_auto] sm:items-center sm:gap-4 sm:py-3"
-              >
-                <div className="flex items-start gap-3 min-w-0 sm:items-center">
-                  <span className="lab-tech-tag w-fit shrink-0">
-                    {project.category?.name ?? "—"}
-                  </span>
-                  <div className="min-w-0 flex-1">
-                    <p className="truncate text-sm font-medium text-[var(--lab-ink)]">
-                      {project.title}
-                    </p>
-                    <p className="line-clamp-2 text-xs text-[var(--lab-ink-soft)] sm:line-clamp-1">
-                      {project.description}
-                    </p>
-                  </div>
-                </div>
-                <div className="flex flex-wrap gap-1.5 sm:justify-start">
-                  {project.technologies.slice(0, 4).map((techItem) => (
-                    <span key={techItem} className="lab-tech-tag">
-                      {techItem}
-                    </span>
-                  ))}
-                  {project.technologies.length > 4 ? (
-                    <span className="lab-tech-tag border-dashed">+{project.technologies.length - 4}</span>
-                  ) : null}
-                </div>
-                <div className="-mr-2 flex items-center justify-end gap-0.5 sm:shrink-0">
-                  {project.githubUrl ? (
-                    <Button asChild size="icon" variant="ghost" aria-label="Source" className="size-9 sm:size-8">
-                      <a href={project.githubUrl} target="_blank" rel="noreferrer">
-                        <Github className="size-4" />
-                      </a>
-                    </Button>
-                  ) : null}
-                  {project.demoUrl ? (
-                    <Button asChild size="icon" variant="ghost" aria-label="Demo" className="size-9 sm:size-8">
-                      <a href={project.demoUrl} target="_blank" rel="noreferrer">
-                        <ExternalLink className="size-4" />
-                      </a>
-                    </Button>
-                  ) : null}
-                  <Button
-                    asChild
-                    size="icon"
-                    variant="ghost"
-                    aria-label={`Edit ${project.title}`}
-                    className="size-9 sm:size-8"
-                  >
-                    <Link to="/admin/projects/$id" params={{ id: project.id }}>
-                      <Pencil className="size-4 text-[var(--lab-ink-soft)]" />
-                    </Link>
+        <ul className={cn(adminPanelClass, "divide-y divide-[var(--lab-line)] overflow-hidden")}>
+          {projects.map((project) => (
+            <li
+              key={project.id}
+              className="grid grid-cols-1 gap-3 px-5 py-4 sm:grid-cols-[minmax(0,2fr)_minmax(0,1fr)_9.5rem] sm:items-center sm:gap-6"
+            >
+              <div className="min-w-0">
+                <p className="truncate text-[15px] font-medium text-[var(--lab-ink)]">{project.title}</p>
+                <p className="mt-0.5 line-clamp-2 text-sm text-[var(--lab-ink-soft)] sm:line-clamp-1">
+                  {project.category?.name ? `${project.category.name} · ` : ""}
+                  {project.description}
+                </p>
+              </div>
+              <p className="truncate font-mono text-sm text-[var(--lab-ink-soft)]">
+                {project.technologies.slice(0, STACK_PREVIEW).join(" · ")}
+                {project.technologies.length > STACK_PREVIEW
+                  ? ` · +${project.technologies.length - STACK_PREVIEW}`
+                  : ""}
+              </p>
+              <div className="-mr-2 flex items-center justify-end gap-0.5 sm:shrink-0">
+                {project.githubUrl ? (
+                  <Button asChild size="icon" variant="ghost" aria-label="Source" className={adminIconButtonClass}>
+                    <a href={project.githubUrl} target="_blank" rel="noreferrer">
+                      <Github className="size-4" />
+                    </a>
                   </Button>
-                  <Button
-                    size="icon"
-                    variant="ghost"
-                    aria-label={`Delete ${project.title}`}
-                    className="size-9 sm:size-8"
-                    onClick={() => void onDelete(project.id, project.title)}
-                    disabled={deleteProject.isPending}
-                  >
-                    <Trash2 className="size-4 text-[var(--lab-ink-soft)] hover:text-destructive" />
+                ) : null}
+                {project.demoUrl ? (
+                  <Button asChild size="icon" variant="ghost" aria-label="Demo" className={adminIconButtonClass}>
+                    <a href={project.demoUrl} target="_blank" rel="noreferrer">
+                      <ExternalLink className="size-4" />
+                    </a>
                   </Button>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
+                ) : null}
+                <Button asChild size="icon" variant="ghost" aria-label={`Edit ${project.title}`} className={adminIconButtonClass}>
+                  <Link to="/admin/projects/$id" params={{ id: project.id }}>
+                    <Pencil className="size-4" />
+                  </Link>
+                </Button>
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  aria-label={`Delete ${project.title}`}
+                  onClick={() => void onDelete(project.id, project.title)}
+                  disabled={deleteProject.isPending}
+                >
+                  <Trash2 className="size-4 text-[var(--lab-ink-soft)] hover:text-destructive" />
+                </Button>
+              </div>
+            </li>
+          ))}
+        </ul>
       )}
     </div>
   )

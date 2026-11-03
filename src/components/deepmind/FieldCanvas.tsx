@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react"
+import { useTheme } from "#/hooks/useTheme"
 import {
   buildFieldEdges,
   generateFieldPositions,
@@ -15,6 +16,9 @@ type FieldCanvasProps = {
   scrollLinked?: boolean
 }
 
+const DARK_LINE_OPACITY = 0.12
+const LIGHT_LINE_OPACITY = 0.24
+
 function readToken(name: string, fallback: string): string {
   const value = getComputedStyle(document.documentElement).getPropertyValue(name).trim()
   return value || fallback
@@ -22,6 +26,12 @@ function readToken(name: string, fallback: string): string {
 
 export function FieldCanvas({ seed, pointCount = 360, className, scrollLinked = true }: FieldCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  const refreshPaletteRef = useRef<(() => void) | null>(null)
+  const { resolvedTheme } = useTheme()
+
+  useEffect(() => {
+    refreshPaletteRef.current?.()
+  }, [resolvedTheme])
 
   useEffect(() => {
     let disposed = false
@@ -45,6 +55,8 @@ export function FieldCanvas({ seed, pointCount = 360, className, scrollLinked = 
       const reduced = prefersReducedMotion()
       const inkSoft = new THREE.Color(readToken("--lab-ink-soft", "#8fa3bd"))
       const orange = new THREE.Color(readToken("--lab-orange", "#f65a0b"))
+      const lightSurface = (): boolean => !document.documentElement.classList.contains("dark")
+      let lineOpacity = lightSurface() ? LIGHT_LINE_OPACITY : DARK_LINE_OPACITY
 
       const scene = new THREE.Scene()
       const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 20)
@@ -112,6 +124,16 @@ export function FieldCanvas({ seed, pointCount = 360, className, scrollLinked = 
       const setTiltX = gsap.quickTo(state, "tiltX", { duration: 1.2, ease: "power3.out" })
       const setTiltY = gsap.quickTo(state, "tiltY", { duration: 1.2, ease: "power3.out" })
 
+      refreshPaletteRef.current = (): void => {
+        inkSoft.set(readToken("--lab-ink-soft", "#8fa3bd"))
+        orange.set(readToken("--lab-orange", "#f65a0b"))
+        pointMaterial.color.copy(inkSoft)
+        lineMaterial.color.copy(inkSoft)
+        accentMaterial.color.copy(orange)
+        lineOpacity = lightSurface() ? LIGHT_LINE_OPACITY : DARK_LINE_OPACITY
+        if (reduced) render()
+      }
+
       const resize = (): void => {
         const width = Math.max(1, host.clientWidth)
         const height = Math.max(1, host.clientHeight)
@@ -130,7 +152,7 @@ export function FieldCanvas({ seed, pointCount = 360, className, scrollLinked = 
         const scale = (0.78 + state.intro * 0.22) * (1 - state.scroll * 0.25)
         group.scale.setScalar(scale)
         pointMaterial.opacity = 0.75 * reveal
-        lineMaterial.opacity = 0.12 * reveal
+        lineMaterial.opacity = lineOpacity * reveal
         accentMaterial.opacity = reveal
         renderer.render(scene, camera)
       }
@@ -183,6 +205,7 @@ export function FieldCanvas({ seed, pointCount = 360, className, scrollLinked = 
       }
 
       teardown = () => {
+        refreshPaletteRef.current = null
         gsap.ticker.remove(tick)
         window.removeEventListener("pointermove", onPointerMove)
         resizeObserver.disconnect()

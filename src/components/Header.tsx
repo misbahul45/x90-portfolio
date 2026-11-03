@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router"
 import { useEffect, useState } from "react"
 import { Github, Menu } from "lucide-react"
 import { Button } from "#/components/ui/button"
+import { ThemeToggle } from "#/components/ThemeToggle"
 import { XninetzyLogo } from "#/components/XninetzyLogo"
 import { outlinePillClass } from "#/components/deepmind/styles"
 import {
@@ -112,6 +113,8 @@ export default function Header() {
               <Github aria-hidden />
             </a>
           </Button>
+
+          <ThemeToggle />
 
           <Button asChild variant="outline" className={cn(outlinePillClass, "hidden sm:inline-flex")}>
             <Link to="/" hash="contact">

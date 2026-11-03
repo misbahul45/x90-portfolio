@@ -1,7 +1,6 @@
 import { Link } from "@tanstack/react-router"
 import { ArrowUpRight } from "lucide-react"
 import { NodeArt } from "#/components/deepmind/NodeArt"
-import { formatMonthYear } from "#/lib/format-date"
 import type { ResearchNewsItemData } from "#/components/research/ResearchNewsItem"
 
 type ResearchFeatureCardProps = {
@@ -9,8 +8,6 @@ type ResearchFeatureCardProps = {
 }
 
 export function ResearchFeatureCard({ article }: ResearchFeatureCardProps) {
-  const meta = [formatMonthYear(article.publishedAt), article.category?.name].filter(Boolean).join("  ·  ")
-
   return (
     <Link
       to="/research/$slug"
@@ -31,8 +28,7 @@ export function ResearchFeatureCard({ article }: ResearchFeatureCardProps) {
         <h3 className="dm-card-title">{article.title}</h3>
         <p className="dm-body mt-2 line-clamp-3">{article.excerpt}</p>
       </div>
-      <p className="mt-4 flex items-center justify-between gap-4 text-sm text-[var(--lab-ink-soft)]">
-        <span>{meta}</span>
+      <p className="mt-4 flex items-center text-sm text-[var(--lab-ink-soft)]">
         <span className="inline-flex items-center gap-1 font-medium text-[var(--lab-ink)] transition-colors group-hover:text-[var(--lab-orange)]">
           Read
           <ArrowUpRight className="size-4" aria-hidden />

@@ -1,10 +1,10 @@
 import { Suspense, lazy, useEffect, useMemo, useState } from "react"
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router"
-import { motion } from "motion/react"
 import { ArrowLeft, Loader2, Save, Send, Trash2 } from "lucide-react"
 import { useAdminArticle, useAdminDeleteArticle, useAdminUpdateArticle } from "#/hooks/useAdminArticles"
 import { useCategories, type CategoryItem } from "#/hooks/useCategories"
 import { TagMultiSelect } from "#/components/admin/TagMultiSelect"
+import { adminInputClass, adminPanelClass, adminSelectTriggerClass } from "#/components/admin/styles"
 import { Button } from "#/components/ui/button"
 import { Input } from "#/components/ui/input"
 import { Textarea } from "#/components/ui/textarea"
@@ -22,7 +22,7 @@ import { ARTICLE_STATUS, type ArticleStatus } from "#/lib/domain/article-status"
 const RichEditor = lazy(() =>
   import("#/components/admin/RichEditor").then((m) => ({ default: m.RichEditor })),
 )
-import { fadeInUp, VIEWPORT_OPTIONS } from "#/lib/motion-variants"
+import { cn } from "#/lib/utils"
 
 export const Route = createFileRoute("/admin/articles/$id")({
   head: () => ({ meta: [{ title: "Edit article — Admin" }] }),
@@ -110,11 +110,11 @@ function AdminArticleEdit() {
 
   if (!article) {
     return (
-      <div className="research-card-surface p-10 text-center">
-        <p className="text-sm text-[var(--lab-ink)]">Article not found.</p>
+      <div className={cn(adminPanelClass, "p-10")}>
+        <p className="text-xl font-medium text-[var(--lab-ink)]">Article not found.</p>
         <Link
           to="/admin/articles"
-          className="mt-4 inline-block font-mono text-xs uppercase tracking-[0.16em] text-[var(--lab-orange)] no-underline"
+          className="mt-4 inline-block text-[15px] text-[var(--lab-orange)] no-underline hover:underline"
         >
           ← Back to articles
         </Link>
@@ -123,26 +123,20 @@ function AdminArticleEdit() {
   }
 
   return (
-    <motion.form
-      initial="hidden"
-      animate="visible"
-      variants={fadeInUp}
-      onSubmit={onSubmit}
-      className="space-y-6"
-    >
+    <form onSubmit={onSubmit} className="space-y-8">
       <header className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <Link
             to="/admin/articles"
-            className="inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--lab-ink-soft)] no-underline transition-colors hover:text-[var(--lab-orange)]"
+            className="inline-flex items-center gap-1.5 text-sm text-[var(--lab-ink-soft)] no-underline transition-colors hover:text-[var(--lab-orange)]"
           >
-            <ArrowLeft className="size-3.5" />
+            <ArrowLeft className="size-4" aria-hidden />
             All articles
           </Link>
-          <h1 className="mt-3 text-2xl font-semibold tracking-tight text-[var(--lab-ink)]">
+          <h1 className="dm-title mt-3">
             Edit article
           </h1>
-          <p className="mt-1 font-mono text-xs text-[var(--lab-ink-soft)]">
+          <p className="dm-body mt-1">
             Last updated: {new Date(article.publishedAt ?? Date.now()).toLocaleString()}
           </p>
         </div>
@@ -158,13 +152,13 @@ function AdminArticleEdit() {
           >
             <Trash2 className="size-4" />
           </Button>
-          <Button type="submit" className="font-mono" disabled={update.isPending}>
+          <Button type="submit" disabled={update.isPending}>
             {update.isPending ? (
-              <Loader2 className="size-4 animate-spin" />
+              <Loader2 className="animate-spin" aria-hidden />
             ) : status === ARTICLE_STATUS.PUBLISHED ? (
-              <Send className="size-4" />
+              <Send aria-hidden />
             ) : (
-              <Save className="size-4" />
+              <Save aria-hidden />
             )}
             {submitLabel}
           </Button>
@@ -172,13 +166,7 @@ function AdminArticleEdit() {
       </header>
 
       <div className="grid gap-6 lg:grid-cols-[1fr_320px]">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={VIEWPORT_OPTIONS}
-          variants={fadeInUp}
-          className="space-y-4"
-        >
+        <div className="space-y-5">
           <div className="space-y-1.5">
             <Label htmlFor="article-title" className="text-[var(--lab-ink)]">Title</Label>
             <Input
@@ -186,9 +174,9 @@ function AdminArticleEdit() {
               required
               value={title}
               onChange={(event) => setTitle(event.target.value)}
-              className="border-[var(--lab-line)] bg-[var(--lab-card)] text-[var(--lab-ink)]"
+              className={adminInputClass}
             />
-            {errors.title && <p className="text-xs text-destructive">{errors.title}</p>}
+            {errors.title && <p className="text-sm text-destructive">{errors.title}</p>}
           </div>
           <div className="space-y-1.5">
             <Label htmlFor="article-slug" className="text-[var(--lab-ink)]">Slug</Label>
@@ -196,9 +184,9 @@ function AdminArticleEdit() {
               id="article-slug"
               value={slug}
               onChange={(event) => setSlug(event.target.value)}
-              className="border-[var(--lab-line)] bg-[var(--lab-card)] font-mono text-xs text-[var(--lab-ink)]"
+              className={adminInputClass}
             />
-            {errors.slug && <p className="text-xs text-destructive">{errors.slug}</p>}
+            {errors.slug && <p className="text-sm text-destructive">{errors.slug}</p>}
           </div>
           <div className="space-y-1.5">
             <Label htmlFor="article-excerpt" className="text-[var(--lab-ink)]">Excerpt</Label>
@@ -208,33 +196,27 @@ function AdminArticleEdit() {
               required
               value={excerpt}
               onChange={(event) => setExcerpt(event.target.value)}
-              className="border-[var(--lab-line)] bg-[var(--lab-card)] text-[var(--lab-ink)]"
+              className={adminInputClass}
             />
-            {errors.excerpt && <p className="text-xs text-destructive">{errors.excerpt}</p>}
+            {errors.excerpt && <p className="text-sm text-destructive">{errors.excerpt}</p>}
           </div>
           <div className="space-y-1.5">
             <Label className="text-[var(--lab-ink)]">Content</Label>
             <Suspense fallback={<Skeleton className="h-72 w-full" />}>
               <RichEditor value={content} onChange={setContent} />
             </Suspense>
-            {errors.content && <p className="text-xs text-destructive">{errors.content}</p>}
+            {errors.content && <p className="text-sm text-destructive">{errors.content}</p>}
           </div>
-        </motion.div>
+        </div>
 
-        <motion.aside
-          initial="hidden"
-          whileInView="visible"
-          viewport={VIEWPORT_OPTIONS}
-          variants={fadeInUp}
-          className="research-card-surface h-fit space-y-4 p-5"
-        >
+        <aside className={cn(adminPanelClass, "h-fit space-y-5 p-5")}>
           <div className="space-y-1.5">
             <Label className="text-[var(--lab-ink)]">Status</Label>
             <Select value={status} onValueChange={(value) => setStatus(value as ArticleStatus)}>
-              <SelectTrigger className="border-[var(--lab-line)] bg-[var(--lab-card)] text-[var(--lab-ink)]">
+              <SelectTrigger className={adminSelectTriggerClass}>
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent className="border-[var(--lab-line)] bg-[var(--lab-card)] text-[var(--lab-ink)]">
+              <SelectContent>
                 <SelectItem value={ARTICLE_STATUS.DRAFT}>Draft</SelectItem>
                 <SelectItem value={ARTICLE_STATUS.PUBLISHED}>Published</SelectItem>
                 <SelectItem value={ARTICLE_STATUS.ARCHIVED}>Archived</SelectItem>
@@ -247,10 +229,10 @@ function AdminArticleEdit() {
               value={categoryId || "__none__"}
               onValueChange={(value) => setCategoryId(value === "__none__" ? "" : value)}
             >
-              <SelectTrigger className="border-[var(--lab-line)] bg-[var(--lab-card)] text-[var(--lab-ink)]">
+              <SelectTrigger className={adminSelectTriggerClass}>
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent className="border-[var(--lab-line)] bg-[var(--lab-card)] text-[var(--lab-ink)]">
+              <SelectContent>
                 <SelectItem value="__none__">— none —</SelectItem>
                 {(categories ?? []).map((category: CategoryItem) => (
                   <SelectItem key={category.id} value={category.id}>
@@ -271,15 +253,15 @@ function AdminArticleEdit() {
               value={coverImage}
               onChange={(event) => setCoverImage(event.target.value)}
               placeholder="https://…"
-              className="border-[var(--lab-line)] bg-[var(--lab-card)] text-[var(--lab-ink)]"
+              className={adminInputClass}
             />
           </div>
-          <p className="font-mono text-[10px] text-[var(--lab-ink-soft)]">
+          <p className="text-sm text-[var(--lab-ink-soft)]">
             Public URL: /research/{slug || article.slug}
           </p>
-        </motion.aside>
+        </aside>
       </div>
-    </motion.form>
+    </form>
   )
 }
 

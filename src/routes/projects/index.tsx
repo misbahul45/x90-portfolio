@@ -64,7 +64,6 @@ function ProjectsListPage() {
   return (
     <main>
       <PageIntro
-        label="Projects"
         title="Systems we have engineered"
         description="Production-grade platforms and research systems: agents, retrieval pipelines and software built to survive real users."
       />

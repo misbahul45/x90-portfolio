@@ -14,6 +14,7 @@ import TanStackQueryProvider from "#/integrations/tanstack-query/root-provider"
 import TanStackQueryDevtools from "#/integrations/tanstack-query/devtools"
 
 import appCss from "#/styles.css?url"
+import { THEME_COLORS, THEME_INIT_SCRIPT } from "#/lib/theme"
 
 import type { QueryClient } from "@tanstack/react-query"
 import { AskLabsDialog } from "#/components/asklabs/AskLabsDialog"
@@ -37,8 +38,8 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
         content:
           "X90 Labs is an AI engineering studio that designs, builds, and ships production software — websites, mobile apps, internal tools, AI agents, and workflow automation.",
       },
-      { name: "theme-color", content: "#071426" },
-      { name: "color-scheme", content: "dark" },
+      { name: "theme-color", content: THEME_COLORS.light },
+      { name: "color-scheme", content: "light dark" },
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "X90 Labs" },
       {
@@ -70,6 +71,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
       { rel: "manifest", href: "/manifest.json" },
       { rel: "stylesheet", href: appCss },
     ],
+    scripts: [{ children: THEME_INIT_SCRIPT }],
   }),
   shellComponent: RootDocument,
 })
@@ -78,7 +80,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
   const currentPath = useRouterState({ select: (state) => state.location.pathname })
   const isAdminRoute = currentPath.startsWith("/admin")
   return (
-    <html lang="en" className="dark" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <head>
         <HeadContent />
       </head>

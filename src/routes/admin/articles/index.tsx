@@ -1,32 +1,46 @@
 import { useMemo, useState } from "react"
 import { createFileRoute, Link } from "@tanstack/react-router"
-import { motion } from "motion/react"
-import { Plus, Pencil, Trash2, Search, ArrowUpRight } from "lucide-react"
-import { useAdminArticles, useAdminDeleteArticle } from "#/hooks/useAdminArticles"
-import { Skeleton } from "#/components/ui/skeleton"
+import { ArrowUpRight, Pencil, Plus, Search, Trash2 } from "lucide-react"
+import { AdminPageHeader } from "#/components/admin/AdminPageHeader"
+import { AdminStatus, type AdminStatusTone } from "#/components/admin/AdminStatus"
+import { adminIconButtonClass, adminInputClass, adminPanelClass, adminTableHeadClass } from "#/components/admin/styles"
+import { FilterTabs, type FilterOption } from "#/components/deepmind/FilterTabs"
 import { Button } from "#/components/ui/button"
 import { Input } from "#/components/ui/input"
-import { FilterPill } from "#/components/projects/FilterPill"
-import { ARTICLE_STATUS, type ArticleStatus } from "#/lib/domain/article-status"
-import { fadeInUp } from "#/lib/motion-variants"
+import { Skeleton } from "#/components/ui/skeleton"
+import { useAdminArticles, useAdminDeleteArticle } from "#/hooks/useAdminArticles"
+import { ARTICLE_STATUS, ARTICLE_STATUS_OPTIONS, type ArticleStatus } from "#/lib/domain/article-status"
+import { formatFullDate } from "#/lib/format-date"
 
 export const Route = createFileRoute("/admin/articles/")({
   head: () => ({ meta: [{ title: "Articles — Admin" }] }),
   component: AdminArticlesList,
 })
 
-const FILTERS: Array<{ value: ArticleStatus | "ALL"; label: string }> = [
-  { value: "ALL", label: "All" },
-  { value: ARTICLE_STATUS.PUBLISHED, label: "Published" },
-  { value: ARTICLE_STATUS.DRAFT, label: "Drafts" },
-  { value: ARTICLE_STATUS.ARCHIVED, label: "Archived" },
+const ALL = "ALL"
+
+const FILTERS: ReadonlyArray<FilterOption> = [
+  { value: ALL, label: "All" },
+  ...ARTICLE_STATUS_OPTIONS.map((option) => ({ value: option.value, label: option.label })),
 ]
 
+const STATUS_TONE: Record<ArticleStatus, AdminStatusTone> = {
+  [ARTICLE_STATUS.PUBLISHED]: "active",
+  [ARTICLE_STATUS.DRAFT]: "neutral",
+  [ARTICLE_STATUS.ARCHIVED]: "neutral",
+}
+
+const STATUS_LABEL = Object.fromEntries(
+  ARTICLE_STATUS_OPTIONS.map((option) => [option.value, option.label]),
+) as Record<ArticleStatus, string>
+
+const ROW_GRID = "sm:grid-cols-[minmax(0,2fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_120px]"
+
 function AdminArticlesList() {
-  const [active, setActive] = useState<ArticleStatus | "ALL">("ALL")
+  const [active, setActive] = useState(ALL)
   const [query, setQuery] = useState("")
   const { data: articles, isPending, isError } = useAdminArticles(
-    active === "ALL" ? {} : { status: active },
+    active === ALL ? {} : { status: active as ArticleStatus },
   )
   const deleteArticle = useAdminDeleteArticle()
 
@@ -49,44 +63,27 @@ function AdminArticlesList() {
 
   return (
     <div className="space-y-8">
-      <motion.header
-        initial="hidden"
-        animate="visible"
-        variants={fadeInUp}
-        className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between"
-      >
-        <div>
-          <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--lab-orange)]">
-            Research
-          </p>
-          <h1 className="mt-2 text-3xl font-semibold tracking-tight text-[var(--lab-ink)]">
-            Articles
-          </h1>
-          <p className="mt-2 text-sm text-[var(--lab-ink-soft)]">
-            Drafts, published articles, and archived posts.
-          </p>
-        </div>
-        <Link
-          to="/admin/articles/new"
-          className="inline-flex items-center gap-2 rounded-md bg-[var(--lab-orange)] px-4 py-2 font-mono text-sm font-semibold text-[var(--lab-bg)] no-underline transition-opacity hover:opacity-90"
-        >
-          <Plus className="size-4" aria-hidden />
-          New article
-        </Link>
-      </motion.header>
+      <AdminPageHeader
+        title="Articles"
+        description="Drafts, published research and archived posts."
+        action={
+          <Button asChild>
+            <Link to="/admin/articles/new">
+              <Plus aria-hidden />
+              New article
+            </Link>
+          </Button>
+        }
+      />
 
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex flex-wrap items-center gap-2">
-          {FILTERS.map((filter) => (
-            <FilterPill
-              key={filter.value}
-              active={active === filter.value}
-              onClick={() => setActive(filter.value)}
-            >
-              {filter.label}
-            </FilterPill>
-          ))}
-        </div>
+      <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+        <FilterTabs
+          label="Filter articles by status"
+          options={FILTERS}
+          value={active}
+          onChange={setActive}
+          className="min-w-0"
+        />
         <div className="relative w-full sm:max-w-xs">
           <Search
             aria-hidden
@@ -94,38 +91,35 @@ function AdminArticlesList() {
           />
           <Input
             type="search"
-            placeholder="Search articles…"
+            placeholder="Search articles"
+            aria-label="Search articles"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            className="h-9 border-[var(--lab-line)] bg-[var(--lab-card)] pl-9 font-mono text-xs text-[var(--lab-ink)] placeholder:text-[var(--lab-ink-soft)]"
+            className={`${adminInputClass} pl-9`}
           />
         </div>
       </div>
 
       {isPending && (
-        <div className="space-y-2 rounded-xl border border-[var(--lab-line)] bg-[var(--lab-card)] p-4">
+        <div className="space-y-3">
           {[0, 1, 2, 3].map((index) => (
-            <Skeleton key={index} className="h-12 w-full" />
+            <Skeleton key={index} className="h-14 w-full rounded-2xl" />
           ))}
         </div>
       )}
 
-      {isError && (
-        <p className="text-sm text-destructive">Unable to load articles.</p>
-      )}
+      {isError && <p className="text-sm text-destructive">Unable to load articles.</p>}
 
       {!isPending && !isError && filtered.length === 0 && (
-        <div className="rounded-xl border border-dashed border-[var(--lab-line)] bg-[var(--lab-card)] p-10 text-center">
-          <p className="text-sm font-medium text-[var(--lab-ink)]">No articles match.</p>
-          <p className="mt-1 text-xs text-[var(--lab-ink-soft)]">
-            Try clearing the search or switching the filter.
-          </p>
+        <div className={`${adminPanelClass} p-10`}>
+          <p className="text-xl font-medium text-[var(--lab-ink)]">No articles match</p>
+          <p className="dm-body mt-2">Try clearing the search or switching the filter.</p>
         </div>
       )}
 
       {!isPending && !isError && filtered.length > 0 && (
-        <div className="overflow-hidden rounded-xl border border-[var(--lab-line)] bg-[var(--lab-card)]">
-          <div className="hidden border-b border-[var(--lab-line)] bg-[var(--lab-card-elevated)] px-4 py-2 font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--lab-ink-soft)] sm:grid sm:grid-cols-[2fr_1fr_1fr_1fr_120px]">
+        <div className={`${adminPanelClass} overflow-hidden`}>
+          <div className={`hidden border-b border-[var(--lab-line)] px-5 py-3 sm:grid ${ROW_GRID} ${adminTableHeadClass}`}>
             <span>Title</span>
             <span>Category</span>
             <span>Status</span>
@@ -136,33 +130,29 @@ function AdminArticlesList() {
             {filtered.map((article) => (
               <li
                 key={article.id}
-                className="grid grid-cols-1 gap-2 px-4 py-3 sm:grid-cols-[2fr_1fr_1fr_1fr_120px] sm:items-center sm:gap-3"
+                className={`grid grid-cols-1 gap-2 px-5 py-4 sm:items-center sm:gap-4 ${ROW_GRID}`}
               >
                 <Link
                   to="/admin/articles/$id"
                   params={{ id: article.id }}
-                  className="text-sm font-medium text-[var(--lab-ink)] no-underline transition-colors hover:text-[var(--lab-orange)]"
+                  className="truncate text-[15px] font-medium text-[var(--lab-ink)] no-underline transition-colors hover:text-[var(--lab-orange)]"
                 >
                   {article.title}
                 </Link>
-                <span className="lab-tech-tag w-fit">
+                <span className="truncate text-sm text-[var(--lab-ink-soft)]">
                   {article.category?.name ?? "—"}
                 </span>
-                <span
-                  className="lab-tech-tag w-fit"
-                  data-active={article.status === ARTICLE_STATUS.PUBLISHED ? "true" : "false"}
-                >
-                  {article.status}
-                </span>
-                <span className="font-mono text-xs text-[var(--lab-ink-soft)]">
-                  {article.publishedAt
-                    ? new Date(article.publishedAt).toLocaleDateString()
-                    : "—"}
+                <AdminStatus
+                  label={STATUS_LABEL[article.status]}
+                  tone={STATUS_TONE[article.status]}
+                />
+                <span className="text-sm text-[var(--lab-ink-soft)]">
+                  {article.publishedAt ? formatFullDate(article.publishedAt) : "—"}
                 </span>
                 <div className="flex items-center justify-end gap-1">
-                  <Button asChild size="icon" variant="ghost" aria-label={`Edit ${article.title}`}>
+                  <Button asChild size="icon" variant="ghost" aria-label={`Edit ${article.title}`} className={adminIconButtonClass}>
                     <Link to="/admin/articles/$id" params={{ id: article.id }}>
-                      <Pencil className="size-3.5" />
+                      <Pencil className="size-4" />
                     </Link>
                   </Button>
                   <Button
@@ -172,11 +162,11 @@ function AdminArticlesList() {
                     onClick={() => void onDelete(article.id, article.title)}
                     disabled={deleteArticle.isPending}
                   >
-                    <Trash2 className="size-3.5 text-[var(--lab-ink-soft)] hover:text-destructive" />
+                    <Trash2 className="size-4 text-[var(--lab-ink-soft)] hover:text-destructive" />
                   </Button>
-                  <Button asChild size="icon" variant="ghost" aria-label="View public">
+                  <Button asChild size="icon" variant="ghost" aria-label="View public" className={adminIconButtonClass}>
                     <a href={`/research/${article.slug}`} target="_blank" rel="noreferrer">
-                      <ArrowUpRight className="size-3.5" />
+                      <ArrowUpRight className="size-4" />
                     </a>
                   </Button>
                 </div>

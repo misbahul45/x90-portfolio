@@ -97,7 +97,7 @@ async function* streamFromFlazz(input: {
   const knowledgeContext = formatHitsForPrompt(hits)
   const apiKey = env.FLAZZ_API_KEY
   const baseUrl = env.FLAZZ_BASE_URL
-  const model = env.FLAZZ_MODEL ?? "qwen3.6-flash"
+  const model = env.FLAZZ_MODEL ?? "gpt-4.1-mini"
 
   if (!apiKey) {
     yield { type: "error", message: "FLAZZ_API_KEY is not configured on the server." }

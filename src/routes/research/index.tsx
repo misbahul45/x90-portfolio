@@ -62,7 +62,6 @@ function ResearchListPage() {
   return (
     <main>
       <PageIntro
-        label="Research"
         title="Experiments, evaluations and notes from the lab"
         description="What we test for real projects, what held up, and what did not."
       />

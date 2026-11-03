@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { createFileRoute, Link } from "@tanstack/react-router"
 import { ChevronRight, Plus } from "lucide-react"
+import { AdminPageHeader } from "#/components/admin/AdminPageHeader"
 import { FilterTabs, type FilterOption } from "#/components/deepmind/FilterTabs"
 import { Button } from "#/components/ui/button"
 import { Skeleton } from "#/components/ui/skeleton"
@@ -34,20 +35,18 @@ function AdminLabPage() {
 
   return (
     <div className="space-y-10">
-      <header className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-        <div className="max-w-2xl">
-          <h1 className="dm-title">Lab</h1>
-          <p className="dm-subtitle mt-1">
-            Track fine-tuning runs from dataset to release, then turn the findings into research.
-          </p>
-        </div>
-        <Button asChild>
-          <Link to="/admin/lab/new">
-            <Plus aria-hidden />
-            New experiment
-          </Link>
-        </Button>
-      </header>
+      <AdminPageHeader
+        title="Lab"
+        description="Track fine-tuning runs from dataset to release, then turn the findings into research."
+        action={
+          <Button asChild>
+            <Link to="/admin/lab/new">
+              <Plus aria-hidden />
+              New experiment
+            </Link>
+          </Button>
+        }
+      />
 
       <FilterTabs label="Filter experiments by status" options={STATUS_OPTIONS} value={filter} onChange={setFilter} />
 

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router"
-import { motion } from "motion/react"
 import { ArrowLeft, Loader2, Save, Trash2 } from "lucide-react"
 import {
   useAdminProject,
@@ -8,6 +7,7 @@ import {
   useAdminDeleteProject,
 } from "#/hooks/useAdminProjects"
 import { useCategories, type CategoryItem } from "#/hooks/useCategories"
+import { adminInputClass, adminPanelClass, adminSelectTriggerClass } from "#/components/admin/styles"
 import { Button } from "#/components/ui/button"
 import { Input } from "#/components/ui/input"
 import { Textarea } from "#/components/ui/textarea"
@@ -21,7 +21,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "#/components/ui/select"
-import { fadeInUp, VIEWPORT_OPTIONS } from "#/lib/motion-variants"
+import { cn } from "#/lib/utils"
 
 export const Route = createFileRoute("/admin/projects/$id")({
   head: () => ({ meta: [{ title: "Edit project — Admin" }] }),
@@ -116,11 +116,11 @@ function AdminProjectEdit() {
 
   if (!project) {
     return (
-      <div className="research-card-surface p-10 text-center">
-        <p className="text-sm text-[var(--lab-ink)]">Project not found.</p>
+      <div className={cn(adminPanelClass, "p-10")}>
+        <p className="text-xl font-medium text-[var(--lab-ink)]">Project not found.</p>
         <Link
           to="/admin/projects"
-          className="mt-4 inline-block font-mono text-xs uppercase tracking-[0.16em] text-[var(--lab-orange)] no-underline"
+          className="mt-4 inline-block text-[15px] text-[var(--lab-orange)] no-underline hover:underline"
         >
           ← Back to projects
         </Link>
@@ -129,26 +129,20 @@ function AdminProjectEdit() {
   }
 
   return (
-    <motion.form
-      initial="hidden"
-      animate="visible"
-      variants={fadeInUp}
-      onSubmit={onSubmit}
-      className="space-y-6"
-    >
+    <form onSubmit={onSubmit} className="space-y-8">
       <header className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <Link
             to="/admin/projects"
-            className="inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--lab-ink-soft)] no-underline transition-colors hover:text-[var(--lab-orange)]"
+            className="inline-flex items-center gap-1.5 text-sm text-[var(--lab-ink-soft)] no-underline transition-colors hover:text-[var(--lab-orange)]"
           >
-            <ArrowLeft className="size-3.5" />
+            <ArrowLeft className="size-4" aria-hidden />
             All projects
           </Link>
-          <h1 className="mt-3 text-2xl font-semibold tracking-tight text-[var(--lab-ink)]">
+          <h1 className="dm-title mt-3">
             Edit project
           </h1>
-          <p className="mt-1 font-mono text-xs text-[var(--lab-ink-soft)]">
+          <p className="dm-body mt-1">
             Public URL: /projects/{slug || project.slug}
           </p>
         </div>
@@ -164,11 +158,11 @@ function AdminProjectEdit() {
           >
             <Trash2 className="size-4" />
           </Button>
-          <Button type="submit" className="font-mono" disabled={update.isPending}>
+          <Button type="submit" disabled={update.isPending}>
             {update.isPending ? (
-              <Loader2 className="size-4 animate-spin" />
+              <Loader2 className="animate-spin" aria-hidden />
             ) : (
-              <Save className="size-4" />
+              <Save aria-hidden />
             )}
             Save changes
           </Button>
@@ -176,13 +170,7 @@ function AdminProjectEdit() {
       </header>
 
       <div className="grid gap-6 lg:grid-cols-[1fr_320px]">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={VIEWPORT_OPTIONS}
-          variants={fadeInUp}
-          className="space-y-4"
-        >
+        <div className="space-y-5">
           <div className="space-y-1.5">
             <Label htmlFor="project-title" className="text-[var(--lab-ink)]">Title</Label>
             <Input
@@ -190,9 +178,9 @@ function AdminProjectEdit() {
               required
               value={title}
               onChange={(event) => setTitle(event.target.value)}
-              className="border-[var(--lab-line)] bg-[var(--lab-card)] text-[var(--lab-ink)]"
+              className={adminInputClass}
             />
-            {errors.title && <p className="text-xs text-destructive">{errors.title}</p>}
+            {errors.title && <p className="text-sm text-destructive">{errors.title}</p>}
           </div>
           <div className="space-y-1.5">
             <Label htmlFor="project-slug" className="text-[var(--lab-ink)]">Slug</Label>
@@ -200,9 +188,9 @@ function AdminProjectEdit() {
               id="project-slug"
               value={slug}
               onChange={(event) => setSlug(event.target.value)}
-              className="border-[var(--lab-line)] bg-[var(--lab-card)] font-mono text-xs text-[var(--lab-ink)]"
+              className={adminInputClass}
             />
-            {errors.slug && <p className="text-xs text-destructive">{errors.slug}</p>}
+            {errors.slug && <p className="text-sm text-destructive">{errors.slug}</p>}
           </div>
           <div className="space-y-1.5">
             <Label htmlFor="project-description" className="text-[var(--lab-ink)]">Description</Label>
@@ -212,9 +200,9 @@ function AdminProjectEdit() {
               required
               value={description}
               onChange={(event) => setDescription(event.target.value)}
-              className="border-[var(--lab-line)] bg-[var(--lab-card)] text-[var(--lab-ink)]"
+              className={adminInputClass}
             />
-            {errors.description && <p className="text-xs text-destructive">{errors.description}</p>}
+            {errors.description && <p className="text-sm text-destructive">{errors.description}</p>}
           </div>
           <div className="space-y-1.5">
             <Label htmlFor="project-tech" className="text-[var(--lab-ink)]">
@@ -225,7 +213,7 @@ function AdminProjectEdit() {
               value={techInput}
               onChange={(event) => setTechInput(event.target.value)}
               placeholder="TypeScript, PostgreSQL, OpenAI"
-              className="border-[var(--lab-line)] bg-[var(--lab-card)] font-mono text-xs text-[var(--lab-ink)] placeholder:text-[var(--lab-ink-soft)]"
+              className={adminInputClass}
             />
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
@@ -236,7 +224,7 @@ function AdminProjectEdit() {
                 type="url"
                 value={githubUrl}
                 onChange={(event) => setGithubUrl(event.target.value)}
-                className="border-[var(--lab-line)] bg-[var(--lab-card)] text-[var(--lab-ink)]"
+                className={adminInputClass}
               />
             </div>
             <div className="space-y-1.5">
@@ -246,29 +234,23 @@ function AdminProjectEdit() {
                 type="url"
                 value={demoUrl}
                 onChange={(event) => setDemoUrl(event.target.value)}
-                className="border-[var(--lab-line)] bg-[var(--lab-card)] text-[var(--lab-ink)]"
+                className={adminInputClass}
               />
             </div>
           </div>
-        </motion.div>
+        </div>
 
-        <motion.aside
-          initial="hidden"
-          whileInView="visible"
-          viewport={VIEWPORT_OPTIONS}
-          variants={fadeInUp}
-          className="research-card-surface h-fit space-y-4 p-5"
-        >
+        <aside className={cn(adminPanelClass, "h-fit space-y-5 p-5")}>
           <div className="space-y-1.5">
             <Label className="text-[var(--lab-ink)]">Category</Label>
             <Select
               value={categoryId || "__none__"}
               onValueChange={(value) => setCategoryId(value === "__none__" ? "" : value)}
             >
-              <SelectTrigger className="border-[var(--lab-line)] bg-[var(--lab-card)] text-[var(--lab-ink)]">
+              <SelectTrigger className={adminSelectTriggerClass}>
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent className="border-[var(--lab-line)] bg-[var(--lab-card)] text-[var(--lab-ink)]">
+              <SelectContent>
                 <SelectItem value="__none__">— none —</SelectItem>
                 {(categories ?? []).map((category: CategoryItem) => (
                   <SelectItem key={category.id} value={category.id}>
@@ -285,7 +267,7 @@ function AdminProjectEdit() {
               value={coverImage}
               onChange={(event) => setCoverImage(event.target.value)}
               placeholder="https://…"
-              className="border-[var(--lab-line)] bg-[var(--lab-card)] text-[var(--lab-ink)]"
+              className={adminInputClass}
             />
           </div>
           <div className="space-y-1.5">
@@ -296,7 +278,7 @@ function AdminProjectEdit() {
               min={0}
               value={order}
               onChange={(event) => setOrder(Number(event.target.value))}
-              className="border-[var(--lab-line)] bg-[var(--lab-card)] font-mono text-xs text-[var(--lab-ink)]"
+              className={adminInputClass}
             />
           </div>
           <div className="space-y-1.5">
@@ -305,17 +287,17 @@ function AdminProjectEdit() {
               value={status}
               onValueChange={(value) => setStatus(value as "DRAFT" | "PUBLISHED" | "ARCHIVED")}
             >
-              <SelectTrigger className="border-[var(--lab-line)] bg-[var(--lab-card)] text-[var(--lab-ink)]">
+              <SelectTrigger className={adminSelectTriggerClass}>
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent className="border-[var(--lab-line)] bg-[var(--lab-card)] text-[var(--lab-ink)]">
+              <SelectContent>
                 <SelectItem value="DRAFT">Draft</SelectItem>
                 <SelectItem value="PUBLISHED">Published</SelectItem>
                 <SelectItem value="ARCHIVED">Archived</SelectItem>
               </SelectContent>
             </Select>
           </div>
-          <label className="flex items-center gap-3 font-mono text-xs uppercase tracking-[0.18em] text-[var(--lab-ink-soft)]">
+          <label className="flex items-center gap-3 text-[15px] text-[var(--lab-ink)]">
             <Switch
               checked={featured}
               onCheckedChange={(value) => setFeatured(value)}
@@ -323,10 +305,10 @@ function AdminProjectEdit() {
             />
             Feature on homepage
           </label>
-          {submitError && <p className="text-xs text-destructive">{submitError}</p>}
-        </motion.aside>
+          {submitError && <p className="text-sm text-destructive">{submitError}</p>}
+        </aside>
       </div>
-    </motion.form>
+    </form>
   )
 }
 

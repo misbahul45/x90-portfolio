@@ -13,6 +13,9 @@ export const env = createEnv({
     FLAZZ_BASE_URL: z.string().url().optional(),
     FLAZZ_MODEL: z.string().min(1).optional(),
     HF_API_KEY: z.string().optional(),
+    VERCEL_URL: z.string().min(1).optional(),
+    VERCEL_BRANCH_URL: z.string().min(1).optional(),
+    VERCEL_PROJECT_PRODUCTION_URL: z.string().min(1).optional(),
   },
 
   clientPrefix: 'VITE_',

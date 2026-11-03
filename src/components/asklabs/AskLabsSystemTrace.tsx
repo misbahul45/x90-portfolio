@@ -17,16 +17,16 @@ export function AskLabsSystemTrace({
   return (
     <div className="flex h-full flex-col">
       <header className="border-b border-[var(--lab-line)] px-4 py-3">
-        <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--lab-orange)]">System trace</p>
-        <p className="mt-1 text-[11px] leading-snug text-[var(--lab-ink-soft)]">
+        <p className="text-sm font-medium text-[var(--lab-ink)]">System trace</p>
+        <p className="mt-1 text-xs leading-snug text-[var(--lab-ink-soft)]">
           Secondary diagnostics. Toggle from the header to hide.
         </p>
       </header>
-      <div className="flex-1 overflow-y-auto p-4 text-[12px] leading-relaxed text-[var(--lab-ink-soft)]">
+      <div className="flex-1 overflow-y-auto p-4 text-sm leading-relaxed text-[var(--lab-ink-soft)]">
         <Section label="Phase">
           <ul className="space-y-1.5">
             {PHASE_ORDER.map((entry) => (
-              <li key={entry} className="flex items-center gap-2 font-mono text-[10.5px] uppercase tracking-[0.16em]">
+              <li key={entry} className="flex items-center gap-2 text-sm capitalize">
                 <span
                   aria-hidden
                   className={`size-1.5 rounded-full ${
@@ -60,7 +60,7 @@ export function AskLabsSystemTrace({
 function Section({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <section className="mb-5 last:mb-0">
-      <p className="mb-2 font-mono text-[9.5px] uppercase tracking-[0.2em] text-[var(--lab-ink-soft)]/70">
+      <p className="mb-2 text-xs font-medium text-[var(--lab-ink-soft)]">
         {label}
       </p>
       {children}
@@ -71,8 +71,8 @@ function Section({ label, children }: { label: string; children: React.ReactNode
 function Row({ k, v }: { k: string; v: string }) {
   return (
     <div className="flex items-center justify-between gap-4">
-      <dt className="font-mono text-[10.5px] uppercase tracking-[0.16em] text-[var(--lab-ink-soft)]/70">{k}</dt>
-      <dd className="font-mono text-[11px] text-[var(--lab-ink)] truncate">{v}</dd>
+      <dt className="text-sm text-[var(--lab-ink-soft)]">{k}</dt>
+      <dd className="truncate text-sm text-[var(--lab-ink)]">{v}</dd>
     </div>
   )
 }
